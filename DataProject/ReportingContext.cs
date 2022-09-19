@@ -11,9 +11,5 @@ public class ReportingContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Report>()
-        .Property(e => e.ReportId)
-        .IsRequired();
-        
     }
 }

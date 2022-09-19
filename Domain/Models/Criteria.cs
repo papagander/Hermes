@@ -5,17 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data;
+namespace Domain.Models;
 
 public class Statement
 {
-    // Each statement represents a fact which is either true or false per row of the data source.
-    // Each statement is pointed to by exactly one criterion OR exactly one conjunction,
-    // which it represents.
-    // Records for which the top-level statement is true are returned
-    // by the query.
+    // A statement represents either a single criterion or a conjunction.
+    // Each report points to a statement. Records for which the statement is true
+    // are included in the report.
     [Key]
     public int Id;
+    // 
     Conjuction? ParentConjuction;
     public int? ParentConjunctionid;
 
@@ -87,4 +86,14 @@ public class CriterionValue
     [Required]
     public int CriterionId;
     public string Value;
+}
+public class ReportField
+{
+    // Create a link between a report and a field to be included on said report.
+    [Key]
+    public int ReportFieldId;
+    [Required]
+    public int ReportId;
+    [Required]
+    public int FieldId;
 }
