@@ -69,7 +69,7 @@ public class Criterion
     public Field Field;
     [Required]
     public int FieldId;
-    public Operation Operation;
+    public Operator Operation;
     [Required]
     public int OperationId;
     public Statement Statement;

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\Templates.cs" />
+    <Compile Remove="Models\Criteria.cs" />
+  </ItemGroup>
 </Project>

@@ -24,12 +24,13 @@ namespace DataAccess.EFCore
         public DbSet<Criterion> Criteria { get; set; }
         public DbSet<CriterionValue> CriterionValues { get; set; }
 
-        // Templates
+        // Reports
         public DbSet<Template> Templates { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<FieldType> FieldTypes { get; set; }
-        public DbSet<Operation> Operations { get; set; }
-        public DbSet<FieldTypeOperation> FieldTypeOperations{ get; set; }
+        public DbSet<Operator> Operations { get; set; }
+        public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
+        public DbSet<ReportField> ReportFields { get; set; }
 
         // Transmissions
     }

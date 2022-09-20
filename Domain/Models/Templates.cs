@@ -27,16 +27,16 @@ public class FieldType
     public int FieldTypeId;
     public string Name;
 }
-public class Operation
+public class Operator
 {
-    public int OperationId;
+    public int OperatorId;
     public string Name;
 }
-public class FieldTypeOperation
+public class FieldTypeOperator
 {
-    public int FieldTypeOperationId;
+    public int FieldTypeOperatorId;
     public FieldType FieldType;
     public int FieldTypeId;
-    public Operation Operation;
-    public int OperationId;
+    public Operator Operator;
+    public int OperatorId;
 }
