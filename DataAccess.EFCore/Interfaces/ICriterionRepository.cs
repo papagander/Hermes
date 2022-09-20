@@ -2,7 +2,7 @@
 {
     public interface ICriterionRepository : IGenericRepository<Criterion>
     {
-        Criterion? GetCriterionByStatementId(int statementId);
+        Criterion? GetByStatementId(int statementId);
     }
 }
 

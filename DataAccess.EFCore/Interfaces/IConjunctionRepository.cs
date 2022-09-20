@@ -1,9 +1,9 @@
 ﻿using System;
 namespace DataAccess.EFCore.Interfaces
 {
-    public interface IConjunctionRepository : IGenericRepository<Conjuction>
+    public interface IConjunctionRepository : IGenericRepository<Conjunction>
     {
-        Conjuction? GetConjuctionByStatementId(int statementId);
+        Conjunction? GetByStatementId(int statementId);
     }
 }
 

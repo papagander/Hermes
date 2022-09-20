@@ -19,7 +19,7 @@ namespace DataAccess.EFCore
 
         // Criteria
         public DbSet<Statement> Statements { get; set; }
-        public DbSet<Conjuction> Conjuctions { get; set; }
+        public DbSet<Conjunction> Conjuctions { get; set; }
         public DbSet<Conjoiner> Conjoiners { get; set; }
         public DbSet<Criterion> Criteria { get; set; }
         public DbSet<CriterionValue> CriterionValues { get; set; }

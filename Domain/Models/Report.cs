@@ -62,7 +62,7 @@ public class Statement
         ConjunctionId = parentConjunctionid;
     }
 }
-public class Conjuction
+public class Conjunction
 {
     // A Conjunction is pointed to by n statements (conjugants).
     // These statements are joined by the conjoiner
