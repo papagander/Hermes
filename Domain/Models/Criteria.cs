@@ -16,11 +16,11 @@ public class Statement
     public int Id;
     // 
     Conjuction? ParentConjuction;
-    public int? ParentConjunctionid;
+    public int? Conjunctionid;
 
     public Statement(int? parentConjunctionid)
     {
-        ParentConjunctionid = parentConjunctionid;
+        Conjunctionid = parentConjunctionid;
     }
 }
 public class Conjuction
