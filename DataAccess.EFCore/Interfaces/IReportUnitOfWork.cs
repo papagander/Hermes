@@ -5,23 +5,25 @@ namespace DataAccess.EFCore.Interfaces
 {
     public interface IReportUnitOfWork
     {
-        ICrdRepository<Report> Reports { get; }
+        ICrdRepository<Query> Reports { get; }
 
-        ICrdRepository<Template> Templates { get; }
+        ICrdRepository<DataSet> Templates { get; }
         ICrdRepository<FieldType> FieldTypes { get; }
         ICrdRepository<Operator> Operators { get; }
 
         ICrdRepository<Conjoiner> Conjoiners { get; }
-        ICrdRepository<CriterionValue> CriterionsValues { get; }
+        ICrdRepository<CriterionValue> CriterionValues { get; }
 
-        IReportFieldRepository ReportFields {get; }
 
         IConjunctionRepository Conjunctions { get; }
         ICriterionRepository Criteria { get; }
         IStatementRepository Statements { get; }
 
         IFieldRepository Fields { get; }
+        IReportFieldRepository ReportFields {get; }
         IFieldTypeOperatorRepository FieldTypeOperators { get; }
+
+        int Complete();
 
 
     }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 using Domain.Models;
+using Domain.Models.DataCore;
 
 namespace DataAccess.EFCore
 {
@@ -15,7 +16,7 @@ namespace DataAccess.EFCore
         public ReportContext(DbContextOptions<ReportContext> options) : base(options)
         {
         }
-        public DbSet<Report> Reports { get; set; }
+        public DbSet<Query> Reports { get; set; }
 
         // Criteria
         public DbSet<Statement> Statements { get; set; }
@@ -25,12 +26,12 @@ namespace DataAccess.EFCore
         public DbSet<CriterionValue> CriterionValues { get; set; }
 
         // Reports
-        public DbSet<Template> Templates { get; set; }
+        public DbSet<DataSet> DataSets { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<FieldType> FieldTypes { get; set; }
         public DbSet<Operator> Operators { get; set; }
         public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
-        public DbSet<ReportField> ReportFields { get; set; }
+        public DbSet<QueryField> ReportFields { get; set; }
 
         // Transmissions
     }

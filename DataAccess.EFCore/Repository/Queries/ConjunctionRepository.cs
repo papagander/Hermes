@@ -1,5 +1,5 @@
 ﻿using System;
-namespace DataAccess.EFCore.Repository
+namespace DataAccess.EFCore.Repository.Reports
 {
     public class ConjunctionRepository : CrdRepository<Conjunction> , IConjunctionRepository
     {

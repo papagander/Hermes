@@ -10,5 +10,5 @@ public class Customer
 {
     public int CustomerId;
     public string Name;
-    public virtual List<Report> Reports { get; set; }
+    public virtual List<Query> Reports { get; set; }
 }

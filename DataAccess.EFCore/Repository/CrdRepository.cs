@@ -1,4 +1,5 @@
 ﻿using System;
+using DataAccess.EFCore.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.EFCore.Repository

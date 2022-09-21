@@ -1,5 +1,7 @@
-﻿using System;
-namespace DataAccess.EFCore.Repository
+﻿global using DataAccess.EFCore.Interfaces.Repositories;
+using System;
+
+namespace DataAccess.EFCore.Repository.Reports
 {
     public class FieldTypeRepository : CrdRepository<FieldType>, ICrdRepository<FieldType>
     {

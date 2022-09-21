@@ -1,5 +1,5 @@
 ﻿using System;
-namespace DataAccess.EFCore.Repository.Report
+namespace DataAccess.EFCore.Repository.Reports
 {
     public class FieldTypeOperatorRepository : GenericRepository<FieldTypeOperator>, IFieldTypeOperatorRepository
     {
