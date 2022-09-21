@@ -13,11 +13,10 @@ public class Query
 {
     public int QueryId;
     public string Name;
-    public int CustomerId;
     public int DataSetId;
     public int StatementId;
-    public int TransmissionTypeId;
-    public int MediumTypeId;
+    public List<Field> Fields;
+    public Statement Statement;
 
 }
 
@@ -32,7 +31,7 @@ public class Statement
     public bool IsConjunction;
     public Conjunction? Conjunction;
     public Criterion? Criterion;
-    public string ToString()
+    public override string ToString()
     {
         if (IsConjunction) return Conjunction.ToString();
         else return Criterion.ToString();
@@ -44,16 +43,15 @@ public class Conjunction
     // These statements are joined by the conjoiner
     // To form a higher statement, pointed to by the 
     // statement Id.
-    [Key]
     public int ConjunctionId;
-    [Required]
     public int ConjoinerId;
-    [Required]
     public int StatementId;
+
     public Conjoiner Conjoiner;
     public Statement Statement;
     public List<Statement> Conjugants;
-    public string ToString()
+
+    public override string ToString()
     {
         string output = "";
         string conjoinerString = Conjoiner.Name;

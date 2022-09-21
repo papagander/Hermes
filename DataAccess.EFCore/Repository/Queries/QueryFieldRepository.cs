@@ -2,15 +2,15 @@
 using System;
 namespace DataAccess.EFCore.Repository.Reports
 {
-    public class ReportFieldRepository : CrdRepository<QueryField>, IReportFieldRepository
+    public class QueryFieldRepository : CrdRepository<QueryField>, IQueryFieldRepository
     {
-        public ReportFieldRepository(ReportContext reportContext) :base(reportContext){}
-        public IEnumerable<Field> GetFields(int reportId)
+        public QueryFieldRepository(ReportContext reportContext) :base(reportContext){}
+        public IEnumerable<Field> GetFields(int queryId)
         {
 
             IEnumerable<int> fieldIds = (
-                from rf in _context.ReportFields
-                where rf.QueryId == reportId
+                from rf in _context.QueryFields
+                where rf.QueryId == queryId
                 select rf.FieldId
                 );
             var Fields = _context.Fields;

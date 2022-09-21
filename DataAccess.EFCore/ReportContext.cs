@@ -31,7 +31,7 @@ namespace DataAccess.EFCore
         public DbSet<FieldType> FieldTypes { get; set; }
         public DbSet<Operator> Operators { get; set; }
         public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
-        public DbSet<QueryField> ReportFields { get; set; }
+        public DbSet<QueryField> QueryFields { get; set; }
 
         // Transmissions
     }

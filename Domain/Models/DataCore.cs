@@ -9,6 +9,7 @@ namespace Domain.Models.DataCore
         // string, int, date, money?
         public int FieldTypeId;
         public string Name;
+        public List<Operator> Operators;
     }
     public class Operator
     {
@@ -16,6 +17,7 @@ namespace Domain.Models.DataCore
         public int OperatorId;
         public string Name;
         public string? Symbol;
+        public List<FieldType> FieldTypes;
     }
     public class FieldTypeOperator
     {
