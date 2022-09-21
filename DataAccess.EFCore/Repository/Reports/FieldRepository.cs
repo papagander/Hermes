@@ -2,7 +2,7 @@
 using System.Linq;
 namespace DataAccess.EFCore.Repository
 {
-    public class FieldRepository : GenericRepository<Field>, IFieldRepository
+    public class FieldRepository :   CrdRepository<Field>, IFieldRepository
     {
         public FieldRepository(ReportContext reportContext) : base(reportContext) { }
         public IEnumerable<Field> GetFieldsByTemplateId(int templateId)

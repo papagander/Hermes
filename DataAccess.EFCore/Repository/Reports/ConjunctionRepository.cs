@@ -1,7 +1,7 @@
 ﻿using System;
 namespace DataAccess.EFCore.Repository
 {
-    public class ConjunctionRepository : GenericRepository<Conjunction> , IConjunctionRepository
+    public class ConjunctionRepository : CrdRepository<Conjunction> , IConjunctionRepository
     {
         public ConjunctionRepository(ReportContext reportContext) : base(reportContext)
         {
@@ -10,6 +10,16 @@ namespace DataAccess.EFCore.Repository
         {
             return (from cj in _context.Conjuctions where cj.StatementId == statementId select cj).FirstOrDefault();
         }
+        /*
+        public string ToString(int conjunctionId)
+        {
+            Conjunction conjunction = GetById(conjunctionId);
+            foreach (var statement in conjunction.Conjugants)
+            {
+
+            }
+        }
+        */
     }
 }
 

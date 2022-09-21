@@ -1,7 +1,7 @@
 ﻿using System;
 namespace DataAccess.EFCore.Repository
 {
-    public class CriterionRepository : GenericRepository<Criterion> , ICriterionRepository
+    public class CriterionRepository : CrdRepository<Criterion> , ICriterionRepository
     {
         public CriterionRepository(ReportContext reportContext) : base(reportContext)
         {

@@ -7,7 +7,7 @@ namespace DataAccess.EFCore.Repository
         public StatementRepository(ReportContext reportContext) : base(reportContext)
         {
         }
-        public IEnumerable<Statement> GetStatementsByConjunctionId(int conjunctionId)
+        public IEnumerable<Statement> GetRangeByConjunctionId(int conjunctionId)
         {
             return (from statement in _context.Statements where statement.ConjunctionId == conjunctionId select statement);
         }

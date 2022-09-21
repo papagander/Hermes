@@ -6,9 +6,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.EFCore.Interfaces;
+namespace DataAccess.EFCore.Interfaces.Repositories;
 
-public interface IGenericRepository<T> where T : class
+public interface ICrdRepository<T> where T : class
 {
     T GetById(int id);
     IEnumerable<T> GetAll();

@@ -28,7 +28,7 @@ namespace DataAccess.EFCore
         public DbSet<Template> Templates { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<FieldType> FieldTypes { get; set; }
-        public DbSet<Operator> Operations { get; set; }
+        public DbSet<Operator> Operators { get; set; }
         public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
         public DbSet<ReportField> ReportFields { get; set; }
 

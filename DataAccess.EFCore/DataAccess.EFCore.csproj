@@ -16,4 +16,14 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="UnitOfWork\" />
+    <None Remove="Interfaces\Repositories\" />
+    <None Remove="Interfaces\Repositories\Reports\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UnitOfWork\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Interfaces\Repositories\Reports\" />
+  </ItemGroup>
 </Project>

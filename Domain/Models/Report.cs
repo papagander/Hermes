@@ -41,12 +41,15 @@ public class Operator
 {
     public int OperatorId;
     public string Name;
+    public string? Symbol;
 }
 public class FieldTypeOperator
 {
     public int FieldTypeOperatorId;
     public int FieldTypeId;
     public int OperatorId;
+    public FieldType FieldType;
+    public Operator Operator;
 }
 public class Statement
 {
@@ -56,10 +59,13 @@ public class Statement
     [Key]
     public int Id;
     public int? ConjunctionId;
-
-    public Statement(int? parentConjunctionid)
+    public bool IsConjunction;
+    public Conjunction? Conjunction;
+    public Criterion? Criterion;
+    public string ToString()
     {
-        ConjunctionId = parentConjunctionid;
+        if (IsConjunction) return Conjunction.ToString();
+        else return Criterion.ToString();
     }
 }
 public class Conjunction
@@ -72,11 +78,26 @@ public class Conjunction
     public int ConjunctionId;
     [Required]
     public int ConjoinerId;
-    public Conjoiner Conjoiner;
     [Required]
     public int StatementId;
+    public Conjoiner Conjoiner;
     public Statement Statement;
     public List<Statement> Conjugants;
+    public string ToString()
+    {
+        string output = "";
+        string conjoinerString = Conjoiner.Name;
+        output += "(";
+        for (int i = 0; i < Conjugants.Count; i++)
+        {
+            Statement? conjugant = Conjugants[i];
+            output += $" {conjugant.ToString()}";
+            if (i < Conjugants.Count - 1) output += $" {conjoinerString}";
+        }
+        output += ")";
+        return output;
+    }
+
 }
 
 public class Conjoiner
@@ -84,12 +105,8 @@ public class Conjoiner
     // e.g. AND, OR
     [Key]
     public int ConjoinerId;
-    public string ConjoinerName;
+    public string Name;
 
-    public Conjoiner(string conjoinerName)
-    {
-        ConjoinerName = conjoinerName;
-    }
 }
 
 public class Criterion
@@ -98,15 +115,31 @@ public class Criterion
     // Criterion are pointed to by CriterionValues to support n values per criterion.
     [Key]
     public int CriterionId;
-    public Field Field;
     [Required]
     public int FieldId;
-    public Operator Operation;
     [Required]
-    public int OperationId;
-    public Statement Statement;
+    public int OperatorId;
     [Required]
     public int StatementId;
+
+    public Field Field;
+    public Operator Operator;
+    public Statement Statement;
+    public List<CriterionValue> CriterionValues { get; set; }
+    public override string ToString()
+    {
+        string output = "";
+        output += $"{Field.Name} {Operator.Symbol} ";
+        output += "{";
+        foreach (var criterionValue in CriterionValues)
+        {
+            output += " ";
+            output += criterionValue.Value;
+            output += ",";
+        }
+        output += "}";
+        return output;
+    }
 
 }
 public class CriterionValue
@@ -114,9 +147,9 @@ public class CriterionValue
     // Feed criterion with values.
     [Key]
     public int CriterionValueId;
-    public Criterion Criterion;
     [Required]
     public int CriterionId;
+    public Criterion Criterion;
     public string Value;
 }
 public class ReportField
