@@ -1,6 +1,6 @@
 ﻿
 using System;
-namespace DataAccess.EFCore.Repository.Reports
+namespace DataAccess.EFCore.Repository.Queries
 {
     public class StatementRepository : GenericRepository<Statement>, IStatementRepository
     {

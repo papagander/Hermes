@@ -1,5 +1,9 @@
-﻿using System;
-namespace DataAccess.EFCore.Repository.Reports
+﻿using DataAccess.EFCore.Interfaces.Repositories.DataCore;
+
+using Domain.Models.DataCore;
+
+using System;
+namespace DataAccess.EFCore.Repository.DataCore
 {
     public class FieldTypeOperatorRepository : GenericRepository<FieldTypeOperator>, IFieldTypeOperatorRepository
     {

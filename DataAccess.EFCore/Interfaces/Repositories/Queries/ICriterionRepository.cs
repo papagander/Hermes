@@ -1,4 +1,4 @@
-﻿namespace DataAccess.EFCore.Interfaces.Repositories.Reports
+﻿namespace DataAccess.EFCore.Interfaces.Repositories.Queries
 {
     public interface ICriterionRepository : ICrdRepository<Criterion>
     {

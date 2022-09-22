@@ -25,7 +25,7 @@ namespace DataAccess.EFCore
         public DbSet<Criterion> Criteria { get; set; }
         public DbSet<CriterionValue> CriterionValues { get; set; }
 
-        // Reports
+        // Queries
         public DbSet<DataSet> DataSets { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<FieldType> FieldTypes { get; set; }

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace DataAccess.EFCore.Interfaces.Repositories.Reports
+namespace DataAccess.EFCore.Interfaces.Repositories.DataSets
 {
     public interface IFieldRepository : ICrdRepository<Field>
     {

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DataAccess.EFCore.Interfaces.Repositories.DataSets;
+
+using System;
 using System.Linq;
-namespace DataAccess.EFCore.Repository.Reports
+namespace DataAccess.EFCore.Repository.DataSets
 {
     public class FieldRepository :   CrdRepository<Field>, IFieldRepository
     {

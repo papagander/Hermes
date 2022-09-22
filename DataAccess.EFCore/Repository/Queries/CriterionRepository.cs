@@ -1,5 +1,5 @@
 ﻿using System;
-namespace DataAccess.EFCore.Repository.Reports
+namespace DataAccess.EFCore.Repository.Queries
 {
     public class CriterionRepository : CrdRepository<Criterion> , ICriterionRepository
     {

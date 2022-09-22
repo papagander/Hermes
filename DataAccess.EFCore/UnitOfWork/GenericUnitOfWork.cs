@@ -3,10 +3,14 @@ namespace DataAccess.EFCore.UnitOfWork
 {
     public class GenericUnitOfWork
     {
-        private readonly ReportContext _context;
+        protected readonly ReportContext _context;
         public GenericUnitOfWork(ReportContext _context)
         {
             this._context = _context;
+        }
+        public int Complete()
+        {
+            return _context.SaveChanges();
         }
     }
 }

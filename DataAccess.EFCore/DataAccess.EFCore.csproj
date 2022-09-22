@@ -32,14 +32,11 @@
     <None Remove="Interfaces\UnitsOfWork\Queries\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UnitOfWork\" />
     <Folder Include="Interfaces\Repositories\" />
     <Folder Include="Interfaces\Repositories\DataSets\" />
     <Folder Include="Interfaces\Repositories\DataCore\" />
     <Folder Include="Repository\DataCore\" />
     <Folder Include="Repository\DataSets\" />
-    <Folder Include="UnitOfWork\DataCore\" />
-    <Folder Include="UnitOfWork\DataSets\" />
     <Folder Include="UnitOfWork\Queries\" />
     <Folder Include="Interfaces\UnitsOfWork\" />
     <Folder Include="Interfaces\UnitsOfWork\DataCore\" />
