@@ -32,7 +32,7 @@ namespace Services
 
         public int CreateFieldTypeOperator(string fieldTypeName, string operatorName)
         {
-            var e = new FieldTypeOperator()
+            var e = new FieldTypeOperator();
         }
 
         public int CreateOperator(string operatorName)

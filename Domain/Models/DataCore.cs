@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces.Model;
+﻿using Domain.Interfaces.Models;
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Domain.Models.DataCore
 {
 
-    public class FieldType : INamed, IReferencedTable<Operator>
+    public class FieldType : INamed, IReferencedBy<Operator>
     {
         // string, int, date, money?
         public int FieldTypeId;
@@ -16,10 +16,10 @@ namespace Domain.Models.DataCore
         {
             Name = name;
         }
-        public int Id { get { return FieldTypeId} set { FieldTypeId = value; } }
+        public int Id { get { return FieldTypeId; } set { FieldTypeId = value; } }
         public string Name { get { return FieldTypeName; } set { FieldTypeName = value; } }
 
-        List<Operator> IReferencedTable<Operator>.MyTs { get { return Operators; } set { Operators = value; } }
+        List<Operator> IReferencedBy<Operator>.MyTs { get => Operators; set => Operators = value; }
         int IIndexed.Id { get { return FieldTypeId; } set { FieldTypeId = value; } }
     }
     public class Operator : INamed
@@ -27,19 +27,17 @@ namespace Domain.Models.DataCore
         // equals, greather than, less than, contains, etc.
         public int OperatorId;
         public string OperatorName;
-        public string? Symbol;
         public List<FieldType> FieldTypes;
 
-        public Operator(string name, string? symbol)
+        public Operator(string name)
         {
             OperatorName = name;
-            Symbol = symbol;
         }
 
         public int Id { get { return OperatorId; } set { OperatorId = value; } }
         public string Name { get { return OperatorName; } set { OperatorName = value; } }
     }
-    public class FieldTypeOperator : IReferenceTable<FieldType>, IReferenceTable<Operator>
+    public class FieldTypeOperator : IReferences<FieldType>, IReferences<Operator>
     {
         // string contains, int less than,
         public int FieldTypeOperatorId;
@@ -54,10 +52,10 @@ namespace Domain.Models.DataCore
             Operator = @operator;
         }
 
-        int IReferenceTable<FieldType>.TId { get { return FieldTypeId; } set { FieldTypeId = value; } }
-        FieldType IReferenceTable<FieldType>.MyT { get { return FieldType; } set { FieldType = value; } }
-        int IReferenceTable<Operator>.TId { get { return OperatorId; } set { OperatorId = value; } }
-        Operator IReferenceTable<Operator>.MyT { get { return Operator; } set { Operator = value; }  }
+        int IReferences<FieldType>.TDex { get { return FieldTypeId; } set { FieldTypeId = value; } }
+        FieldType IReferences<FieldType>.MyT { get { return FieldType; } set { FieldType = value; } }
+        int IReferences<Operator>.TDex { get { return OperatorId; } set { OperatorId = value; } }
+        Operator IReferences<Operator>.MyT { get { return Operator; } set { Operator = value; }  }
         int IIndexed.Id { get { return FieldTypeOperatorId; } set { FieldTypeOperatorId = value; } }
     }
 
@@ -73,7 +71,7 @@ namespace Domain.Models.DataCore
         }
 
         string INamed.Name { get { return ConjoinerName; } set { ConjoinerName = value; } }
-        int IIndexed.Id { get { return ConjoinerId; } set { ConjoinerId = value} }
+        int IIndexed.Id { get { return ConjoinerId; } set { ConjoinerId = value; } }
     }
 
 }

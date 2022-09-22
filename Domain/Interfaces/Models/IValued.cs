@@ -5,29 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Interfaces.Model;
-
-public interface IIndexed
-{
-    // Table with an index.
-    public int Id { get; set; }
-
-}
-public interface INamed : IIndexed
-{
-    // A table with an index and a name.
-    public string Name { get; set; }
-
-}
-public interface IReferenceTable<T> : IIndexed where T : IIndexed
-{
-    public int TId { get; set; }
-    public T MyT { get; set; }
-}
-public interface IReferencedTable<T> : IIndexed where T : IIndexed
-{
-    public List<T>? MyTs { get; set; }
-}
+namespace Domain.Interfaces.Models;
 public interface IValued : IIndexed
 {
     public string Value { get; set; }
