@@ -1,18 +1,54 @@
-﻿using System;
+﻿using Domain.Interfaces.Model;
+using Domain.Models.DataCore;
+
+using System;
+
 namespace Domain.Models
 {
 
-    public class DataSet
+    public class DataSet : INamed, IReferencedTable<Field>
     {
         public int DataSetId;
-        public string Name;
+        public string DataSetName;
+        public List<Field> Fields;
+        string INamed.Name { get { return DataSetName; } set { DataSetName = value; } }
+        int IIndexed.Id { get { return DataSetId; } set { DataSetId = value; } }
+
+        public DataSet(string name)
+        {
+            DataSetName = name;
+        }
+
+        List<Field> IReferencedTable<Field>.MyTs
+        {
+            get { return Fields; }
+            set { Fields = value; }
+        }
     }
-    public class Field
+    public class Field : INamed, IReferenceTable<DataSet>, IReferenceTable<FieldType>
     {
         public int FieldId;
-        public string Name;
+        public string FieldName;
         public int DataSetId;
         public int FieldTypeId;
+        public FieldType FieldType;
+        public DataSet DataSet;
+        private List<QueryField> queryFields;
+        public List<Query> Queries;
+
+        public Field(FieldType fieldType, DataSet dataSet, string name)
+        {
+            FieldType = fieldType;
+            DataSet = dataSet;
+            FieldName = name;
+        }
+
+        string INamed.Name { get { return FieldName; } set { FieldName = value; } }
+        int IIndexed.Id { get { return FieldId; } set { FieldId = value; } }
+        int IReferenceTable<DataSet>.TId { get { return DataSetId; } set { DataSetId = value; } }
+        int IReferenceTable<FieldType>.TId { get { return FieldTypeId; } set { FieldTypeId = value; } }
+        DataSet IReferenceTable<DataSet>.MyT { get { return DataSet; } set { DataSet = value; } }
+        FieldType IReferenceTable<FieldType>.MyT { get { return FieldType; } set { FieldType = value; } }
     }
 }
 

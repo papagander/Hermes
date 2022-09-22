@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.Models.DataCore;
+
+using System;
 namespace Domain.TestConsole
 {
     public class ConjunctionTests
@@ -21,7 +23,7 @@ namespace Domain.TestConsole
             Field DateReceived = new Field();
             Field Category = new Field();
             ModelNum.Name = "Serial Number";
-            and.Name = "AND";
+            and.ConjoinerName = "AND";
 
 
         }

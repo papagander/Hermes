@@ -1,4 +1,7 @@
 ﻿global using DataAccess.EFCore.Interfaces.Repositories;
+
+using Domain.Models.DataCore;
+
 using System;
 
 namespace DataAccess.EFCore.Repository.Queries

@@ -2,7 +2,7 @@
 using System;
 namespace DataAccess.EFCore.Repository.Queries
 {
-    public class StatementRepository : GenericRepository<Statement>, IStatementRepository
+    public class StatementRepository : CrdRepository<Statement>, IStatementRepository
     {
         public StatementRepository(ReportContext reportContext) : base(reportContext)
         {

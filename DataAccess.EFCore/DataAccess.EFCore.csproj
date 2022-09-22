@@ -15,32 +15,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="UnitOfWork\" />
-    <None Remove="Interfaces\Repositories\" />
-    <None Remove="Interfaces\Repositories\DataSets\" />
-    <None Remove="Interfaces\Repositories\DataCore\" />
-    <None Remove="Repository\DataCore\" />
-    <None Remove="Repository\DataSets\" />
-    <None Remove="UnitOfWork\DataCore\" />
-    <None Remove="UnitOfWork\DataSets\" />
-    <None Remove="UnitOfWork\Queries\" />
-    <None Remove="Interfaces\UnitsOfWork\" />
-    <None Remove="Interfaces\UnitsOfWork\DataCore\" />
-    <None Remove="Interfaces\UnitsOfWork\DataSets\" />
-    <None Remove="Interfaces\UnitsOfWork\Queries\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\Repositories\" />
-    <Folder Include="Interfaces\Repositories\DataSets\" />
-    <Folder Include="Interfaces\Repositories\DataCore\" />
-    <Folder Include="Repository\DataCore\" />
-    <Folder Include="Repository\DataSets\" />
-    <Folder Include="UnitOfWork\Queries\" />
-    <Folder Include="Interfaces\UnitsOfWork\" />
-    <Folder Include="Interfaces\UnitsOfWork\DataCore\" />
-    <Folder Include="Interfaces\UnitsOfWork\DataSets\" />
-    <Folder Include="Interfaces\UnitsOfWork\Queries\" />
-  </ItemGroup>
 </Project>
