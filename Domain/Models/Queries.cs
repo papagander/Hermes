@@ -49,6 +49,10 @@ public class Query : INamed, IReferenceTable<DataSet>, IReferenceTable<Statement
             QueryId = value;
         }
     }
+    int IReferenceTable<DataSet>.TId { get => DataSetId; set => DataSetId = value; }
+    DataSet IReferenceTable<DataSet>.MyT { get => DataSet; set => DataSet = value; }
+    int IReferenceTable<Statement>.TId { get => StatementId; set => StatementId = value; }
+    Statement IReferenceTable<Statement>.MyT { get => Statement; set => Statement = value; }
 }
 
 public class Statement : IIndexed
@@ -60,7 +64,8 @@ public class Statement : IIndexed
     public int? ConjunctionId;
     public bool IsConjunction;
     public Conjunction? Conjunction;
-    public Criterion? Criterion;
+    public List<Conjunction> Conjunctions;
+    public List<Criterion> Criterions;
 
 
     public override string ToString()
@@ -68,19 +73,9 @@ public class Statement : IIndexed
         if (IsConjunction) return Conjunction.ToString();
         else return Criterion.ToString();
     }
-    int IIndexed.Id
-    {
-        get
-        {
-            return StatementId;
-        }
-        set
-        {
-            StatementId = value;
-        }
-    }
+    int IIndexed.Id { get => StatementId; set => StatementId = value; }
 }
-public class Conjunction : IIndexed
+public class Conjunction : IIndexed, IReferenceTable<Statement>, IReferenceTable<Conjoiner>
 {
     // A Conjunction is pointed to by n statements (conjugants).
     // These statements are joined by the conjoiner
@@ -119,10 +114,14 @@ public class Conjunction : IIndexed
             ConjunctionId = value;
         }
     }
+    int IReferenceTable<Statement>.TId { get => StatementId; set => StatementId = value; }
+    Statement IReferenceTable<Statement>.MyT { get => Statement; set => Statement = value; }
+    int IReferenceTable<Conjoiner>.TId { get => ConjoinerId; set => ConjoinerId = value; }
+    Conjoiner IReferenceTable<Conjoiner>.MyT { get => Conjoiner; set => Conjoiner = value; }
 
 }
 
-public class Criterion : IIndexed
+public class Criterion : IIndexed, IReferenceTable<Field>, IReferenceTable<Operator>, IReferenceTable<Statement>, IReferencedTable<CriterionValue>
 {
     // e.g. Serial number equals, DateReceived greater than, Model Number contains.
     // Criterion are pointed to by CriterionValues to support n values per criterion.
@@ -162,10 +161,15 @@ public class Criterion : IIndexed
             CriterionId = value;
         }
     }
-
-
+    int IReferenceTable<Field>.TId { get => FieldId; set => FieldId = value; }
+    Field IReferenceTable<Field>.MyT { get => Field; set => Field = value; }
+    int IReferenceTable<Operator>.TId { get => OperatorId; set => OperatorId = value; }
+    Operator IReferenceTable<Operator>.MyT { get => Operator; set => Operator = value; }
+    int IReferenceTable<Statement>.TId { get => StatementId; set => StatementId = value; }
+    Statement IReferenceTable<Statement>.MyT { get => Statement; set => Statement = value; }
+    List<CriterionValue> IReferencedTable<CriterionValue>.MyTs { get => CriterionValues; set => CriterionValues = value; }
 }
-public class CriterionValue :  IValued, IReferenceTable<Criterion>
+public class CriterionValue : IValued, IReferenceTable<Criterion>
 {
     // Feed criterion with values.
     [Key]
@@ -181,25 +185,11 @@ public class CriterionValue :  IValued, IReferenceTable<Criterion>
         Value = value;
     }
 
-    int IIndexed.Id
-    {
-        get
-        {
-            return CriterionValueId;
-        }
-        set
-        {
-            CriterionValueId = value;
-        }
-    }
+    int IIndexed.Id { get => CriterionValueId; set => CriterionValueId = value; }
 
-    string IValued.Value
-    {
-        get => Value;
-        set => Value = value;
-    }
-    int IReferenceTable<Criterion>.TId { get =>  CriterionId; set => CriterionId = value; }
-    Criterion IReferenceTable<Criterion>.MyT { get =>  Criterion; set => Criterion = value; }
+    string IValued.Value { get => Value; set => Value = value; }
+    int IReferenceTable<Criterion>.TId { get => CriterionId; set => CriterionId = value; }
+    Criterion IReferenceTable<Criterion>.MyT { get => Criterion; set => Criterion = value; }
 }
 public class QueryField : IIndexed, IReferenceTable<Query>, IReferenceTable<Field>
 {

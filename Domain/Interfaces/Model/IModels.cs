@@ -26,7 +26,7 @@ public interface IReferenceTable<T> : IIndexed where T : IIndexed
 }
 public interface IReferencedTable<T> : IIndexed where T : IIndexed
 {
-    public List<T> MyTs { get; set; }
+    public List<T>? MyTs { get; set; }
 }
 public interface IValued : IIndexed
 {
