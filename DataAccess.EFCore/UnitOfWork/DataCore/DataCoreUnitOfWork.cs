@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.UnitOfWork.DataCore
 {

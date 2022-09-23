@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using DataAccess.EFCore.Interfaces.Repositories.Generic;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.EFCore.Repository
 {
-    public class CrdRepository<T> : GenericRepository<T>, ICrdRepository<T> where T:class
+    public class IndexedRepository<T> : GenericRepository<T>, IIndexedRepository<T> where T : class, IIndexed
     {
-        public CrdRepository(ReportContext reportContext) : base(reportContext) { }
+        public IndexedRepository(ReportContext reportContext) : base(reportContext){        }
 
         public void Add(T entity)
         {
@@ -17,20 +20,18 @@ namespace DataAccess.EFCore.Repository
         {
             _context.Set<T>().AddRange(entities);
         }
-
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
-        {
-            return _context.Set<T>().Where(expression);
-        }
-
         public IEnumerable<T> GetAll()
         {
             return _context.Set<T>().ToList();
         }
 
-        public T GetById(int id)
+        public T Get(int id)
         {
             return _context.Set<T>().Find(id);
+        }
+        public T GetRange(IEnumerable< int> ids)
+        {
+            throw new NotImplementedException();
         }
 
         public void Remove(T entity)
@@ -44,4 +45,3 @@ namespace DataAccess.EFCore.Repository
         }
     }
 }
-

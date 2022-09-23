@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.EFCore.Interfaces.Repositories;
+namespace DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 public interface ICrdRepository<T> where T : class
 {

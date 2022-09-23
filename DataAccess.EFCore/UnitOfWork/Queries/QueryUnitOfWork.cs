@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Xml.Serialization;
-using DataAccess.EFCore.Interfaces.Repositories;
 using DataAccess.EFCore.Interfaces.Repositories.DataCore;
 using DataAccess.EFCore.Interfaces.Repositories.DataSets;
+using DataAccess.EFCore.Interfaces.Repositories.Generic;
 using DataAccess.EFCore.Interfaces.Repositories.Queries;
 using DataAccess.EFCore.Repository;
 using DataAccess.EFCore.Repository.DataCore;

@@ -1,7 +1,7 @@
 ﻿using System;
 using DataAccess.EFCore.Interfaces.Repositories.Queries;
-using DataAccess.EFCore.Interfaces.Repositories;
 using Domain.Models.DataCore;
+using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.Interfaces
 {

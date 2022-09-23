@@ -1,4 +1,5 @@
 ﻿using DataAccess.EFCore.Interfaces.Repositories.DataCore;
+using DataAccess.EFCore.Interfaces.Repositories.Generic;
 using Domain.Models.DataCore;
 
 using System;

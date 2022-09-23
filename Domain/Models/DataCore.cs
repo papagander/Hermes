@@ -11,6 +11,7 @@ namespace Domain.Models.DataCore
         // string, int, date, money?
         public int FieldTypeId;
         public string FieldTypeName;
+        public readonly List<FieldTypeOperator> fieldTypeOperators;
         public List<Operator> Operators;
         public FieldType(string name)
         {
@@ -19,7 +20,13 @@ namespace Domain.Models.DataCore
         public int Id { get { return FieldTypeId; } set { FieldTypeId = value; } }
         public string Name { get { return FieldTypeName; } set { FieldTypeName = value; } }
 
-        List<Operator> IReferencedBy<Operator>.MyTs { get => Operators; set => Operators = value; }
+        List<Operator> IReferencedBy<Operator>.MyTs
+        {
+            get
+            {
+
+            }
+        }
         int IIndexed.Id { get { return FieldTypeId; } set { FieldTypeId = value; } }
     }
     public class Operator : INamed

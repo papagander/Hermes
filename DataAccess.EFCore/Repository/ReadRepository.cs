@@ -1,4 +1,6 @@
 ﻿using System;
+using DataAccess.EFCore.Interfaces.Repositories.Generic;
+
 namespace DataAccess.EFCore.Repository
 {
     public class ReadRepository<T> : GenericRepository<T>, IReadRepository<T> where T : class
