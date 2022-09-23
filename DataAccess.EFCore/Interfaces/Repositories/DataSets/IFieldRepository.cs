@@ -3,10 +3,12 @@ using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.Interfaces.Repositories.DataSets
 {
-    public interface IFieldRepository : ICrdRepository<Field>
+    public interface IFieldRepository : 
+        INamedRepository<Field>
+        , IReferencesRepository<Field, DataSet>
+        , IReferencedByRepository<Field, Query>
+
     {
-        IEnumerable<Field> GetFieldsByDataSetId(int dataSetId);
-        IEnumerable<Field> GetFieldsByQueryId(int queryId);
     }
 }
 

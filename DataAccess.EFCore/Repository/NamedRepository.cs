@@ -7,26 +7,35 @@ using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.Repository
 {
-    internal class NamedRepository<T> : IndexedRepository<T>, INamedRepository<T> where T : INamed
+    internal class NamedRepository<T> : IndexedRepository<T>, INamedRepository<T> where T : class, INamed
     {
+        public NamedRepository(ReportContext _context) : base(_context) { }
         public T Get(string Name)
         {
-            throw new NotImplementedException();
+            return (from myT in _context.Set<T>() where myT.Name == Name select myT).ElementAt(0);
+
         }
 
-        public IEnumerable<T> GetRange(IEnumerable<string> Names)
+        public IEnumerable<T> GetRange(IEnumerable<string> names)
         {
-            throw new NotImplementedException();
+            List<T> Ts = new List<T>();
+            foreach (var name in names)
+            {
+                Ts.Add(Get(name));
+            }
+            return Ts;
         }
 
-        public T Remove(string Name)
+        public void Remove(string Name)
         {
-            throw new NotImplementedException();
+            T MyT = Get(Name);
+            _context.Set<T>().Remove(MyT);
         }
 
-        public IEnumerable<T> RemoveRange(IEnumerable<string> Names)
+        public void RemoveRange(IEnumerable<string> Names)
         {
-            throw new NotImplementedException();
+            IEnumerable<T> Ts = GetRange(Names);
+            _context.Set<T>().RemoveRange(Ts);
         }
 
         public void Rename(string OldName, string NewName)

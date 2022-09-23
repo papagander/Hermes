@@ -1,7 +1,7 @@
 ﻿namespace Domain.Interfaces.Models;
 
-public interface IReferences<T> : IIndexed where T : IIndexed
+public interface IReferences<TRef> : IIndexed where TRef : IIndexed
 {
-    public int TDex { get; set; }
-    public T MyT { get; set; }
+    public int MyTRefId { get; /*set;*/ }
+    public TRef MyTRef { get; /*set;*/ }
 }

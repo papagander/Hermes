@@ -3,31 +3,25 @@
 using Domain.Models.DataCore;
 
 using System;
+
 namespace DataAccess.EFCore.Repository.DataCore
 {
-    public class FieldTypeOperatorRepository : GenericRepository<FieldTypeOperator>, IFieldTypeOperatorRepository
+    public class FieldTypeOperatorRepository : IndexedRepository<FieldTypeOperator>, IFieldTypeOperatorRepository
     {
-        public FieldTypeOperatorRepository(ReportContext reportContext) : base(reportContext) { }
-        public void Add(FieldType fieldType, Operator @operator)
+        private  ReferencesRepository<FieldTypeOperator, FieldType> RefFT;
+        private  ReferencesRepository<FieldTypeOperator, Operator> RefOp;
+        public FieldTypeOperatorRepository(ReportContext _context) : base(_context)
         {
-            FieldTypeOperator fieldTypeOperator = new FieldTypeOperator { FieldType = fieldType, Operator = @operator };
-            _context.FieldTypeOperators.Add(fieldTypeOperator);
-        }
-        public IEnumerable<Operator> GetOperators(int fieldTypeId)
-        {
-            IEnumerable<int> operatorIds = (
-                from fto in _context.FieldTypeOperators
-                where fto.FieldTypeId == fieldTypeId
-                select fto.OperatorId
-                );
-            var Operators = _context.Operators;
-            List<Operator> operatorList = new List<Operator>();
-            foreach (var operatorId in operatorIds)
-                operatorList.Add(Operators.ElementAt(operatorId));
-            return operatorList;
-
+            RefFT = new ReferencesRepository<FieldTypeOperator, FieldType>(_context);
+            RefOp = new ReferencesRepository<FieldTypeOperator, Operator>(_context);
         }
 
+        public IEnumerable<FieldTypeOperator> GetByParent(FieldType MyTRef) => RefFT.GetByParent(MyTRef);
+
+        public IEnumerable<FieldTypeOperator> GetByParent(Operator MyTRef)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

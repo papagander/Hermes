@@ -14,17 +14,11 @@ namespace Domain.Models
         string INamed.Name { get { return DataSetName; } set { DataSetName = value; } }
         int IIndexed.Id { get { return DataSetId; } set { DataSetId = value; } }
 
-        public DataSet(string name)
-        {
-            DataSetName = name;
-        }
+        public DataSet(string name)=> DataSetName = name;
 
-        List<Field> IReferencedBy<Field>.MyTs
-        {
-            get { return Fields; }
-        }
+        List<Field> IReferencedBy<Field>.MyTs{get => Fields; }
     }
-    public class Field : INamed, IReferences<DataSet>, IReferences<FieldType>
+    public class Field : INamed, IReferences<DataSet>, IReferences<FieldType>, IReferencedBy<Query>
     {
         public int FieldId;
         public string FieldName;
@@ -33,21 +27,27 @@ namespace Domain.Models
         public FieldType FieldType;
         public DataSet DataSet;
         private List<QueryField> queryFields;
-        public List<Query> Queries;
-
         public Field(FieldType fieldType, DataSet dataSet, string name)
         {
             FieldType = fieldType;
             DataSet = dataSet;
             FieldName = name;
         }
-
-        string INamed.Name { get { return FieldName; } set { FieldName = value; } }
+        string INamed.Name { get => FieldName; set => FieldName = value;  }
         int IIndexed.Id { get { return FieldId; } set { FieldId = value; } }
-        int IReferences<DataSet>.TDex { get { return DataSetId; } set { DataSetId = value; } }
-        int IReferences<FieldType>.TDex { get { return FieldTypeId; } set { FieldTypeId = value; } }
-        DataSet IReferences<DataSet>.MyT { get { return DataSet; } set { DataSet = value; } }
-        FieldType IReferences<FieldType>.MyT { get { return FieldType; } set { FieldType = value; } }
+        int IReferences<DataSet>.MyTRefId { get => DataSetId;  /*set => DataSetId = value;  */}
+        int IReferences<FieldType>.MyTRefId { get =>FieldTypeId; /*set => FieldTypeId = value;*/ }
+        DataSet IReferences<DataSet>.MyTRef { get => DataSet; /*set => DataSet = value;*/ }
+        FieldType IReferences<FieldType>.MyTRef { get => FieldType; /*set => FieldType = value;*/ }
+        List<Query> IReferencedBy<Query>.MyTs
+        { 
+            get 
+            { 
+                List<Query> queries = new List<Query>();
+                foreach (QueryField queryField in queryFields) queries.Add(queryField.Query);
+                return queries;
+            } 
+        }
     }
 }
 

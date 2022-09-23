@@ -2,10 +2,11 @@
 
 namespace DataAccess.EFCore.Interfaces.Repositories.Queries
 {
-    public interface ICriterionRepository : ICrdRepository<Criterion>
-    {
-        Criterion? GetByStatementId(int statementId);
-
+    public interface ICriterionRepository : IIndexedRepository<Criterion> 
+        , IReferencedByRepository<Criterion, CriterionValue>
+        , IReferencesRepository<Criterion, Field>
+        , IReferencesRepository<Criterion, Operator>
+    { 
     }
 }
 

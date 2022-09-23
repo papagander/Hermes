@@ -3,9 +3,8 @@ using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.Interfaces.Repositories.Queries
 {
-    public interface IConjunctionRepository : ICrdRepository<Conjunction>
+    public interface IConjunctionRepository : IIndexedRepository<Conjunction>, IReferencedByRepository<Conjunction, Statement>
     {
-        Conjunction? GetByStatementId(int statementId);
     }
 }
 

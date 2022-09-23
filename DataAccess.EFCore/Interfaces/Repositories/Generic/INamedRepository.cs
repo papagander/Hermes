@@ -10,10 +10,10 @@ namespace DataAccess.EFCore.Interfaces.Repositories.Generic
 {
     public interface INamedRepository<T> : IIndexedRepository<T> where T : INamed
     {
+        //void Rename(string OldName, string NewName);
         T Get(string Name);
-        T Remove(string Name);
-        void Rename(string OldName, string NewName);
         IEnumerable<T> GetRange(IEnumerable<string> Names);
-        IEnumerable<T> RemoveRange(IEnumerable<string> Names);
+        //void Remove(string Name);
+        //void RemoveRange(IEnumerable<string> Names);
     }
 }

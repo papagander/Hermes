@@ -12,7 +12,7 @@ using Domain.Models.DataCore;
 
 namespace Domain.Models;
 
-public class Query : INamed, IReferences<DataSet>, IReferences<Statement>
+public class Query : INamed, IReferences<DataSet>, IReferencedBy<Field>
 {
     public int QueryId;
     public string QueryName;
@@ -50,35 +50,38 @@ public class Query : INamed, IReferences<DataSet>, IReferences<Statement>
             QueryId = value;
         }
     }
-    int IReferences<DataSet>.TDex { get => DataSetId; set => DataSetId = value; }
-    DataSet IReferences<DataSet>.MyT { get => DataSet; set => DataSet = value; }
-    int IReferences<Statement>.TDex { get => StatementId; set => StatementId = value; }
-    Statement IReferences<Statement>.MyT { get => Statement; set => Statement = value; }
+    int IReferences<DataSet>.MyTRefId { get => DataSetId; /*set => DataSetId = value;*/ }
+    DataSet IReferences<DataSet>.MyTRef { get => DataSet; /*set => DataSet = value;*/ }
+    List<Field>? IReferencedBy<Field>.MyTs { get => Fields; }
+    //int IReferences<Statement>.MyTRefId { get => StatementId; /*set => StatementId = value;*/ }
+    //Statement IReferences<Statement>.MyTRef { get => Statement; /*set => Statement = value;*/ }
 }
 
-public class Statement : IIndexed, ISuperTypeOf<Conjunction> , ISuperTypeOf<Criterion>
+public class Statement : IIndexed, ISuperTypeOf<Conjunction> , ISuperTypeOf<Criterion>, IReferences<Conjunction>
 {
     // A statement represents either a single criterion or a conjunction.
     // Each report points to a statement. Records for which the statement is true
     // are included in the report.
     public int StatementId;
-    public int? ParentConjunctionId;
-    public Conjunction? ParentConjunction;
+    public int? ConjunctionId;
+    public Conjunction? Conjunction;
     public List<Conjunction> Conjunctions;
     public List< Criterion> Criterions;
 
 
     public override string ToString()
     {
-        if (Conjunctions.Count == 1) return Conjunctions[0].ToString();
+        if (Conjunctions.Count == 1) return Conjunctions[1].ToString();
         else if (Criterions.Count == 1) return Criterions[0].ToString();
         return $"Unreferenced statement {StatementId}";
     }
     int IIndexed.Id { get => StatementId; set => StatementId = value; }
     Criterion? ISuperTypeOf<Criterion>.MySub { get => Criterions[0];  }
     Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunctions[0]; }
+    int IReferences<Conjunction>.MyTRefId { get { if (ConjunctionId is null) return -1; else return (int)ConjunctionId; } }
+    Conjunction IReferences<Conjunction>.MyTRef { get => (Conjunction)Conjunction; }
 }
-public class Conjunction : IIndexed, ISubTypeOf<Statement>, IReferences<Conjoiner>
+public class Conjunction : IIndexed, ISubTypeOf<Statement>, IReferences<Conjoiner>, IReferencedBy<Statement>
 {
     // A Conjunctions is pointed to by n statements (conjugants).
     // These statements are joined by the conjoiner
@@ -90,18 +93,18 @@ public class Conjunction : IIndexed, ISubTypeOf<Statement>, IReferences<Conjoine
 
     public Conjoiner Conjoiner;
     public Statement Statement;
-    public List<Statement> Conjugants;
+    public List<Statement> Statements;
 
     public override string ToString()
     {
         string output = "";
         string conjoinerString = Conjoiner.ConjoinerName;
         output += "(";
-        for (int i = 0; i < Conjugants.Count; i++)
+        for (int i = 0; i < Statements.Count; i++)
         {
-            Statement? conjugant = Conjugants[i];
+            Statement conjugant = Statements[i];
             output += $" {conjugant.ToString()}";
-            if (i < Conjugants.Count - 1) output += $" {conjoinerString}";
+            if (i < Statements.Count - 1) output += $" {conjoinerString}";
         }
         output += ")";
         return output;
@@ -117,14 +120,14 @@ public class Conjunction : IIndexed, ISubTypeOf<Statement>, IReferences<Conjoine
             ConjunctionId = value;
         }
     }
-    int ISubTypeOf<Statement>.SuperDex { get => StatementId; set => StatementId = value; }
+    int ISubTypeOf<Statement>.MySuperId { get => StatementId; set => StatementId = value; }
     Statement ISubTypeOf<Statement>.MySuper { get => Statement; set => Statement = value; }
-    int IReferences<Conjoiner>.TDex { get => ConjoinerId; set => ConjoinerId = value; }
-    Conjoiner IReferences<Conjoiner>.MyT { get => Conjoiner; set => Conjoiner = value; }
-
+    int IReferences<Conjoiner>.MyTRefId { get => ConjoinerId; /*set => ConjoinerId = value;*/ }
+    Conjoiner IReferences<Conjoiner>.MyTRef { get => Conjoiner; /*set => Conjoiner = value;*/ }
+    List<Statement> IReferencedBy<Statement>.MyTs { get => Statements; }
 }
 
-public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, IReferences<Statement>, IReferencedBy<CriterionValue>
+public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, ISubTypeOf<Statement>, IReferencedBy<CriterionValue>
 {
     // e.g. Serial number equals, DateReceived greater than, Model Number contains.
     // Criterions are pointed to by CriterionValues to support n values per criterion.
@@ -140,7 +143,7 @@ public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, IR
     public override string ToString()
     {
         string output = "";
-        output += $"{Field.FieldName} {Operator.} ";
+        output += $"{Field.FieldName} {Operator.OperatorName} ";
         output += "{";
         for (int i = 0; i < CriterionValues.Count; i++)
         {
@@ -164,12 +167,12 @@ public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, IR
             CriterionId = value;
         }
     }
-    int IReferences<Field>.TDex { get => FieldId; set => FieldId = value; }
-    Field IReferences<Field>.MyT { get => Field; set => Field = value; }
-    int IReferences<Operator>.TDex { get => OperatorId; set => OperatorId = value; }
-    Operator IReferences<Operator>.MyT { get => Operator; set => Operator = value; }
-    int IReferences<Statement>.TDex { get => StatementId; set => StatementId = value; }
-    Statement IReferences<Statement>.MyT { get => Statement; set => Statement = value; }
+    int IReferences<Field>.MyTRefId { get => FieldId; /*set => FieldId = value; */}
+    Field IReferences<Field>.MyTRef { get => Field; /*set => Field = value;*/ }
+    int IReferences<Operator>.MyTRefId { get => OperatorId; /*set => OperatorId = value; */}
+    Operator IReferences<Operator>.MyTRef { get => Operator; /*set => Operator = value; */}
+    Statement ISubTypeOf<Statement>.MySuper { get => Statement; set => Statement = value; }
+    int ISubTypeOf<Statement>.MySuperId { get => StatementId; set => StatementId = value; }
     List<CriterionValue> IReferencedBy<CriterionValue>.MyTs { get => CriterionValues; }
 }
 public class CriterionValue : INamed, IReferences<Criterion>
@@ -191,8 +194,8 @@ public class CriterionValue : INamed, IReferences<Criterion>
     int IIndexed.Id { get => CriterionValueId; set => CriterionValueId = value; }
 
     string INamed.Name { get => Value; set => Value = value; }
-    int IReferences<Criterion>.TDex { get => CriterionId; set => CriterionId = value; }
-    Criterion IReferences<Criterion>.MyT { get => Criterion; set => Criterion = value; }
+    int IReferences<Criterion>.MyTRefId { get => CriterionId; /*set => CriterionId = value;*/ }
+    Criterion IReferences<Criterion>.MyTRef { get => Criterion; /*set => Criterion = value;*/ }
 }
 public class QueryField : IIndexed, IReferences<Query>, IReferences<Field>
 {
@@ -210,10 +213,10 @@ public class QueryField : IIndexed, IReferences<Query>, IReferences<Field>
     }
 
     int IIndexed.Id { get => QueryFieldId; set => QueryFieldId = value; }
-    int IReferences<Query>.TDex { get => QueryId; set => QueryId = value; }
-    Query IReferences<Query>.MyT { get => Query; set => Query = value; }
-    int IReferences<Field>.TDex { get => FieldId; set => FieldId = value; }
-    Field IReferences<Field>.MyT { get => Field; set => Field = value; }
+    int IReferences<Query>.MyTRefId { get => QueryId; /*set => QueryId = value;*/ }
+    Query IReferences<Query>.MyTRef { get => Query; /*set => Query = value;*/ }
+    int IReferences<Field>.MyTRefId { get => FieldId; /*set => FieldId = value;*/ }
+    Field IReferences<Field>.MyTRef { get => Field; /*set => Field = value;*/ }
 }
 
 

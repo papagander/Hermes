@@ -13,8 +13,8 @@ namespace DataAccess.EFCore.Repository.Queries
         /*
         public string ToString(int conjunctionId)
         {
-            Conjunctions conjunction = GetById(conjunctionId);
-            foreach (var statement in conjunction.Conjugants)
+            Conjunction conjunction = GetById(conjunctionId);
+            foreach (var statement in conjunction.Statements)
             {
 
             }

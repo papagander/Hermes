@@ -47,7 +47,7 @@ namespace Domain.Models.DataCore
         string INamed.Name { get { return OperatorName; } set { OperatorName = value; } }
 
         List<FieldType>? IReferencedBy<FieldType>.MyTs { get { throw new NotImplementedException(); } }
-        int IIndexed.Id { get => OperatorId;  set => OperatorId = value;  }
+        int IIndexed.Id { get => OperatorId; set => OperatorId = value; }
     }
     public class FieldTypeOperator : IReferences<FieldType>, IReferences<Operator>
     {
@@ -64,11 +64,11 @@ namespace Domain.Models.DataCore
             Operator = @operator;
         }
 
-        int IReferences<FieldType>.TDex { get { return FieldTypeId; } set { FieldTypeId = value; } }
-        FieldType IReferences<FieldType>.MyT { get { return FieldType; } set { FieldType = value; } }
-        int IReferences<Operator>.TDex { get { return OperatorId; } set { OperatorId = value; } }
-        Operator IReferences<Operator>.MyT { get { return Operator; } set { Operator = value; }  }
-        int IIndexed.Id { get { return FieldTypeOperatorId; } set { FieldTypeOperatorId = value; } }
+        int IReferences<FieldType>.MyTRefId { get { return FieldTypeId; } /*set { FieldTypeId = value; } */}
+        FieldType IReferences<FieldType>.MyTRef { get { return FieldType; } /*set { FieldType = value; }*/ }
+        int IReferences<Operator>.MyTRefId { get { return OperatorId; } /*set { OperatorId = value; }*/ }
+        Operator IReferences<Operator>.MyTRef { get { return Operator; } /*set { Operator = value; }*/ }
+        int IIndexed.Id { get => FieldTypeOperatorId; set => FieldTypeOperatorId = value;  }
     }
 
     public class Conjoiner : INamed

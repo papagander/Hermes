@@ -11,6 +11,6 @@ namespace DataAccess.EFCore.Interfaces.Repositories.Generic
     public interface IReferencedByRepository<TRef, T> : IIndexedRepository<TRef> where TRef : IReferencedBy<T> where T : IIndexed
     {
         IEnumerable<T> GetChildren(TRef MyT);
-        IEnumerable<T> GetChildren(int TDex);
+        //IEnumerable<T> GetChildren(int TDex);
     }
 }

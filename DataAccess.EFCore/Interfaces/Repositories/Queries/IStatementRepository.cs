@@ -3,9 +3,9 @@ using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.Interfaces
 {
-    public interface IStatementRepository : ICrdRepository<Statement>
+    public interface IStatementRepository :
+        IReferencesRepository<Statement, Conjunction>
     {
-        IEnumerable<Statement> GetRangeByConjunctionId(int conjunctionId);
     }
 }
 
