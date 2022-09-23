@@ -22,7 +22,6 @@ namespace Domain.Models
         List<Field> IReferencedBy<Field>.MyTs
         {
             get { return Fields; }
-            set { Fields = value; }
         }
     }
     public class Field : INamed, IReferences<DataSet>, IReferences<FieldType>

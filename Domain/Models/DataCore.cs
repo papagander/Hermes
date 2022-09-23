@@ -24,16 +24,19 @@ namespace Domain.Models.DataCore
         {
             get
             {
-
+                List<Operator> operators = new List<Operator>();
+                foreach (FieldTypeOperator fieldTypeOperator in fieldTypeOperators) operators.Add(fieldTypeOperator.Operator);
+                return operators;
             }
         }
         int IIndexed.Id { get { return FieldTypeId; } set { FieldTypeId = value; } }
     }
-    public class Operator : INamed
+    public class Operator : INamed, IReferencedBy<FieldType>
     {
         // equals, greather than, less than, contains, etc.
         public int OperatorId;
         public string OperatorName;
+        public List<FieldTypeOperator> fieldTypeOperators;
         public List<FieldType> FieldTypes;
 
         public Operator(string name)
@@ -41,8 +44,10 @@ namespace Domain.Models.DataCore
             OperatorName = name;
         }
 
-        public int Id { get { return OperatorId; } set { OperatorId = value; } }
-        public string Name { get { return OperatorName; } set { OperatorName = value; } }
+        string INamed.Name { get { return OperatorName; } set { OperatorName = value; } }
+
+        List<FieldType>? IReferencedBy<FieldType>.MyTs { get { throw new NotImplementedException(); } }
+        int IIndexed.Id { get => OperatorId;  set => OperatorId = value;  }
     }
     public class FieldTypeOperator : IReferences<FieldType>, IReferences<Operator>
     {

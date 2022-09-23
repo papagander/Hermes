@@ -35,7 +35,7 @@ namespace Domain.TestConsole
             criterion.Field = field;
             criterion.Operator = @operator;
             criterion.CriterionValues = criterionValues;
-            criterion.Statement.Conjunction = conjunction;
+            criterion.Statement.Conjunctions = conjunction;
             return criterion;
 
         }

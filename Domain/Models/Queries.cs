@@ -64,23 +64,23 @@ public class Statement : IIndexed, ISuperTypeOf<Conjunction> , ISuperTypeOf<Crit
     public int StatementId;
     public int? ParentConjunctionId;
     public Conjunction? ParentConjunction;
-    public Conjunction? Conjunction;
-    public Criterion? Criterion;
+    public List<Conjunction> Conjunctions;
+    public List< Criterion> Criterions;
 
 
     public override string ToString()
     {
-        if (Conjunction is not null) return Conjunction.ToString();
-        else if (Criterion is not null) return Criterion.ToString();
-        return string.Empty;
+        if (Conjunctions.Count == 1) return Conjunctions[0].ToString();
+        else if (Criterions.Count == 1) return Criterions[0].ToString();
+        return $"Unreferenced statement {StatementId}";
     }
     int IIndexed.Id { get => StatementId; set => StatementId = value; }
-    Criterion? ISuperTypeOf<Criterion>.MySub { get => Criterion; set => Criterion = value; }
-    Conjunction? ISuperTypeOf<Conjunction>.MySub { get; set; }
+    Criterion? ISuperTypeOf<Criterion>.MySub { get => Criterions[0];  }
+    Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunctions[0]; }
 }
 public class Conjunction : IIndexed, ISubTypeOf<Statement>, IReferences<Conjoiner>
 {
-    // A Conjunction is pointed to by n statements (conjugants).
+    // A Conjunctions is pointed to by n statements (conjugants).
     // These statements are joined by the conjoiner
     // To form a higher statement, pointed to by the 
     // statement Id.
@@ -127,7 +127,7 @@ public class Conjunction : IIndexed, ISubTypeOf<Statement>, IReferences<Conjoine
 public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, IReferences<Statement>, IReferencedBy<CriterionValue>
 {
     // e.g. Serial number equals, DateReceived greater than, Model Number contains.
-    // Criterion are pointed to by CriterionValues to support n values per criterion.
+    // Criterions are pointed to by CriterionValues to support n values per criterion.
     public int CriterionId;
     public int FieldId;
     public int OperatorId;
@@ -140,7 +140,7 @@ public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, IR
     public override string ToString()
     {
         string output = "";
-        output += $"{Field.FieldName} {Operator.Name} ";
+        output += $"{Field.FieldName} {Operator.} ";
         output += "{";
         for (int i = 0; i < CriterionValues.Count; i++)
         {
@@ -170,9 +170,9 @@ public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, IR
     Operator IReferences<Operator>.MyT { get => Operator; set => Operator = value; }
     int IReferences<Statement>.TDex { get => StatementId; set => StatementId = value; }
     Statement IReferences<Statement>.MyT { get => Statement; set => Statement = value; }
-    List<CriterionValue> IReferencedBy<CriterionValue>.MyTs { get => CriterionValues; set => CriterionValues = value; }
+    List<CriterionValue> IReferencedBy<CriterionValue>.MyTs { get => CriterionValues; }
 }
-public class CriterionValue : IValued, IReferences<Criterion>
+public class CriterionValue : INamed, IReferences<Criterion>
 {
     // Feed criterion with values.
     [Key]
@@ -190,7 +190,7 @@ public class CriterionValue : IValued, IReferences<Criterion>
 
     int IIndexed.Id { get => CriterionValueId; set => CriterionValueId = value; }
 
-    string IValued.Value { get => Value; set => Value = value; }
+    string INamed.Name { get => Value; set => Value = value; }
     int IReferences<Criterion>.TDex { get => CriterionId; set => CriterionId = value; }
     Criterion IReferences<Criterion>.MyT { get => Criterion; set => Criterion = value; }
 }
