@@ -11,7 +11,8 @@ namespace DataAccess.EFCore.Interfaces.Repositories
     public interface IIndexedRepository<T> where T : IIndexed
     {
         T Get(int dex);
-        T GetRange(IEnumerable<int> dexes);
+        IEnumerable<T> GetRange(IEnumerable<int> dexes);
+        IEnumerable<T> GetAll();
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);
         void Remove(T entity);

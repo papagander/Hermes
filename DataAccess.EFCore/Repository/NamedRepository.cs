@@ -8,6 +8,7 @@ namespace DataAccess.EFCore.Repository
 {
     public class NamedRepository<T> : IndexedRepository<T>, INamedRepository<T> where T : class, INamed
     {
+        // need to not allow insert if name exists
         public NamedRepository(ReportContext _context) : base(_context) { }
         public T Get(string Name)
         {

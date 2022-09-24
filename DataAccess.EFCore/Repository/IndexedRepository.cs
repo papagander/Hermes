@@ -23,12 +23,12 @@ namespace DataAccess.EFCore.Repository
         {
             return _context.Set<T>().ToList();
         }
-
+        
         public T Get(int id)
         {
             return _context.Set<T>().Find(id);
         }
-        public T GetRange(IEnumerable< int> ids)
+        public IEnumerable<T> GetRange(IEnumerable< int> ids)
         {
             throw new NotImplementedException();
         }
@@ -42,5 +42,6 @@ namespace DataAccess.EFCore.Repository
         {
             _context.Set<T>().RemoveRange(entities);
         }
+
     }
 }

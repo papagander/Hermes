@@ -1,4 +1,5 @@
-﻿using DataAccess.EFCore;
+﻿
+using DataAccess.EFCore;
 using DataAccess.EFCore.UnitOfWork.DataCore;
 
 using Domain.Models.DataCore;
@@ -58,17 +59,25 @@ namespace Services
 
         public int DeleteFieldTypeOperator(string fieldTypeName, string operatorName)
         {
+            var byFieldType = U.FieldTypeOperators.GetRange(U.FieldTypes.Get(fieldTypeName));
+            int count = byFieldType.Count();
+            var operatorId = U.Operators.Get(operatorName).OperatorId;
+            int i = 0;
+            while (byFieldType.ElementAt(i).OperatorId != operatorId & i < count) i++;
+            if (i < count) U.FieldTypeOperators.Remove(byFieldType.ElementAt(i));
+            return Complete;
 
         }
 
         public int DeleteOperator(string operatorName)
         {
-            throw new NotImplementedException();
+            U.Operators.Remove(U.Operators.Get(operatorName));
+            return Complete;
         }
 
         public IEnumerable<Conjoiner> GetAllConjoiners()
         {
-            throw new NotImplementedException();
+            return U.Conjoiners.GetAll();
         }
 
         public IEnumerable<FieldType> GetAllFieldTypes()
