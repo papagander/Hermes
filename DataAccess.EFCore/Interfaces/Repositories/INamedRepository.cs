@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.EFCore.Interfaces.Repositories.Generic
+namespace DataAccess.EFCore.Interfaces.Repositories
 {
     public interface INamedRepository<T> : IIndexedRepository<T> where T : INamed
     {

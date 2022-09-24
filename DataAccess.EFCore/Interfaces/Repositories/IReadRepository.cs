@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataAccess.EFCore.Interfaces.Repositories.Generic
+namespace DataAccess.EFCore.Interfaces.Repositories
 {
     public interface IReadRepository<T> where T : class
     {

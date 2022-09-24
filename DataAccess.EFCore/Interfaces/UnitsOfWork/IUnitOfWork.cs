@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.EFCore.Interfaces.Repositories.DataCore
+namespace DataAccess.EFCore.Interfaces.UnitsOfWork
 {
-    internal interface IConjoinerRepository : INamedRepository<Conjoiner>
+    public interface IUnitOfWork
     {
+        int Complete();
     }
 }

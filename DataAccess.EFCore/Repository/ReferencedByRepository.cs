@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Repository
 {
-    internal class ReferencedByRepository<TRef, T> : IndexedRepository<TRef>, IReferencedByRepository<TRef, T>
-        where T : class, IReferences<TRef> where TRef : class, IReferencedBy<T>
+    public class ReferencedByRepository<TRef, T> : IndexedRepository<TRef>, IReferencedByRepository<TRef, T>
+        where T : class, IIndexed where TRef : class, IReferencedBy<T>
     {
         public ReferencedByRepository(ReportContext _context) : base(_context) { }
         public IEnumerable<T> GetChildren(TRef MyTRef)
-         => (from MyT in _context.Set<T>() where MyT.MyTRefId == MyTRef.Id select MyT);
+        {
+            return MyTRef.MyTs;
+        }
 
         /*public IEnumerable<T> GetChildren(int MyTRefId)
          => (from MyT in _context.Set<T>() where MyT.MyTRefId == MyTRefId select MyT);*/

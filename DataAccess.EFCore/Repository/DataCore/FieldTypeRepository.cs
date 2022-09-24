@@ -1,16 +1,17 @@
-﻿global using DataAccess.EFCore.Interfaces.Repositories;
-using DataAccess.EFCore.Interfaces.Repositories.DataCore;
-
-using Domain.Models.DataCore;
+﻿using DataAccess.EFCore.Interfaces.Repositories.DataCore;
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DataAccess.EFCore.Repository.Queries
+namespace DataAccess.EFCore.Repository.DataCore
 {
     public class FieldTypeRepository : NamedRepository<FieldType>, IFieldTypeRepository
     {
         ReferencedByRepository<FieldType, Operator> RefOp;
-        public FieldTypeRepository(ReportContext reportContext) : base(reportContext)
+        public FieldTypeRepository(ReportContext _context) : base(_context)
         {
             RefOp = new ReferencedByRepository<FieldType, Operator>(_context);
         }
@@ -18,4 +19,3 @@ namespace DataAccess.EFCore.Repository.Queries
         public IEnumerable<Operator> GetChildren(FieldType MyT) => RefOp.GetChildren(MyT);
     }
 }
-

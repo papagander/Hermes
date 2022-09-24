@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.EFCore.Interfaces.Repositories.Generic
+namespace DataAccess.EFCore.Interfaces.Repositories
 {
     public interface IReferencesRepository<T, TRef> : IIndexedRepository<T> where T : IReferences<TRef> where TRef : IIndexed
     {
-        IEnumerable<T> GetRangeByParent(TRef MyTRef);
-        //IEnumerable<T> GetRangeByParent(int MyTRefId);
+        IEnumerable<T> GetRange(TRef MyTRef);
+        //IEnumerable<T> GetRange(int MyTRefId);
     }
 }

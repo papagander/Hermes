@@ -175,7 +175,7 @@ public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, IS
     int ISubTypeOf<Statement>.MySuperId { get => StatementId; set => StatementId = value; }
     List<CriterionValue> IReferencedBy<CriterionValue>.MyTs { get => CriterionValues; }
 }
-public class CriterionValue : INamed, IReferences<Criterion>
+public class CriterionValue : IIndexed, IReferences<Criterion>
 {
     // Feed criterion with values.
     [Key]
@@ -193,7 +193,6 @@ public class CriterionValue : INamed, IReferences<Criterion>
 
     int IIndexed.Id { get => CriterionValueId; set => CriterionValueId = value; }
 
-    string INamed.Name { get => Value; set => Value = value; }
     int IReferences<Criterion>.MyTRefId { get => CriterionId; /*set => CriterionId = value;*/ }
     Criterion IReferences<Criterion>.MyTRef { get => Criterion; /*set => Criterion = value;*/ }
 }

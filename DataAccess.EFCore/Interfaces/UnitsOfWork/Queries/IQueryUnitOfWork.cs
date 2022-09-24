@@ -1,20 +1,20 @@
 ﻿using System;
 using DataAccess.EFCore.Interfaces.Repositories.Queries;
+using DataAccess.EFCore.Interfaces.UnitsOfWork;
+
 using Domain.Models.DataCore;
-using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.Interfaces
 {
-    public interface IQueryUnitOfWork
+    public interface IQueryUnitOfWork : IUnitOfWork
     {
-        ICrdRepository<Query> Queries { get; }
+        IQueryRepository Queries { get; }
         IStatementRepository Statements { get; }
         IConjunctionRepository Conjunctions { get; }
         ICriterionRepository Criteria { get; }
-        ICrdRepository<CriterionValue> CriterionValues { get; }
+        ICriterionValueRepository CriterionValues { get; }
         IQueryFieldRepository QueryFields {get; }
 
-        int Complete();
 
     }
 }

@@ -1,15 +1,30 @@
 ﻿using System;
+
 namespace DataAccess.EFCore.Repository.Queries
 {
-    public class CriterionRepository : CrdRepository<Criterion> , ICriterionRepository
+    public class CriterionRepository : IndexedRepository<Criterion>, ICriterionRepository
     {
+        ReferencesRepository<Criterion, Operator> RefOp;
+        ReferencesRepository<Criterion, Field> RefF;
+        ReferencedByRepository<Criterion, CriterionValue> RefCV;
         public CriterionRepository(ReportContext reportContext) : base(reportContext)
         {
+            RefOp = new ReferencesRepository<Criterion, Operator>(_context);
+            RefF = new ReferencesRepository<Criterion, Field>(_context);
+            RefCV = new ReferencedByRepository<Criterion, CriterionValue>(_context);
         }
-        public Criterion? GetByStatementId(int statementId)
-        {
-            return (from cr in _context.Criteria where cr.StatementId == statementId select cr).FirstOrDefault();
-        }
+
+        public IEnumerable<CriterionValue> GetChildren(Criterion MyT) => RefCV.GetChildren(MyT);
+
+        public IEnumerable<Criterion> GetRange(Field MyTRef) => RefF.GetRange(MyTRef);
+
+        public IEnumerable<Criterion> GetRange(Operator MyTRef) => RefOp.GetRange(MyTRef);
+        /*
+public Criterion? GetByStatementId(int statementId)
+{
+   return (from cr in _context.Criteria where cr.StatementId == statementId select cr).FirstOrDefault();
+}
+*/
     }
 }
 

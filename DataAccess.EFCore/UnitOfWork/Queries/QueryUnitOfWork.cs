@@ -2,7 +2,6 @@
 using System.Xml.Serialization;
 using DataAccess.EFCore.Interfaces.Repositories.DataCore;
 using DataAccess.EFCore.Interfaces.Repositories.DataSets;
-using DataAccess.EFCore.Interfaces.Repositories.Generic;
 using DataAccess.EFCore.Interfaces.Repositories.Queries;
 using DataAccess.EFCore.Repository;
 using DataAccess.EFCore.Repository.DataCore;
@@ -17,22 +16,23 @@ namespace DataAccess.EFCore.UnitOfWork
 
 
 
-        public ICrdRepository<Query> Queries { get; private set; }
+        public IQueryRepository Queries { get; private set; }
         public IStatementRepository Statements { get; private set; }
         public IConjunctionRepository Conjunctions { get; private set; }
         public ICriterionRepository Criteria { get; private set; }
-        public ICrdRepository<CriterionValue> CriterionValues { get; private set; }
+        public ICriterionValueRepository CriterionValues { get; private set; }
         public IQueryFieldRepository QueryFields { get; private set; }
+
 
 
         public QueryUnitOfWork(ReportContext reportContext) : base(reportContext)
         {
 
-            Queries = new CrdRepository<Query>(reportContext);
+            Queries = new QueryRepository(reportContext);
             Statements = new StatementRepository(reportContext);
             Conjunctions = new ConjunctionRepository(reportContext);
             Criteria = new CriterionRepository(reportContext);
-            CriterionValues = new CrdRepository<CriterionValue>(reportContext);
+            CriterionValues = new CriterionValueRepository(reportContext);
             QueryFields = new QueryFieldRepository(reportContext);
         }
     }

@@ -16,12 +16,8 @@ namespace DataAccess.EFCore.Repository.DataCore
             RefOp = new ReferencesRepository<FieldTypeOperator, Operator>(_context);
         }
 
-        public IEnumerable<FieldTypeOperator> GetRangeByParent(FieldType MyTRef) => RefFT.GetRangeByParent(MyTRef);
-
-        public IEnumerable<FieldTypeOperator> GetRangeByParent(Operator MyTRef)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<FieldTypeOperator> GetRange(FieldType MyTRef) => RefFT.GetRange(MyTRef);
+        public IEnumerable<FieldTypeOperator> GetRange(Operator MyTRef) =>RefOp.GetRange(MyTRef);
     }
 }
 

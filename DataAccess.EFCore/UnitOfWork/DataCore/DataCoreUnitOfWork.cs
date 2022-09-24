@@ -10,23 +10,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.UnitOfWork.DataCore
 {
     public class DataCoreUnitOfWork : GenericUnitOfWork, IDataCoreUnitOfWork
     {
-        public ICrdRepository<FieldType> FieldTypes { get; private set; }
-        public ICrdRepository<Operator> Operators { get; private set; }
+        public IFieldTypeRepository  FieldTypes { get; private set; }
+        public IOperatorRepository Operators { get; private set; }
         public IFieldTypeOperatorRepository FieldTypeOperators { get; private set; }
-        public ICrdRepository<Conjoiner> Conjoiners { get; private set; }
+        public IConjoinerRepository Conjoiners { get; private set; }
         public DataCoreUnitOfWork(ReportContext reportContext) : base(reportContext)
         {
 
-            FieldTypes = new CrdRepository<FieldType>(reportContext);
-            Operators = new CrdRepository<Operator>(reportContext);
-            FieldTypeOperators = new FieldTypeOperatorRepository(reportContext);
-            Conjoiners = new CrdRepository<Conjoiner>(reportContext);
+            FieldTypes = new FieldTypeRepository(reportContext);
+            Operators = new OperatorRepository(reportContext);
+            FieldTypeOperators = new FieldTypeOperatorRepository (reportContext);
+            Conjoiners = new ConjoinerRepository(reportContext);
         }
     }
 }

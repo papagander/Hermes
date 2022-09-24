@@ -1,18 +1,18 @@
 ﻿using DataAccess.EFCore.Interfaces.Repositories.DataCore;
-using DataAccess.EFCore.Interfaces.Repositories.Generic;
+using DataAccess.EFCore.Repository.DataCore;
+
 using Domain.Models.DataCore;
 
 using System;
 namespace DataAccess.EFCore.Interfaces.UnitsOfWork.DataCore
 {
-    public interface IDataCoreUnitOfWork
+    public interface IDataCoreUnitOfWork : IUnitOfWork
     {
 
-        ICrdRepository<FieldType> FieldTypes { get; }
-        ICrdRepository<Operator> Operators { get; }
+        IFieldTypeRepository FieldTypes { get; }
+        IOperatorRepository Operators { get; }
         IFieldTypeOperatorRepository FieldTypeOperators { get; }
-        ICrdRepository<Conjoiner> Conjoiners { get; }
-        int Complete();
+        IConjoinerRepository Conjoiners { get; }
     }
 }
 

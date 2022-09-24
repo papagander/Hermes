@@ -10,10 +10,10 @@ namespace DataAccess.EFCore.Repository
         where T : class, IReferences<TRef> where TRef : class, IIndexed
     {
         public ReferencesRepository(ReportContext _context) : base(_context) { }
-        public IEnumerable<T> GetRangeByParent(TRef MyTRef)
+        public IEnumerable<T> GetRange(TRef MyTRef)
          => (from MyT in _context.Set<T>() where MyT.MyTRefId == MyTRef.Id select MyT);
 
-        /*public IEnumerable<T> GetRangeByParent(int MyTRefId)
+        /*public IEnumerable<T> GetRange(int MyTRefId)
          => (from MyT in _context.Set<T>() where MyT.MyTRefId == MyTRefId select MyT);*/
 
     }

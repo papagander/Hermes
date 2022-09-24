@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccess.EFCore.Interfaces.Repositories.Generic;
 
 namespace DataAccess.EFCore.Repository
 {
-    internal class NamedRepository<T> : IndexedRepository<T>, INamedRepository<T> where T : class, INamed
+    public class NamedRepository<T> : IndexedRepository<T>, INamedRepository<T> where T : class, INamed
     {
         public NamedRepository(ReportContext _context) : base(_context) { }
         public T Get(string Name)
