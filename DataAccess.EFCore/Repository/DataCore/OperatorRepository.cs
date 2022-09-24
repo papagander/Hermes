@@ -11,12 +11,16 @@ namespace DataAccess.EFCore.Repository.DataCore
 {
     public class OperatorRepository : NamedRepository<Operator>, IOperatorRepository
     {
-        ReferencedByRepository<Operator, FieldType> RefFT;
+        ReferencedByRepository<Operator, FieldType> _Ft;
+        ReferencedByRepository<Operator, FieldTypeOperator> _Fto;
         public OperatorRepository(ReportContext _context) : base(_context)
         {
-            RefFT = new ReferencedByRepository<Operator, FieldType>(_context);
+            _Ft = new ReferencedByRepository<Operator, FieldType>(_context);
+            _Fto = new(_context);
         }
 
-        public IEnumerable<FieldType> GetChildren(Operator MyT) => RefFT.GetChildren(MyT);
+        public IEnumerable<FieldType> GetChildren(Operator MyT) => _Ft.GetChildren(MyT);
+
+        IEnumerable<FieldTypeOperator> IReferencedByRepository<Operator, FieldTypeOperator>.GetChildren(Operator MyT) => _Fto.GetChildren(MyT);
     }
 }

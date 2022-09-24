@@ -6,12 +6,12 @@ using System.ComponentModel.DataAnnotations;
 namespace Domain.Models.DataCore
 {
 
-    public class FieldType : INamed, IReferencedBy<Operator>
+    public class FieldType : INamed, IReferencedBy<Operator>, IReferencedBy<FieldTypeOperator>
     {
         // string, int, date, money?
         public int FieldTypeId;
         public string FieldTypeName;
-        public readonly List<FieldTypeOperator> fieldTypeOperators;
+        public List<FieldTypeOperator> FieldTypeOperators;
         public List<Operator> Operators;
         public FieldType(string name)
         {
@@ -25,18 +25,21 @@ namespace Domain.Models.DataCore
             get
             {
                 List<Operator> operators = new List<Operator>();
-                foreach (FieldTypeOperator fieldTypeOperator in fieldTypeOperators) operators.Add(fieldTypeOperator.Operator);
+                foreach (FieldTypeOperator fieldTypeOperator in FieldTypeOperators) operators.Add(fieldTypeOperator.Operator);
                 return operators;
             }
         }
+
+        List<FieldTypeOperator> IReferencedBy<FieldTypeOperator>.MyTs { get => FieldTypeOperators; }
+
         int IIndexed.Id { get { return FieldTypeId; } set { FieldTypeId = value; } }
     }
-    public class Operator : INamed, IReferencedBy<FieldType>
+    public class Operator : INamed, IReferencedBy<FieldType>, IReferencedBy<FieldTypeOperator>
     {
         // equals, greather than, less than, contains, etc.
         public int OperatorId;
         public string OperatorName;
-        public List<FieldTypeOperator> fieldTypeOperators;
+        public List<FieldTypeOperator> FieldTypeOperators;
         public List<FieldType> FieldTypes;
 
         public Operator(string name)
@@ -47,6 +50,8 @@ namespace Domain.Models.DataCore
         string INamed.Name { get { return OperatorName; } set { OperatorName = value; } }
 
         List<FieldType>? IReferencedBy<FieldType>.MyTs { get { throw new NotImplementedException(); } }
+
+        List<FieldTypeOperator> IReferencedBy<FieldTypeOperator>.MyTs { get => FieldTypeOperators; }
         int IIndexed.Id { get => OperatorId; set => OperatorId = value; }
     }
     public class FieldTypeOperator : IReferences<FieldType>, IReferences<Operator>

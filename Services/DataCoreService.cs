@@ -19,40 +19,46 @@ namespace Services
         {
             var conjoiner = new Conjoiner(conjoinerName);
             U.Conjoiners.Add(conjoiner);
-            return U.Complete();
+            return Complete;
         }
 
         public int CreateFieldType(string fieldTypeName)
         {
             var fieldType = new FieldType(fieldTypeName);
             U.FieldTypes.Add(fieldType);
-            return U.Complete();
+            return Complete;
 
         }
 
-        public int CreateFieldTypeOperator(string fieldTypeName, string operatorName)
+        public int? CreateFieldTypeOperator(string fieldTypeName, string operatorName)
         {
-            var e = new FieldTypeOperator();
+            FieldType fieldType = U.FieldTypes.Get(fieldTypeName);
+            Operator @operator = U.Operators.Get(operatorName);
+            var e = new FieldTypeOperator(fieldType,operator);
+            return Complete;
         }
 
         public int CreateOperator(string operatorName)
         {
-            throw new NotImplementedException();
+            U.Operators.Add(new(operatorName));
+            return Complete;
         }
 
         public int DeleteConjoiner(string conjoinerName)
         {
-            throw new NotImplementedException();
+            U.Conjoiners.Remove(U.Conjoiners.Get(conjoinerName));
+            return Complete;
         }
 
         public int DeleteFieldType(string fieldTypeName)
         {
-            throw new NotImplementedException();
+            U.FieldTypes.Remove(U.FieldTypes.Get(fieldTypeName));
+            return Complete;
         }
 
         public int DeleteFieldTypeOperator(string fieldTypeName, string operatorName)
         {
-            throw new NotImplementedException();
+
         }
 
         public int DeleteOperator(string operatorName)
@@ -89,5 +95,6 @@ namespace Services
         {
             throw new NotImplementedException();
         }
+        private int Complete => U.Complete();
     }
 }

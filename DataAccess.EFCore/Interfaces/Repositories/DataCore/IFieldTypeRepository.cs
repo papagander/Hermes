@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Interfaces.Repositories.DataCore
 {
-    public interface IFieldTypeRepository : INamedRepository<FieldType>, IReferencedByRepository<FieldType,Operator>
-    {
-        
-    }
+    public interface IFieldTypeRepository : 
+        INamedRepository<FieldType>
+        , IReferencedByRepository<FieldType,Operator>
+        , IReferencedByRepository<FieldType, FieldTypeOperator>
+    {}
 }
