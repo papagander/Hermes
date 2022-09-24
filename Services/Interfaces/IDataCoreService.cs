@@ -28,7 +28,7 @@ namespace Services.Interfaces
 
         // FieldTypeOperator
         int CreateFieldTypeOperator(string fieldTypeName, string operatorName);
-        int GetFieldTypeOperator(string fieldTypeName, string operatorName);
+        FieldTypeOperator? GetFieldTypeOperator(string fieldTypeName, string operatorName);
         int DeleteFieldTypeOperator(string fieldTypeName, string operatorName);
 
     }

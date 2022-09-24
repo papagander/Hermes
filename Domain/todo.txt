@@ -1,0 +1,1 @@
+﻿? make interfaces specific to each model

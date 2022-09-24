@@ -10,5 +10,8 @@ namespace DataAccess.EFCore.Interfaces.Repositories.DataCore
         INamedRepository<FieldType>
         , IReferencedByRepository<FieldType,Operator>
         , IReferencedByRepository<FieldType, FieldTypeOperator>
-    {}
+    {
+        IEnumerable<Operator> GetOperators(FieldType fieldType);
+        IEnumerable<FieldTypeOperator> GetFieldTypeOperators(FieldType fieldType);
+    }
 }

@@ -1,0 +1,3 @@
+﻿! For all interfaces which inherit from referencedbyrepository<TRef, T>, create methods for each relationship like:
+	public IEnumerable<T> GetT(TRef tRef);
+! On insert of named field, first ensure that this name does not exist already.

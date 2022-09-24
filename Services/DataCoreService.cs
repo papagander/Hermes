@@ -12,7 +12,7 @@ namespace Services
     {
         DataCoreUnitOfWork U { get; set; }
         public DataCoreService(ReportContext reportContext)
-        { 
+        {
             U = new DataCoreUnitOfWork(reportContext);
         }
 
@@ -31,11 +31,11 @@ namespace Services
 
         }
 
-        public int? CreateFieldTypeOperator(string fieldTypeName, string operatorName)
+        public int CreateFieldTypeOperator(string fieldTypeName, string operatorName)
         {
             FieldType fieldType = U.FieldTypes.Get(fieldTypeName);
             Operator @operator = U.Operators.Get(operatorName);
-            var e = new FieldTypeOperator(fieldType,operator);
+            var e = new FieldTypeOperator(fieldType, @operator);
             return Complete;
         }
 
@@ -59,12 +59,8 @@ namespace Services
 
         public int DeleteFieldTypeOperator(string fieldTypeName, string operatorName)
         {
-            var byFieldType = U.FieldTypeOperators.GetRange(U.FieldTypes.Get(fieldTypeName));
-            int count = byFieldType.Count();
-            var operatorId = U.Operators.Get(operatorName).OperatorId;
-            int i = 0;
-            while (byFieldType.ElementAt(i).OperatorId != operatorId & i < count) i++;
-            if (i < count) U.FieldTypeOperators.Remove(byFieldType.ElementAt(i));
+            var fto = GetFieldTypeOperator(fieldTypeName, operatorName);
+            if (fto is not null) U.FieldTypeOperators.Remove(fto);
             return Complete;
 
         }
@@ -75,35 +71,26 @@ namespace Services
             return Complete;
         }
 
-        public IEnumerable<Conjoiner> GetAllConjoiners()
+        public IEnumerable<Conjoiner> GetAllConjoiners() => U.Conjoiners.GetAll();
+
+        public IEnumerable<FieldType> GetAllFieldTypes() => U.FieldTypes.GetAll();
+
+        public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
+
+        public FieldTypeOperator? GetFieldTypeOperator(string fieldTypeName, string operatorName)
         {
-            return U.Conjoiners.GetAll();
+            var byFieldType = U.FieldTypeOperators.GetRange(U.FieldTypes.Get(fieldTypeName));
+            int count = byFieldType.Count();
+            var operatorId = U.Operators.Get(operatorName).OperatorId;
+            int i = 0;
+            while (byFieldType.ElementAt(i).OperatorId != operatorId & i < count) i++;
+            if (i < count) return byFieldType.ElementAt(i);
+            return null;
         }
 
-        public IEnumerable<FieldType> GetAllFieldTypes()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Operator> GetOperatorsByFieldType(int fieldTypeDex) => U.FieldTypes.GetOperators(U.FieldTypes.Get(fieldTypeDex));
 
-        public IEnumerable<Operator> GetAllOperators()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetFieldTypeOperator(string fieldTypeName, string operatorName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Operator> GetOperatorsByFieldType(int fieldTypeDex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Operator> GetOperatorsByFieldType(string fieldTypeName)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Operator> GetOperatorsByFieldType(string fieldTypeName) => U.FieldTypes.GetOperators(U.FieldTypes.Get(fieldTypeName));
         private int Complete => U.Complete();
     }
 }
