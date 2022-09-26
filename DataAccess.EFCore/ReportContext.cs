@@ -16,23 +16,23 @@ namespace DataAccess.EFCore
         public ReportContext(DbContextOptions<ReportContext> options) : base(options)
         {
         }
-        public DbSet<Query> Reports { get; set; }
 
-        // Criteria
-        public DbSet<Statement> Statements { get; set; }
-        public DbSet<Conjunction> Conjuctions { get; set; }
+        // Core
         public DbSet<Conjoiner> Conjoiners { get; set; }
-        public DbSet<Criterion> Criteria { get; set; }
-        public DbSet<CriterionValue> CriterionValues { get; set; }
-
-        // Queries
-        public DbSet<DataSet> DataSets { get; set; }
-        public DbSet<Field> Fields { get; set; }
         public DbSet<FieldType> FieldTypes { get; set; }
         public DbSet<Operator> Operators { get; set; }
+        // DataSets
+        public DbSet<DataSet> DataSets { get; set; }
+        public DbSet<Field> Fields { get; set; }
+
+        // Queries
+        public DbSet<Query> Queries { get; set; }
+        public DbSet<Conjunction> Conjuctions { get; set; }
+        public DbSet<Criterion> Criteria { get; set; }
+        public DbSet<CriterionValue> CriterionValues { get; set; }
+        public DbSet<Statement> Statements { get; set; }
         public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
         public DbSet<QueryField> QueryFields { get; set; }
 
-        // Transmissions
     }
 }

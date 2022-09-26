@@ -175,12 +175,10 @@ public class Criterion : IIndexed, IReferences<Field>, IReferences<Operator>, IS
     int ISubTypeOf<Statement>.MySuperId { get => StatementId; set => StatementId = value; }
     List<CriterionValue> IReferencedBy<CriterionValue>.MyTs { get => CriterionValues; }
 }
-public class CriterionValue : IIndexed, IReferences<Criterion>
+public class CriterionValue :  IIndexed, IReferences<Criterion>
 {
     // Feed criterion with values.
-    [Key]
     public int CriterionValueId;
-    [Required]
     public int CriterionId;
     public Criterion Criterion;
     public string Value;

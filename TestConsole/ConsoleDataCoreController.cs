@@ -22,11 +22,11 @@ namespace TestConsole
         public int? Run()
         {
             Console.WriteLine("Welcome to the Hermes DataCore inteface.");
-            Pause(1);
             Console.WriteLine("Type 'about' to learn more about the DataCore module or 'help'");
             Console.WriteLine("for a guide on using this interface.");
             Console.WriteLine();
             Console.WriteLine("Otherwise, enter an entity table to access.");
+            Pause(1);
             string input = Console.ReadLine().ToLower();
             while (input.ToLower() != "exit")
             {
@@ -40,10 +40,16 @@ namespace TestConsole
                         break;
                     case "conjoiner":
                         ConjoinerInterface();
+                        break;
                 }
+                Console.Clear();
+                Console.WriteLine("Type 'about' to learn more about the DataCore module or 'help'");
+                Console.WriteLine("for a guide on using this interface.");
+                Console.WriteLine();
+                Console.WriteLine("Otherwise, enter an entity table to access.");
                 input = Console.ReadLine().ToLower();
             }
-
+            return 0;
         }
         private void About()
         {
@@ -92,7 +98,11 @@ namespace TestConsole
 
         private void GetConjoiners()
         {
-            throw new NotImplementedException();
+            var Conjoiners =  S.GetAllConjoiners();
+            foreach (var item in Conjoiners)
+            {
+                Console.WriteLine($"{item.ConjoinerId}. {item.ConjoinerName}");
+            } 
         }
 
         private void ConjoinerHelp()
@@ -121,11 +131,11 @@ namespace TestConsole
         private void Pause(int seconds)
         {
             Thread.Sleep(250 * seconds);
-            Console.WriteLine("\t.\t");
+            Console.WriteLine(".  ");
             Thread.Sleep(250 * seconds);
-            Console.Write(".\t");
+            Console.Write(".  ");
             Thread.Sleep(250 * seconds );
-            Console.Write(".\t");
+            Console.WriteLine(".  ");
             Thread.Sleep(250 * seconds );
         }
 
