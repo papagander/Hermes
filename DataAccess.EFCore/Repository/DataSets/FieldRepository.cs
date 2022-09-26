@@ -1,5 +1,8 @@
 ﻿using DataAccess.EFCore.Interfaces.Repositories.DataSets;
 
+using Domain.Models.DataSets;
+using Domain.Models.Queries;
+
 using System;
 using System.Linq;
 namespace DataAccess.EFCore.Repository.DataSets

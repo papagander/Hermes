@@ -11,12 +11,12 @@ class Program
     public static void Main(string[] args)
     {
         var options = new DbContextOptionsBuilder<ReportContext>()
-            .UseSqlite()
+            .UseInMemoryDatabase("Report DB")
             .Options;
 
         ReportContext context = new ReportContext(options);
         ConsoleDataCoreController myController = new ConsoleDataCoreController(context);
-        myController.Run();
+        myController.CreateConjoiner();
 
     }
 }

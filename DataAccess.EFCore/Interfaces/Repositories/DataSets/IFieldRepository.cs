@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Domain.Models.DataSets;
+using Domain.Models.Queries;
+
+using System;
 
 namespace DataAccess.EFCore.Interfaces.Repositories.DataSets
 {

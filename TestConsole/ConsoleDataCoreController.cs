@@ -76,13 +76,14 @@ namespace TestConsole
         }
         private void ConjoinerInterface()
         {
-            Console.Write("Conjoiner.");
+               Console.Write("Conjoiner.");
             string? input = Console.ReadLine().ToLower();
-            while (input is not null)
+            while (true)
             {
+                Console.Write("Conjoiner.");
                 switch (input)
                 {
-                    case "create":
+                    case "add":
                         CreateConjoiner();
                         break;
                     case "get":
@@ -93,6 +94,7 @@ namespace TestConsole
                         break;
                 }
                 input = Console.ReadLine().ToLower();
+                Console.WriteLine();
             }
         }
 
@@ -110,7 +112,7 @@ namespace TestConsole
             throw new NotImplementedException();
         }
 
-        private void CreateConjoiner()
+        public void CreateConjoiner()
         {
             int output;
             Console.WriteLine("Please provide a conjoiner name");

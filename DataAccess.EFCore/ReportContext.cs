@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 using Domain.Models;
 using Domain.Models.DataCore;
+using Domain.Models.DataSets;
+using Domain.Models.Queries;
 
 namespace DataAccess.EFCore
 {
@@ -21,6 +23,7 @@ namespace DataAccess.EFCore
         public DbSet<Conjoiner> Conjoiners { get; set; }
         public DbSet<FieldType> FieldTypes { get; set; }
         public DbSet<Operator> Operators { get; set; }
+
         // DataSets
         public DbSet<DataSet> DataSets { get; set; }
         public DbSet<Field> Fields { get; set; }
@@ -29,7 +32,7 @@ namespace DataAccess.EFCore
         public DbSet<Query> Queries { get; set; }
         public DbSet<Conjunction> Conjuctions { get; set; }
         public DbSet<Criterion> Criteria { get; set; }
-        public DbSet<CriterionValue> CriterionValues { get; set; }
+        //public DbSet<CriterionValue> CriterionValues { get; set; }
         public DbSet<Statement> Statements { get; set; }
         public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
         public DbSet<QueryField> QueryFields { get; set; }

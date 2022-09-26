@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 using Domain.Interfaces.Models;
 using Domain.Models.DataCore;
+using Domain.Models.DataSets;
 
-namespace Domain.Models;
+namespace Domain.Models.Queries;
 
 public class Query : INamed, IReferences<DataSet>, IReferencedBy<Field>
 {

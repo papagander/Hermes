@@ -1,5 +1,7 @@
 ﻿using DataAccess.EFCore.Interfaces.Repositories.DataSets;
 
+using Domain.Models.DataSets;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
