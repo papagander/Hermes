@@ -18,30 +18,31 @@ namespace Services
 
         public int CreateConjoiner(string conjoinerName)
         {
-            var conjoiner = new Conjoiner(conjoinerName);
+            var conjoiner = new Conjoiner { ConjoinerName = conjoinerName};
             U.Conjoiners.Add(conjoiner);
             return Complete;
         }
 
         public int CreateFieldType(string fieldTypeName)
         {
-            var fieldType = new FieldType(fieldTypeName);
+            var fieldType = new FieldType { FieldTypeName = fieldTypeName };
             U.FieldTypes.Add(fieldType);
             return Complete;
 
         }
-
+        
         public int CreateFieldTypeOperator(string fieldTypeName, string operatorName)
         {
+            throw new NotImplementedException();
             FieldType fieldType = U.FieldTypes.Get(fieldTypeName);
             Operator @operator = U.Operators.Get(operatorName);
-            var e = new FieldTypeOperator(fieldType, @operator);
+            //var e = new FieldTypeOperator { FieldType = };
             return Complete;
         }
-
+        
         public int CreateOperator(string operatorName)
         {
-            U.Operators.Add(new(operatorName));
+            U.Operators.Add(new Operator { OperatorName = operatorName });
             return Complete;
         }
 

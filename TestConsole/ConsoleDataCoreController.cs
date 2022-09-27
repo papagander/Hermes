@@ -51,6 +51,7 @@ namespace TestConsole
             }
             return 0;
         }
+
         private void About()
         {
             Console.WriteLine("The DataCore module is used to the base entities used for report logic:");
@@ -74,62 +75,7 @@ namespace TestConsole
             Console.WriteLine("Press enter to return to main menu.");
                         Console.Clear();
         }
-        private void ConjoinerInterface()
-        {
-               Console.Write("Conjoiner.");
-            string? input = Console.ReadLine().ToLower();
-            while (true)
-            {
-                Console.Write("Conjoiner.");
-                switch (input)
-                {
-                    case "add":
-                        CreateConjoiner();
-                        break;
-                    case "get":
-                        GetConjoiners();
-                        break;
-                    case "help":
-                        ConjoinerHelp();
-                        break;
-                }
-                input = Console.ReadLine().ToLower();
-                Console.WriteLine();
-            }
-        }
-
-        private void GetConjoiners()
-        {
-            var Conjoiners =  S.GetAllConjoiners();
-            foreach (var item in Conjoiners)
-            {
-                Console.WriteLine($"{item.ConjoinerId}. {item.ConjoinerName}");
-            } 
-        }
-
-        private void ConjoinerHelp()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateConjoiner()
-        {
-            int output;
-            Console.WriteLine("Please provide a conjoiner name");
-            string name = Console.ReadLine();
-            if (name is null)
-            {
-                Console.Clear();
-                CreateConjoiner();
-                return;
-            }
-            output = S.CreateConjoiner(name);
-            if (output == 0) Console.WriteLine("Failed to create conjoiner.");
-            if (output == 1) Console.WriteLine($"Created conjoiner {name}");
-            else Console.WriteLine($"Service returned: {output}");
-            Pause(2);
-            Console.Clear();
-        }
+       
         private void Pause(int seconds)
         {
             Thread.Sleep(250 * seconds);

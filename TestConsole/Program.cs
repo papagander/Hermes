@@ -16,7 +16,7 @@ class Program
 
         ReportContext context = new ReportContext(options);
         ConsoleDataCoreController myController = new ConsoleDataCoreController(context);
-        myController.CreateConjoiner();
+        myController.Run();
 
     }
 }

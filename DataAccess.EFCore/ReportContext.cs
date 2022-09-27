@@ -37,5 +37,15 @@ namespace DataAccess.EFCore
         public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
         public DbSet<QueryField> QueryFields { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Conjoiner>();
+            modelBuilder.Entity<Conjoiner>().HasIndex(c => c.ConjoinerId).IsUnique();
+
+        }
+
     }
 }
