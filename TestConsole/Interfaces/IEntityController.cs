@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.Interfaces.Models;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,13 @@ using System.Threading.Tasks;
 
 namespace TestConsole.Interfaces
 {
-    public interface IEntityController
+    internal interface IEntityController<T> where T : class, IIndexed
     {
+        internal void Run();
+        internal void Add();
+        internal void GetAll();
+        internal void Remove();
+        internal void About();
+        internal void Help();
     }
 }

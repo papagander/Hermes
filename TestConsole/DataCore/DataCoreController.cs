@@ -9,50 +9,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestConsole
-{
-    internal class ConsoleDataCoreController
-    {
-        IDataCoreService S { get; set; }
+using TestConsole.Interfaces;
 
-        public ConsoleDataCoreController(ReportContext _context)
+namespace TestConsole.DataCore
+{
+    internal class DataCoreController : GenericController, IController
+    {
+        public DataCoreController(ReportContext context) : base(context)
         {
-            S = new DataCoreService(_context);
+            Functions.Add(new("conjoiner", ConjoinerMenu));
+            Console.Clear();
+            Console.WriteLine("Welcome to Hermes DataCore interface!");
+            Pause(3);
         }
-        public int? Run()
+
+
+        protected override void PromptForFunction()
         {
-            Console.WriteLine("Welcome to the Hermes DataCore inteface.");
+            Console.Clear();
             Console.WriteLine("Type 'about' to learn more about the DataCore module or 'help'");
             Console.WriteLine("for a guide on using this interface.");
             Console.WriteLine();
             Console.WriteLine("Otherwise, enter an entity table to access.");
-            Pause(1);
-            string input = Console.ReadLine().ToLower();
-            while (input.ToLower() != "exit")
-            {
-                switch (input)
-                {
-                    case "about":
-                        About();
-                        break;
-                    case "help":
-                        MainHelp();
-                        break;
-                    case "conjoiner":
-                        ConjoinerInterface();
-                        break;
-                }
-                Console.Clear();
-                Console.WriteLine("Type 'about' to learn more about the DataCore module or 'help'");
-                Console.WriteLine("for a guide on using this interface.");
-                Console.WriteLine();
-                Console.WriteLine("Otherwise, enter an entity table to access.");
-                input = Console.ReadLine().ToLower();
-            }
-            return 0;
         }
-
-        private void About()
+        public override void About()
         {
             Console.WriteLine("The DataCore module is used to the base entities used for report logic:");
             Pause(1);
@@ -65,7 +45,7 @@ namespace TestConsole
             Pause(1);
             Console.WriteLine("Press enter to return to main menu.");
             Console.ReadLine();
-                        Console.Clear();
+            Console.Clear();
         }
         private void MainHelp()
         {
@@ -73,20 +53,18 @@ namespace TestConsole
             Console.WriteLine("After you select a table, you can type 'help' to view its commands.");
             Console.WriteLine();
             Console.WriteLine("Press enter to return to main menu.");
-                        Console.Clear();
+            Console.Clear();
         }
-       
-        private void Pause(int seconds)
+        public void ConjoinerMenu()
         {
-            Thread.Sleep(250 * seconds);
-            Console.WriteLine(".  ");
-            Thread.Sleep(250 * seconds);
-            Console.Write(".  ");
-            Thread.Sleep(250 * seconds );
-            Console.WriteLine(".  ");
-            Thread.Sleep(250 * seconds );
+            ConjoinerController conjoinerController = new(reportContext);
+            conjoinerController.Run();
         }
 
+        public override void Help()
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

@@ -3,8 +3,7 @@
 using DataAccess.EFCore;
 
 using Microsoft.EntityFrameworkCore;
-
-using TestConsole;
+using TestConsole.DataCore;
 
 class Program 
 {
@@ -15,7 +14,7 @@ class Program
             .Options;
 
         ReportContext context = new ReportContext(options);
-        ConsoleDataCoreController myController = new ConsoleDataCoreController(context);
+        DataCoreController myController = new DataCoreController(context);
         myController.Run();
 
     }

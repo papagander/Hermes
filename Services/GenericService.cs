@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class GenericService
+    public abstract class GenericService
     {
         ReportContext _context { get; set; }
         public GenericService(ReportContext context)
