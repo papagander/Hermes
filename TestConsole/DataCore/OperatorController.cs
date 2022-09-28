@@ -17,44 +17,34 @@ namespace TestConsole.DataCore
         {
         }
 
-        protected override string EntityName { get; }
+        protected override string EntityType { get => "Operator"; }
 
         public override void Add()
         {
-            int output;
-            Console.WriteLine("Please provide an operator name");
-            string name = Console.ReadLine();
-            if (name is null)
-            {
-                Console.Clear();
-                Add();
-                return;
-            }
-            output = S.CreateOperator(name);
+            string name = NamePrompt(EntityType);
+            int output = S.CreateOperator(name);
             if (output == 0) Console.WriteLine("Failed to create operator.");
-            if (output == 1) Console.WriteLine($"Created operator {name}");
+            if (output == 1) Console.WriteLine($"Created operator '{name}'");
             else Console.WriteLine($"Service returned: {output}");
         }
 
         public override void GetAll()
         {
-            throw new NotImplementedException();
+            var operators = S.GetAllOperators();
+            foreach (var op in operators)
+            {
+                Console.WriteLine(op.OperatorName);
+            }
         }
 
         public override void Remove()
         {
             throw new NotImplementedException();
         }
-        public override void About()
+        public override void HelpPrompt()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Operators, such as '=', 'contains', or '<' are used to build query logic ");
+            Console.WriteLine("and define the filters which can be used on a field type.");
         }
-
-
-        public override void Help()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

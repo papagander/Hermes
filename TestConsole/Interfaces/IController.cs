@@ -8,8 +8,7 @@ namespace TestConsole.Interfaces
 {
     internal interface IController
     {
-        void PromptForFunction();
-        void About();
+        //string ControllerName { get; }
         void Help();
         void Pause(int seconds);
         void Run();

@@ -15,13 +15,13 @@ namespace TestConsole
 {
     public abstract class GenericController : IController
     {
+        //public abstract string ControllerName { get;}
         protected List<Function> Functions = new List<Function>();
         protected readonly ReportContext reportContext;
         public GenericController(ReportContext context)
         {
             reportContext = context;
             Functions.Add(new Function("help", Help));
-            Functions.Add(new Function("about", About));
         }
         public void Pause(int seconds)
         {
@@ -37,7 +37,7 @@ namespace TestConsole
             Console.Clear();
             while (true)
             {
-                PromptForFunction();
+                MenuPrompt();
                 string? input = Console.ReadLine();
                 if (input is null)
                 {
@@ -57,14 +57,20 @@ namespace TestConsole
             }
         }
 
-        protected abstract void PromptForFunction();
-        public abstract void About();
-        public abstract void Help();
-
-        void IController.PromptForFunction()
+        protected abstract void MenuPrompt();
+        public void Help()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            HelpPrompt();
+            Console.WriteLine();
+            Console.WriteLine("Available commands:");
+            foreach (var function in Functions)
+                Console.WriteLine(function.Name);
+            Console.WriteLine("quit");
+            Console.WriteLine();
+            Console.WriteLine("Press enter to close to return to the main menu.");
+            Console.ReadLine();
         }
-
+        public abstract void HelpPrompt();
     }
 }

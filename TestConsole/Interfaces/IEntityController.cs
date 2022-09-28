@@ -14,7 +14,6 @@ namespace TestConsole.Interfaces
         internal void Add();
         internal void GetAll();
         internal void Remove();
-        internal void About();
         internal void Help();
     }
 }

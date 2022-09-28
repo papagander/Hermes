@@ -17,7 +17,7 @@ namespace TestConsole.DataCore
     internal class ConjoinerController :
         GenericDataCoreEntityController<Conjoiner>
     {
-        protected override string EntityName { get => "Conjoiner"; }
+        protected override string EntityType { get => "Conjoiner"; }
         public ConjoinerController(ReportContext context) : base(context)
         {
             S = new DataCoreService(reportContext);
@@ -26,35 +26,12 @@ namespace TestConsole.DataCore
         public override void GetAll()
         {
             var Conjoiners = S.GetAllConjoiners();
-            foreach (var item in Conjoiners)
-            {
-                Console.WriteLine($"{item.ConjoinerId}. {item.ConjoinerName}");
-            }
-        }
-
-        public override void Help()
-        {
-            throw new NotImplementedException();
+            ShowNames(Conjoiners);
         }
 
         public override void Add()
         {
-            int output;
-            Console.WriteLine("Please provide a conjoiner name");
-            string name = Console.ReadLine();
-            if (name is null)
-            {
-                Console.Clear();
-                Add();
-                return;
-            }
-            output = S.CreateConjoiner(name);
-            if (output == 0) Console.WriteLine("Failed to create conjoiner.");
-            if (output == 1) Console.WriteLine($"Created conjoiner {name}");
-            else Console.WriteLine($"Service returned: {output}");
-        }
-        void Add(string name)
-        {
+            string name = NamePrompt(EntityType);
             int output = S.CreateConjoiner(name);
             if (output == 0) Console.WriteLine("Failed to create conjoiner.");
             if (output == 1) Console.WriteLine($"Created conjoiner {name}");
@@ -66,11 +43,11 @@ namespace TestConsole.DataCore
             throw new NotImplementedException();
         }
 
-        public override void About()
+        public override void HelpPrompt()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Conjoiners, like 'and' or 'or', are used to build conjunctions");
+            Console.WriteLine("which combine multiple filters in order to build query logic.");
         }
-
     }
 }
 

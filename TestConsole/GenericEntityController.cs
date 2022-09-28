@@ -28,13 +28,33 @@ namespace TestConsole
             Functions.Add(new Function("remove", Remove));
         }
 
-        protected abstract string EntityName { get; }
-        protected override void PromptForFunction()
+        protected abstract string EntityType { get; }
+        protected override void MenuPrompt()
         {
-            Console.Write($"{EntityName}.");
+            Console.Write($"{EntityType}.");
         }
         public abstract void Add();
         public abstract void GetAll();
         public abstract void Remove();
+        protected string NamePrompt(string entityType)
+        {
+            int output;
+            Console.WriteLine($"Please provide {entityType} name");
+            string name = Console.ReadLine();
+            if (name is null)
+            {
+                Console.Clear();
+                return NamePrompt(entityType);
+            }
+            return name;
+        }
+        protected void ShowNames(IEnumerable<INamed> nameds)
+        {
+
+            foreach (var item in nameds)
+            {
+                Console.WriteLine($"{item.Id}. {item.Name}");
+            }
+        }
     }
 }
