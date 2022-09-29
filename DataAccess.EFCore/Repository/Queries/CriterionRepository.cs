@@ -25,7 +25,7 @@ namespace DataAccess.EFCore.Repository.Queries
         /*
 public Criterion? GetByStatementId(int statementId)
 {
-   return (from cr in _context.Criteria where cr.StatementId == statementId select cr).FirstOrDefault();
+   return (from cr in _context.Criteria where cr.Id == statementId select cr).FirstOrDefault();
 }
 */
     }

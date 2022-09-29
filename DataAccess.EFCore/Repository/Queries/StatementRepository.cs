@@ -32,7 +32,7 @@ namespace DataAccess.EFCore.Repository.Queries
         /*
 public IEnumerable<Statement> GetRangeByConjunctionId(int conjunctionId)
 {
-   return (from statement in _context.Statements where statement.ConjunctionId == conjunctionId select statement);
+   return (from statement in _context.Statements where statement.Id == conjunctionId select statement);
 }
 */
     }

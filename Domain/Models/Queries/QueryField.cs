@@ -11,10 +11,10 @@ using Domain.Interfaces.Models;
 using Domain.Models.DataSets;
 
 namespace Domain.Models.Queries;
-public class QueryField : IIndexed, IReferences<Query>, IReferences<Field>
+public class QueryField : Indexed, IReferences<Query>, IReferences<Field>
 {
+    public override string ToString() => $"{Query.Name}.{Field.Name}";
     // Create a link between a report and a field to be included on said report.
-    public int QueryFieldId { get; set; }
     public int QueryId { get; set; }
     public int FieldId { get; set; }
     public Query Query { get; set; }
@@ -26,10 +26,9 @@ public class QueryField : IIndexed, IReferences<Query>, IReferences<Field>
         Field = field;
     }
     */
-    int IIndexed.Id { get => QueryFieldId; set => QueryFieldId = value; }
-    int IReferences<Query>.MyTRefId { get => QueryId; /*set => QueryId = value;*/ }
+    int IReferences<Query>.MyTRefId { get => QueryId; /*set => Id = value;*/ }
     Query IReferences<Query>.MyTRef { get => Query; /*set => Query = value;*/ }
-    int IReferences<Field>.MyTRefId { get => FieldId; /*set => FieldId = value;*/ }
+    int IReferences<Field>.MyTRefId { get => FieldId; /*set => Id = value;*/ }
     Field IReferences<Field>.MyTRef { get => Field; /*set => Field = value;*/ }
 }
 

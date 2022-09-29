@@ -43,7 +43,7 @@ namespace DataAccess.EFCore
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Conjoiner>();
-            modelBuilder.Entity<Conjoiner>().HasIndex(c => c.ConjoinerId).IsUnique();
+            modelBuilder.Entity<Conjoiner>().HasIndex(c => c.Id).IsUnique();
 
         }
 

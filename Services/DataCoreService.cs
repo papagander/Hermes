@@ -18,14 +18,14 @@ namespace Services
 
         public int CreateConjoiner(string conjoinerName)
         {
-            var conjoiner = new Conjoiner { ConjoinerName = conjoinerName};
+            var conjoiner = new Conjoiner { Name = conjoinerName};
             U.Conjoiners.Add(conjoiner);
             return Complete;
         }
 
         public int CreateFieldType(string fieldTypeName)
         {
-            var fieldType = new FieldType { FieldTypeName = fieldTypeName };
+            var fieldType = new FieldType { Name = fieldTypeName };
             U.FieldTypes.Add(fieldType);
             return Complete;
 
@@ -42,7 +42,7 @@ namespace Services
         
         public int CreateOperator(string operatorName)
         {
-            U.Operators.Add(new Operator { OperatorName = operatorName });
+            U.Operators.Add(new Operator { Name = operatorName });
             return Complete;
         }
 
@@ -82,7 +82,7 @@ namespace Services
         {
             var byFieldType = U.FieldTypeOperators.GetRange(U.FieldTypes.Get(fieldTypeName));
             int count = byFieldType.Count();
-            var operatorId = U.Operators.Get(operatorName).OperatorId;
+            var operatorId = U.Operators.Get(operatorName).Id;
             int i = 0;
             while (byFieldType.ElementAt(i).OperatorId != operatorId & i < count) i++;
             if (i < count) return byFieldType.ElementAt(i);

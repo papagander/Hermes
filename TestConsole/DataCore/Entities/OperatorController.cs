@@ -36,7 +36,7 @@ namespace TestConsole.DataCore.Entities
             var operators = S.GetAllOperators();
             foreach (var op in operators)
             {
-                Console.WriteLine(op.OperatorName);
+                Console.WriteLine(op.Name);
             }
         }
 

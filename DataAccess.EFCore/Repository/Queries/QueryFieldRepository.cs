@@ -29,8 +29,8 @@ public IEnumerable<Field> GetFields(int queryId)
 
    IEnumerable<int> fieldIds = (
        from rf in _context.QueryFields
-       where rf.QueryId == queryId
-       select rf.FieldId
+       where rf.Id == queryId
+       select rf.Id
        );
    var Fields = _context.Fields;
    List<Field> fieldList = new List<Field>();

@@ -22,15 +22,15 @@ namespace DataAccess.EFCore.Repository.DataSets
         /*
 public IEnumerable<Field> GetFieldsByDataSetId(int templateId)
 {
-   return _context.Fields.Where<Field>(f => f.DataSetId == templateId);
+   return _context.Fields.Where<Field>(f => f.Id == templateId);
 }
 public IEnumerable<Field> GetFieldsByQueryId(int queryId)
 {
    IEnumerable<int> fieldIds =
-       (from queryField in _context.QueryFields where queryField.QueryId == queryId
-        select queryField.FieldId);
+       (from queryField in _context.QueryFields where queryField.Id == queryId
+        select queryField.Id);
    IEnumerable<Field> Fields =
-       (from Field in _context.Fields where fieldIds.Contains(Field.FieldId)
+       (from Field in _context.Fields where fieldIds.Contains(Field.Id)
         select Field);
    return Fields;
 

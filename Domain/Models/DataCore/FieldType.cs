@@ -2,22 +2,12 @@
 
 namespace Domain.Models.DataCore
 {
-    public class FieldType : INamed, IReferencedBy<Operator>, IReferencedBy<FieldTypeOperator>
+    public class FieldType : Named, IReferencedBy<Operator>, IReferencedBy<FieldTypeOperator>
     {
-        // string, int, date, money?
-        public int FieldTypeId { get; set; }
-        public string FieldTypeName { get; set; }
+        // text, int, date, money?
         public List<FieldTypeOperator> FieldTypeOperators { get; set; }
         public List<Operator> Operators { get; set; }
-        /*
-        public FieldType(string name)
-        {
-            Name = name;
-        }
-        */
-        public int Id { get { return FieldTypeId; } set { FieldTypeId = value; } }
-        public string Name { get { return FieldTypeName; } set { FieldTypeName = value; } }
-
+        
         List<Operator> IReferencedBy<Operator>.MyTs
         {
             get
@@ -29,8 +19,6 @@ namespace Domain.Models.DataCore
         }
 
         List<FieldTypeOperator> IReferencedBy<FieldTypeOperator>.MyTs { get => FieldTypeOperators; }
-
-        int IIndexed.Id { get { return FieldTypeId; } set { FieldTypeId = value; } }
     }
 
 }

@@ -5,6 +5,7 @@ public interface INamed : IIndexed
     // A table with an index and a name.
     public string Name { get; set; }
 
+
 }
 /*
     public interface IJunctionTable<T1, T2> : IIndexed where T1 : IIndexed where T2 : IIndexed

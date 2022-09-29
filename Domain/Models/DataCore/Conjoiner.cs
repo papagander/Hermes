@@ -6,15 +6,14 @@ using System.ComponentModel.DataAnnotations;
 namespace Domain.Models.DataCore
 {
 
-    public class Conjoiner : INamed
+    public class Conjoiner : Named
     {
         // AND, OR
-        public int ConjoinerId { get; set; }
-        public string ConjoinerName { get; set; }
 
 
-        string INamed.Name { get { return ConjoinerName; } set { ConjoinerName = value; } }
-        int IIndexed.Id { get { return ConjoinerId; } set { ConjoinerId = value; } }
+        //string INamed.Name { get { return Name; } set { Name = value; } }
+        //int IIndexed.Id { get { return Id; } set { Id = value; } }
+        
     }
 
 }
