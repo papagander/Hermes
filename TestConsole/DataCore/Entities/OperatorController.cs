@@ -14,7 +14,6 @@ namespace TestConsole.DataCore.Entities
 {
     internal class OperatorController :
         DataCoreEntityController<Operator>
-        , INamedEntityController<Operator>
     {
         public OperatorController(ReportContext context) : base(context)
         {
@@ -31,14 +30,8 @@ namespace TestConsole.DataCore.Entities
             else Console.WriteLine($"Service returned: {output}");
         }
 
-        public override void GetAll()
-        {
-            var operators = S.GetAllOperators();
-            foreach (var op in operators)
-            {
-                Console.WriteLine(op.Name);
-            }
-        }
+        public override void ShowAll() =>            ShowAll(S.GetAllOperators());
+        
 
         public override void Remove()
         {
@@ -50,6 +43,5 @@ namespace TestConsole.DataCore.Entities
             Console.WriteLine("and define the filters which can be used on a field type.");
         }
 
-        public void ShowNames(List<Operator> nameds) => GenericController.ShowNames(nameds);
     }
 }

@@ -27,7 +27,7 @@ namespace Services.Interfaces
         IEnumerable<Conjoiner> GetAllConjoiners();
 
         // FieldTypeOperator
-        int CreateFieldTypeOperator(string fieldTypeName, string operatorName);
+        int CreateFieldTypeOperator(FieldType fieldType , Operator op);
         FieldTypeOperator? GetFieldTypeOperator(string fieldTypeName, string operatorName);
         int DeleteFieldTypeOperator(string fieldTypeName, string operatorName);
 

@@ -14,7 +14,6 @@ namespace TestConsole.DataCore.Entities
 {
     public class FieldTypeController :
         DataCoreEntityController<FieldType>
-        , INamedEntityController<FieldType>
     {
         public FieldTypeController(ReportContext context) : base(context)
         {
@@ -31,9 +30,9 @@ namespace TestConsole.DataCore.Entities
             if (output == 1) Console.WriteLine($"Created field type '{name}'");
             else Console.WriteLine($"Service returned: {output}");
         }
+        
 
-
-        public override void GetAll()
+        public override void ShowAll()
         {
             throw new NotImplementedException();
         }
@@ -48,6 +47,6 @@ namespace TestConsole.DataCore.Entities
             throw new NotImplementedException();
         }
 
-        public void ShowNames(List<FieldType> nameds) => GenericController.ShowNames(nameds);
+        public void ShowNames(List<FieldType> nameds) => GenericController.SelectFromList(nameds);
     }
 }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.EFCore.Interfaces.UnitsOfWork;
 
 namespace DataAccess.EFCore.UnitOfWork.DataCore
 {
@@ -27,5 +28,6 @@ namespace DataAccess.EFCore.UnitOfWork.DataCore
             FieldTypeOperators = new FieldTypeOperatorRepository (reportContext);
             Conjoiners = new ConjoinerRepository(reportContext);
         }
+
     }
 }

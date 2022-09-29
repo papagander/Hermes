@@ -24,7 +24,7 @@ namespace TestConsole
         protected GenericEntityController(ReportContext context) : base(context)
         {
             Functions.Add(new Function("add", Add));
-            Functions.Add(new Function("get", GetAll));
+            Functions.Add(new Function("get", ShowAll));
             Functions.Add(new Function("remove", Remove));
         }
 
@@ -34,16 +34,15 @@ namespace TestConsole
             Console.Write($"{EntityType}.");
         }
         public abstract void Add();
-        public abstract void GetAll();
+        public abstract void ShowAll();
         public abstract void Remove();
         protected string NamePrompt(string entityType)
         {
-            int output;
             Console.WriteLine($"Please provide {entityType} name");
-            string name = Console.ReadLine();
+            string? name = Console.ReadLine();
             if (name is null)
             {
-                Console.Clear();
+                Console.WriteLine("No name provided.");
                 return NamePrompt(entityType);
             }
             return name;

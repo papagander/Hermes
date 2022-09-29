@@ -15,14 +15,51 @@ namespace Services
         {
             U = new DataCoreUnitOfWork(reportContext);
         }
-
+        public int Create(Conjoiner e)
+        {
+            U.Conjoiners.Add(e);
+            return Complete;
+        }
+        public int Create(Operator e)
+        {
+            U.Operators.Add(e);
+            return Complete;
+        }
+        public int Create(FieldType e)
+        {
+            U.FieldTypes.Add(e);
+            return Complete;
+        }
+        public int Create(FieldTypeOperator e)
+        {
+            U.FieldTypeOperators.Add(e);
+            return Complete;
+        }
         public int CreateConjoiner(string conjoinerName)
         {
             var conjoiner = new Conjoiner { Name = conjoinerName};
-            U.Conjoiners.Add(conjoiner);
+            return Create(conjoiner);
+        }
+        public int Remove(Conjoiner e)
+        {
+            U.Conjoiners.Remove(e);
             return Complete;
         }
-
+        public int Remove(FieldType e)
+        {
+            U.FieldTypes.Remove(e);
+            return Complete;
+        }
+        public int Remove(FieldTypeOperator e)
+        {
+            U.FieldTypeOperators.Remove(e);
+            return Complete;
+        }
+        public int Remove(Operator e)
+        {
+            U.Operators.Remove(e);
+            return Complete;
+        }
         public int CreateFieldType(string fieldTypeName)
         {
             var fieldType = new FieldType { Name = fieldTypeName };
@@ -30,13 +67,11 @@ namespace Services
             return Complete;
 
         }
-        
-        public int CreateFieldTypeOperator(string fieldTypeName, string operatorName)
+
+        public int CreateFieldTypeOperator(FieldType fieldType, Operator op)
         {
-            throw new NotImplementedException();
-            FieldType fieldType = U.FieldTypes.Get(fieldTypeName);
-            Operator @operator = U.Operators.Get(operatorName);
-            //var e = new FieldTypeOperator { FieldType = };
+            var FieldTypeOperator = new FieldTypeOperator { FieldType = fieldType, Operator = op };
+            U.Operators.Add(op);
             return Complete;
         }
         

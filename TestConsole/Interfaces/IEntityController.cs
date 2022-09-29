@@ -12,7 +12,7 @@ namespace TestConsole.Interfaces
     {
         internal void Run();
         internal void Add();
-        internal void GetAll();
+        internal void ShowAll();
         internal void Remove();
         internal void Help();
     }

@@ -74,12 +74,35 @@ public abstract class GenericController : IController
         Console.ReadLine();
     }
     public abstract void HelpPrompt();
-    internal static void ShowNames<F>(List<F> nameds) where F : class, INamed
+    internal static F? SelectFromList<F>(List<F> items) where F : class
     {
-        for (int i = 0; i < nameds.Count(); i++)
+        Console.WriteLine("Enter a number to select an item. Press enter to terminate selection.");
+        for (int i = 0; i < items.Count; i++)
         {
-            INamed item = nameds[i];
-            Console.WriteLine($"{i}. {item.Name}");
+            F item = items[i];
+            Console.WriteLine($"{i}. {item.ToString()}");
+        }
+        string? input = Console.ReadLine();
+        if (input is null) return null;
+        int intput;
+        if (!int.TryParse(input, out intput))
+        {
+            Console.WriteLine("Could not parse input.");
+            return SelectFromList(items);
+        }
+        if (intput >= items.Count)
+        {
+            Console.WriteLine("Input out of range");
+            return SelectFromList(items);
+        }
+        return items[intput];
+
+    }
+    protected void ShowAll<T>(IEnumerable<T> items) where T : class, IIndexed
+    {
+        foreach (var item in items)
+        {
+            Console.WriteLine($"{item.Id}\t{item.ToString()}");
         }
     }
 }

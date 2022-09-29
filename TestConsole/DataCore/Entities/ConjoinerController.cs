@@ -16,8 +16,7 @@ using TestConsole.Interfaces;
 namespace TestConsole.DataCore.Entities
 {
     internal class ConjoinerController :
-        DataCoreEntityController<Conjoiner>,
-        INamedEntityController<Conjoiner>
+        DataCoreEntityController<Conjoiner>
     {
         protected override string EntityType { get => "Conjoiner"; }
         public ConjoinerController(ReportContext context) : base(context)
@@ -25,7 +24,7 @@ namespace TestConsole.DataCore.Entities
             S = new DataCoreService(reportContext);
         }
 
-        public override void GetAll()
+        public override void ShowAll()
         {
             List<Conjoiner> Conjoiners = new List<Conjoiner>();
             Conjoiners.AddRange(S.GetAllConjoiners());
@@ -43,7 +42,12 @@ namespace TestConsole.DataCore.Entities
 
         public override void Remove()
         {
-            throw new NotImplementedException();
+            string name = NamePrompt(EntityType);
+            int output = S.DeleteConjoiner(name);
+            if (output == 0) Console.WriteLine("Failed to remove conjoiner.");
+            if (output == 1) Console.WriteLine($"Removed conjoiner {name}");
+            else Console.WriteLine($"Service returned: {output}");
+
         }
 
         public override void HelpPrompt()
@@ -52,7 +56,7 @@ namespace TestConsole.DataCore.Entities
             Console.WriteLine("which combine multiple filters in order to build query logic.");
         }
 
-        public void ShowNames(List<Conjoiner> nameds) => GenericController.ShowNames(nameds);
+        public void ShowNames(List<Conjoiner> nameds) => GenericController.SelectFromList(nameds);
     }
 }
 
@@ -70,7 +74,7 @@ private void Run()
                 Add();
                 break;
             case "get":
-                GetAll();
+                ShowAll();
                 break;
             case "help":
                 ConjoinerHelp();
