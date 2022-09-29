@@ -1,6 +1,7 @@
 ﻿using DataAccess.EFCore;
 
 using Domain.Models.DataCore;
+using Domain.Models.Queries;
 
 using Services;
 
@@ -12,10 +13,11 @@ using System.Threading.Tasks;
 
 using TestConsole.Interfaces;
 
-namespace TestConsole.DataCore
+namespace TestConsole.DataCore.Entities
 {
     internal class ConjoinerController :
-        GenericDataCoreEntityController<Conjoiner>
+        DataCoreEntityController<Conjoiner>,
+        INamedEntityController<Conjoiner>
     {
         protected override string EntityType { get => "Conjoiner"; }
         public ConjoinerController(ReportContext context) : base(context)
@@ -25,7 +27,8 @@ namespace TestConsole.DataCore
 
         public override void GetAll()
         {
-            var Conjoiners = S.GetAllConjoiners();
+            List<Conjoiner> Conjoiners = new List<Conjoiner>();
+            Conjoiners.AddRange(S.GetAllConjoiners());
             ShowNames(Conjoiners);
         }
 
@@ -48,6 +51,8 @@ namespace TestConsole.DataCore
             Console.WriteLine("Conjoiners, like 'and' or 'or', are used to build conjunctions");
             Console.WriteLine("which combine multiple filters in order to build query logic.");
         }
+
+        public void ShowNames(List<Conjoiner> nameds) => GenericController.ShowNames(nameds);
     }
 }
 

@@ -48,13 +48,5 @@ namespace TestConsole
             }
             return name;
         }
-        protected void ShowNames(IEnumerable<INamed> nameds)
-        {
-
-            foreach (var item in nameds)
-            {
-                Console.WriteLine($"{item.Id}. {item.Name}");
-            }
-        }
     }
 }

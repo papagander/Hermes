@@ -8,10 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestConsole.DataCore
+using TestConsole.Interfaces;
+
+namespace TestConsole.DataCore.Entities
 {
     internal class OperatorController :
-        GenericDataCoreEntityController<Operator>
+        DataCoreEntityController<Operator>
+        , INamedEntityController<Operator>
     {
         public OperatorController(ReportContext context) : base(context)
         {
@@ -46,5 +49,7 @@ namespace TestConsole.DataCore
             Console.WriteLine("Operators, such as '=', 'contains', or '<' are used to build query logic ");
             Console.WriteLine("and define the filters which can be used on a field type.");
         }
+
+        public void ShowNames(List<Operator> nameds) => GenericController.ShowNames(nameds);
     }
 }

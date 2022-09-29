@@ -13,14 +13,6 @@ public class Field : INamed, IReferences<DataSet>, IReferences<FieldType>, IRefe
     public FieldType FieldType { get; set; }
     public DataSet DataSet { get; set; }
     private List<QueryField> queryFields { get; set; }
-    /*
-    public Field(FieldType fieldType, DataSet dataSet, string name)
-    {
-        FieldType = fieldType;
-        DataSet = dataSet;
-        FieldName = name;
-    }
-    */
     string INamed.Name { get => FieldName; set => FieldName = value;  }
     int IIndexed.Id { get { return FieldId; } set { FieldId = value; } }
     int IReferences<DataSet>.MyTRefId { get => DataSetId;  /*set => DataSetId = value;  */}

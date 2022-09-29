@@ -8,9 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestConsole.DataCore
+using TestConsole.Interfaces;
+
+namespace TestConsole.DataCore.Entities
 {
-    public class FieldTypeController : GenericDataCoreEntityController<FieldType>
+    public class FieldTypeController :
+        DataCoreEntityController<FieldType>
+        , INamedEntityController<FieldType>
     {
         public FieldTypeController(ReportContext context) : base(context)
         {
@@ -43,5 +47,7 @@ namespace TestConsole.DataCore
         {
             throw new NotImplementedException();
         }
+
+        public void ShowNames(List<FieldType> nameds) => GenericController.ShowNames(nameds);
     }
 }
