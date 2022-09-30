@@ -18,14 +18,12 @@ namespace DataAccess.EFCore.UnitOfWork.DataCore
     {
         public IFieldTypeRepository  FieldTypes { get; private set; }
         public IOperatorRepository Operators { get; private set; }
-        public IFieldTypeOperatorRepository FieldTypeOperators { get; private set; }
         public IConjoinerRepository Conjoiners { get; private set; }
         public DataCoreUnitOfWork(ReportContext reportContext) : base(reportContext)
         {
 
             FieldTypes = new FieldTypeRepository(reportContext);
             Operators = new OperatorRepository(reportContext);
-            FieldTypeOperators = new FieldTypeOperatorRepository (reportContext);
             Conjoiners = new ConjoinerRepository(reportContext);
         }
 

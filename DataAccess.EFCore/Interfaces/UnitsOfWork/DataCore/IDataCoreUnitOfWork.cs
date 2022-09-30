@@ -11,7 +11,6 @@ namespace DataAccess.EFCore.Interfaces.UnitsOfWork.DataCore
 
         IFieldTypeRepository FieldTypes { get; }
         IOperatorRepository Operators { get; }
-        IFieldTypeOperatorRepository FieldTypeOperators { get; }
         IConjoinerRepository Conjoiners { get; }
     }
 }

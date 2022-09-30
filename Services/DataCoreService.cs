@@ -30,18 +30,7 @@ namespace Services
             U.FieldTypes.Add(e);
             return Complete;
         }
-        public int Create(FieldTypeOperator e)
-        {
-            U.FieldTypeOperators.Add(e);
-            return Complete;
-        }
 
-        public int Create(FieldType fieldType, Operator op)
-        {
-            var fto = new FieldTypeOperator { FieldType = fieldType, Operator = op };
-            U.FieldTypeOperators.Add(fto);
-            return Complete;
-        }
         public int Remove(Conjoiner e)
         {
             U.Conjoiners.Remove(e);
@@ -52,22 +41,10 @@ namespace Services
             U.FieldTypes.Remove(e);
             return Complete;
         }
-        public int Remove(FieldTypeOperator e)
-        {
-            U.FieldTypeOperators.Remove(e);
-            return Complete;
-        }
         public int Remove(Operator e)
         {
             U.Operators.Remove(e);
             return Complete;
-        }
-        public int Remove(FieldType ft, Operator op)
-        {
-            var fto = GetFieldTypeOperator(ft, op);
-            if (fto is not null) U.FieldTypeOperators.Remove(fto);
-            return Complete;
-
         }
 
         public IEnumerable<Conjoiner> GetAllConjoiners() => U.Conjoiners.GetAll();
@@ -75,17 +52,6 @@ namespace Services
         public IEnumerable<FieldType> GetAllFieldTypes() => U.FieldTypes.GetAll();
 
         public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
-
-        public IEnumerable<FieldTypeOperator> GetAllFtos() => U.FieldTypeOperators.GetAll();
-
-        public FieldTypeOperator? GetFieldTypeOperator(FieldType ft, Operator op)
-        {
-            var ftos = U.FieldTypes.GetFieldTypeOperators(ft);
-            int count = ftos.Count();
-            int opId = op.Id;
-            return (from fto in ftos where fto.OperatorId == opId select fto).First();
-        }
-
         public IEnumerable<Operator> GetOperators(FieldType ft) => U.FieldTypes.GetOperators(ft);
         public IEnumerable<FieldType> GetFieldTypes(Operator ent) => U.Operators.GetFieldTypes(ent);
         public FieldType? GetFieldType(int id) => U.FieldTypes.Get(id);

@@ -35,7 +35,6 @@ public class ReportContext : DbContext
     public DbSet<Criterion> Criteria { get; set; }
     public DbSet<CriterionValue> CriterionValues { get; set; }
     public DbSet<Statement> Statements { get; set; }
-    //public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
     public DbSet<QueryField> QueryFields { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,6 +44,8 @@ public class ReportContext : DbContext
         modelBuilder.Entity<Statement>()
             .HasOne( st => st.Conjunction)
             .WithMany(s => s.Statements);
+        modelBuilder.Entity<FieldType>()
+            .Navigation(e => e.Operators).AutoInclude();
         /*
         modelBuilder.Entity<Operator>()
             .HasMany(op => op.FieldTypeOperators)
@@ -52,10 +53,8 @@ public class ReportContext : DbContext
         modelBuilder.Entity<FieldType>()
             .HasMany(ft => ft.FieldTypeOperators)
             .WithOne(fto => fto.FieldType);
-        */
         modelBuilder.Entity<FieldType>()
             .Navigation(e => e.FieldTypeOperators).AutoInclude();
-        /*
         modelBuilder.Entity<FieldTypeOperator>()
             .Navigation(e => e.Operator).AutoInclude();
         modelBuilder.Entity<FieldTypeOperator>().HasAlternateKey(e => new { e.OperatorId, e.FieldTypeId }).HasName("FieldTypeOperator");
