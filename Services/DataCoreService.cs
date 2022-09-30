@@ -35,10 +35,12 @@ namespace Services
             U.FieldTypeOperators.Add(e);
             return Complete;
         }
-        public int CreateConjoiner(string conjoinerName)
+
+        public int Create(FieldType fieldType, Operator op)
         {
-            var conjoiner = new Conjoiner { Name = conjoinerName};
-            return Create(conjoiner);
+            var fto = new FieldTypeOperator { FieldType = fieldType, Operator = op };
+            U.FieldTypeOperators.Add(fto);
+            return Complete;
         }
         public int Remove(Conjoiner e)
         {
@@ -60,51 +62,12 @@ namespace Services
             U.Operators.Remove(e);
             return Complete;
         }
-        public int CreateFieldType(string fieldTypeName)
+        public int Remove(FieldType ft, Operator op)
         {
-            var fieldType = new FieldType { Name = fieldTypeName };
-            U.FieldTypes.Add(fieldType);
-            return Complete;
-
-        }
-
-        public int CreateFieldTypeOperator(FieldType fieldType, Operator op)
-        {
-            var FieldTypeOperator = new FieldTypeOperator { FieldType = fieldType, Operator = op };
-            U.Operators.Add(op);
-            return Complete;
-        }
-        
-        public int CreateOperator(string operatorName)
-        {
-            U.Operators.Add(new Operator { Name = operatorName });
-            return Complete;
-        }
-
-        public int DeleteConjoiner(string conjoinerName)
-        {
-            U.Conjoiners.Remove(U.Conjoiners.Get(conjoinerName));
-            return Complete;
-        }
-
-        public int DeleteFieldType(string fieldTypeName)
-        {
-            U.FieldTypes.Remove(U.FieldTypes.Get(fieldTypeName));
-            return Complete;
-        }
-
-        public int DeleteFieldTypeOperator(string fieldTypeName, string operatorName)
-        {
-            var fto = GetFieldTypeOperator(fieldTypeName, operatorName);
+            var fto = GetFieldTypeOperator(ft, op);
             if (fto is not null) U.FieldTypeOperators.Remove(fto);
             return Complete;
 
-        }
-
-        public int DeleteOperator(string operatorName)
-        {
-            U.Operators.Remove(U.Operators.Get(operatorName));
-            return Complete;
         }
 
         public IEnumerable<Conjoiner> GetAllConjoiners() => U.Conjoiners.GetAll();
@@ -113,20 +76,19 @@ namespace Services
 
         public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
 
-        public FieldTypeOperator? GetFieldTypeOperator(string fieldTypeName, string operatorName)
+        public FieldTypeOperator? GetFieldTypeOperator(FieldType ft, Operator op)
         {
-            var byFieldType = U.FieldTypeOperators.GetRange(U.FieldTypes.Get(fieldTypeName));
-            int count = byFieldType.Count();
-            var operatorId = U.Operators.Get(operatorName).Id;
-            int i = 0;
-            while (byFieldType.ElementAt(i).OperatorId != operatorId & i < count) i++;
-            if (i < count) return byFieldType.ElementAt(i);
-            return null;
+            var ftos = U.FieldTypes.GetFieldTypeOperators(ft);
+            int count = ftos.Count();
+            int opId = op.Id;
+            return (from fto in ftos where fto.OperatorId == opId select fto).First();
         }
 
-        public IEnumerable<Operator> GetOperatorsByFieldType(int fieldTypeDex) => U.FieldTypes.GetOperators(U.FieldTypes.Get(fieldTypeDex));
-
-        public IEnumerable<Operator> GetOperatorsByFieldType(string fieldTypeName) => U.FieldTypes.GetOperators(U.FieldTypes.Get(fieldTypeName));
+        public IEnumerable<Operator> GetOperators(FieldType ft) => U.FieldTypes.GetOperators(ft);
+        public IEnumerable<FieldType> GetFieldTypes(Operator ent) => U.Operators.GetFieldTypes(ent);
+        public FieldType? GetFieldType(string name) => U.FieldTypes.Get(name);
+        public Operator? GetOperator(string name) => U.Operators.Get(name);
+        public Conjoiner? GetConjoiner(string name) => U.Conjoiners.Get(name);
         private int Complete => U.Complete();
     }
 }

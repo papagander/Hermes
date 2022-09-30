@@ -3,6 +3,7 @@
 using DataAccess.EFCore;
 
 using Microsoft.EntityFrameworkCore;
+
 using TestConsole.DataCore;
 
 class Program 
@@ -10,7 +11,7 @@ class Program
     public static void Main(string[] args)
     {
         var options = new DbContextOptionsBuilder<ReportContext>()
-            .UseInMemoryDatabase("Report DB")
+            .UseSqlite(@"C:\Users\TimDolin\Desktop\TestDb.sqlite")
             .Options;
 
         ReportContext context = new ReportContext(options);

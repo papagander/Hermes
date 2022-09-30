@@ -41,7 +41,7 @@ namespace TestConsole.DataCore.Entities
                 Console.WriteLine("No operator selected, cancelling insert.");
                 return;
             }
-            S.CreateFieldTypeOperator(fieldType, op);
+            S.Create(fieldType, op);
 
         }
 
@@ -80,7 +80,7 @@ namespace TestConsole.DataCore.Entities
                 Console.WriteLine("No op selected, cancelling remove.");
                 return;
             }
-            S.DeleteFieldTypeOperator(fieldType.Name, op.Name);
+            S.Remove(fieldType, op);
         }
     }
 }

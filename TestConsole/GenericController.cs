@@ -74,12 +74,13 @@ public abstract class GenericController : IController
         Console.ReadLine();
     }
     public abstract void HelpPrompt();
-    internal static F? SelectFromList<F>(List<F> items) where F : class
+    internal static F? SelectFromList<F>(IEnumerable<F> items) where F : class
     {
+        var _ = items.ToList();
         Console.WriteLine("Enter a number to select an item. Press enter to terminate selection.");
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < _.Count; i++)
         {
-            F item = items[i];
+            F item = _[i];
             Console.WriteLine($"{i}. {item.ToString()}");
         }
         string? input = Console.ReadLine();
@@ -88,17 +89,17 @@ public abstract class GenericController : IController
         if (!int.TryParse(input, out intput))
         {
             Console.WriteLine("Could not parse input.");
-            return SelectFromList(items);
+            return SelectFromList(_);
         }
-        if (intput >= items.Count)
+        if (intput >= _.Count)
         {
             Console.WriteLine("Input out of range");
-            return SelectFromList(items);
+            return SelectFromList(_);
         }
-        return items[intput];
+        return _[intput];
 
     }
-    protected void ShowAll<T>(IEnumerable<T> items) where T : class, IIndexed
+    protected void ShowList<T>(IEnumerable<T> items) where T : class, IIndexed
     {
         foreach (var item in items)
         {

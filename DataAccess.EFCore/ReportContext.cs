@@ -17,6 +17,7 @@ namespace DataAccess.EFCore
     {
         public ReportContext(DbContextOptions<ReportContext> options) : base(options)
         {
+
         }
 
         // Core
@@ -32,20 +33,15 @@ namespace DataAccess.EFCore
         public DbSet<Query> Queries { get; set; }
         public DbSet<Conjunction> Conjuctions { get; set; }
         public DbSet<Criterion> Criteria { get; set; }
-        //public DbSet<CriterionValue> CriterionValues { get; set; }
+        public DbSet<CriterionValue> CriterionValues { get; set; }
         public DbSet<Statement> Statements { get; set; }
         public DbSet<FieldTypeOperator> FieldTypeOperators{ get; set; }
         public DbSet<QueryField> QueryFields { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Conjoiner>();
-            modelBuilder.Entity<Conjoiner>().HasIndex(c => c.Id).IsUnique();
-
-        }
+        DbContextOptions options = new DbContextOptionsBuilder<ReportContext>()
+            .UseSqlite(@"C:\Users\TimDolin\Desktop\TestDb.sqlite")
+            .Options;
 
     }
 }

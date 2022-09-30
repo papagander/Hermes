@@ -19,8 +19,12 @@ namespace DataAccess.EFCore.Repository.DataCore
             _Fto = new(_context);
         }
 
-        public IEnumerable<FieldType> GetChildren(Operator MyT) => _Ft.GetChildren(MyT);
+
+        public IEnumerable<FieldType> GetFieldTypes(Operator ent) => _Ft.GetChildren(ent);
 
         IEnumerable<FieldTypeOperator> IReferencedByRepository<Operator, FieldTypeOperator>.GetChildren(Operator MyT) => _Fto.GetChildren(MyT);
+
+        IEnumerable<FieldType> IReferencedByRepository<Operator, FieldType>.GetChildren(Operator MyT) => _Ft.GetChildren(MyT);
+
     }
 }

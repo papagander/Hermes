@@ -11,25 +11,24 @@ namespace Services.Interfaces
     public interface IDataCoreService
     {
         // Field Type
-        int CreateFieldType(string fieldTypeName);
-        int DeleteFieldType(string fieldTypeName);
+        int Create(FieldType ft);
+        int Create(Operator op);
+        int Create(Conjoiner cjr);
+        int Create(FieldType fieldType, Operator op);
+        FieldType GetFieldType(string name);
+        Operator GetOperator(string name);
+        Conjoiner GetConjoiner(string name);
+        FieldTypeOperator? GetFieldTypeOperator(FieldType ft, Operator op);
         IEnumerable<FieldType> GetAllFieldTypes();
-        IEnumerable<Operator> GetOperatorsByFieldType(int fieldTypeDex);
-        IEnumerable<Operator> GetOperatorsByFieldType(string fieldTypeName);
-
-        // Operator
-        int CreateOperator(string operatorName);
-        int DeleteOperator(string operatorName);
         IEnumerable<Operator> GetAllOperators();
-        // Conjoiner
-        int CreateConjoiner(string conjoinerName);
-        int DeleteConjoiner(string conjoinerName);
         IEnumerable<Conjoiner> GetAllConjoiners();
+        IEnumerable<Operator> GetOperators(FieldType ft);
+        IEnumerable<FieldType> GetFieldTypes(Operator ent);
 
-        // FieldTypeOperator
-        int CreateFieldTypeOperator(FieldType fieldType , Operator op);
-        FieldTypeOperator? GetFieldTypeOperator(string fieldTypeName, string operatorName);
-        int DeleteFieldTypeOperator(string fieldTypeName, string operatorName);
+        int Remove(FieldType ft);
+        int Remove(Operator op);
+        int Remove(Conjoiner cjr);
+        int Remove(FieldType ft, Operator op);
 
     }
 }

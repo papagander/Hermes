@@ -21,7 +21,6 @@ namespace TestConsole.DataCore.Entities
         protected override string EntityType { get => "Conjoiner"; }
         public ConjoinerController(ReportContext context) : base(context)
         {
-            S = new DataCoreService(reportContext);
         }
 
         public override void ShowAll()
@@ -34,7 +33,8 @@ namespace TestConsole.DataCore.Entities
         public override void Add()
         {
             string name = NamePrompt(EntityType);
-            int output = S.CreateConjoiner(name);
+            var ent = new Conjoiner { Name = name };
+            int output = S.Create(ent);
             if (output == 0) Console.WriteLine("Failed to create conjoiner.");
             if (output == 1) Console.WriteLine($"Created conjoiner {name}");
             else Console.WriteLine($"Service returned: {output}");
@@ -43,7 +43,8 @@ namespace TestConsole.DataCore.Entities
         public override void Remove()
         {
             string name = NamePrompt(EntityType);
-            int output = S.DeleteConjoiner(name);
+            var ent = new Conjoiner { Name = name };
+            int output = S.Remove(ent);
             if (output == 0) Console.WriteLine("Failed to remove conjoiner.");
             if (output == 1) Console.WriteLine($"Removed conjoiner {name}");
             else Console.WriteLine($"Service returned: {output}");

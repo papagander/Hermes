@@ -17,8 +17,10 @@ namespace TestConsole.DataCore
     {
         public DataCoreController(ReportContext context) : base(context)
         {
-            Functions.Add(new("conjoiner", ConjoinerMenu));
-            Functions.Add(new("operator", OperatorMenu));
+            Functions.Add(new("cjr", ConjoinerMenu));
+            Functions.Add(new("ft", FieldTypeMenu));
+            Functions.Add(new("op", OperatorMenu));
+            Functions.Add(new("fto", FieldTypeOperatorMenu));
             Functions.Add(new("about", About));
             Console.Clear();
             Console.WriteLine("Welcome to Hermes DataCore interface!");
@@ -56,8 +58,18 @@ namespace TestConsole.DataCore
         }
         public void OperatorMenu()
         {
-            OperatorController operatorController = new(reportContext);
-            operatorController.Run();
+            OperatorController controller = new(reportContext);
+            controller.Run();
+        }
+        public void FieldTypeMenu()
+        {
+            FieldTypeController controller = new(reportContext);
+            controller.Run();
+        }
+        public void FieldTypeOperatorMenu()
+        {
+            FieldTypeOperatorController controller = new(reportContext);
+            controller.Run();
         }
         public override void HelpPrompt()
         {
