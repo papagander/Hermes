@@ -13,16 +13,6 @@ namespace DataAccess.EFCore.Repository.Queries
         }
 
         public IEnumerable<Statement> GetChildren(Conjunction MyT) => RefS.GetChildren(MyT);
-        /*
-public string ToString(int conjunctionId)
-{
-   Conjunction conjunction = GetById(conjunctionId);
-   foreach (var statement in conjunction.Statements)
-   {
-
-   }
-}
-*/
     }
 }
 

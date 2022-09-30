@@ -84,7 +84,7 @@ public abstract class GenericController : IController
             Console.WriteLine($"{i}. {item.ToString()}");
         }
         string? input = Console.ReadLine();
-        if (input is null) return null;
+        if (input == "") return null;
         int intput;
         if (!int.TryParse(input, out intput))
         {

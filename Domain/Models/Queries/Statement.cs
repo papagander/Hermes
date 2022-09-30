@@ -21,7 +21,7 @@ public class Statement :
     public int? ConjunctionId { get; set; }
     public Conjunction? Conjunction { get; set; }
     public List<Conjunction> Conjunctions { get; set; }
-    public List< Criterion> Criterions { get; set; }
+    public List<Criterion> Criterions { get; set; }
 
     Criterion? ISuperTypeOf<Criterion>.MySub { get => Criterions[0];  }
     Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunctions[0]; }

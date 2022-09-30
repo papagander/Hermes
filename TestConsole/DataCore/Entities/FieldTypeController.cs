@@ -19,7 +19,8 @@ namespace TestConsole.DataCore.Entities
     {
         public FieldTypeController(ReportContext context) : base(context)
         {
-            Functions.Add(new("showops",ShowOperators));
+            Functions.Add(new("addops", AddOperators));
+            Functions.Add(new("showops", ShowOperators));
         }
 
         protected override string EntityType { get => "FieldType"; }
@@ -34,8 +35,40 @@ namespace TestConsole.DataCore.Entities
             if (output == 1) Console.WriteLine($"Created field type '{name}'");
             else Console.WriteLine($"Service returned: {output}");
         }
-
-
+        public void AddOperators()
+        {
+            Console.WriteLine("Select a field type to add operators to.");
+            var fts = S.GetAllFieldTypes();
+            var ft = SelectFromList(fts);
+            if (ft is null)
+            {
+                Console.WriteLine("Cancelling");
+                return;
+            }
+            Console.WriteLine("Select operators to add.");
+            List<Operator> ops = new();
+            List<Operator> unselectedOps = S.GetAllOperators().ToList();
+            var op = SelectFromList(unselectedOps);
+            while (op is not null)
+            {
+                unselectedOps.Remove(op);
+                ops.Add(op);
+                op = SelectFromList(unselectedOps);
+            }
+            if (ops.Count == 0)
+            {
+                Console.WriteLine("Cancelling");
+                return;
+            }
+            foreach (var _op in ops)
+            {
+                S.Create(ft, _op);
+            }
+            ft = S.GetFieldType(ft.Id);
+            var _ops = S.GetOperators(ft);
+            Console.WriteLine($"Updated {ft.Name}:");
+            ShowList(_ops);
+        }
         public override void ShowAll() => ShowList(S.GetAllFieldTypes());
 
         public override void HelpPrompt()

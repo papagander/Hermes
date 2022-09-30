@@ -1,4 +1,5 @@
-﻿using DataAccess.EFCore;
+﻿global using Domain;
+using DataAccess.EFCore;
 
 using System;
 using System.Collections.Generic;

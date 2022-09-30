@@ -1,15 +1,15 @@
 ﻿using Domain.Interfaces.Models;
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Domain.Models.DataCore
 {
     public class FieldType : Named, IReferencedBy<Operator>, IReferencedBy<FieldTypeOperator>
     {
         // text, int, date, money?
         public List<FieldTypeOperator> FieldTypeOperators { get; set; }
-        public List<Operator> Operators { get; set; }
-        
-        List<Operator> IReferencedBy<Operator>.MyTs
-        {
+        [NotMapped]
+        public List<Operator> Operators {
             get
             {
                 List<Operator> operators = new List<Operator>();
@@ -17,6 +17,9 @@ namespace Domain.Models.DataCore
                 return operators;
             }
         }
+        
+        List<Operator> IReferencedBy<Operator>.MyTs => Operators;
+        
 
         List<FieldTypeOperator> IReferencedBy<FieldTypeOperator>.MyTs { get => FieldTypeOperators; }
     }

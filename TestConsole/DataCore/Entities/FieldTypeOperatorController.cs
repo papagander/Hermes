@@ -19,7 +19,7 @@ namespace TestConsole.DataCore.Entities
         {
         }
 
-        protected override string EntityType { get; }
+        protected override string EntityType { get => "FieldTypeOperator"; }
 
         public override void Add()
         {
@@ -41,18 +41,16 @@ namespace TestConsole.DataCore.Entities
                 Console.WriteLine("No operator selected, cancelling insert.");
                 return;
             }
-            S.Create(fieldType, op);
+            int result = S.Create(fieldType, op);
+            if (result == 0) Console.WriteLine("Failed to insert.");
+            else if (result == 1) Console.WriteLine("Inserted successfully!");
+            else Console.WriteLine($"Service returned: {result}");
 
         }
 
         public override void ShowAll()
         {
-            List<FieldTypeOperator> fieldTypeOperators = new();
-            for (int i = 0; i < fieldTypeOperators.Count; i++)
-            {
-                FieldTypeOperator? fto = fieldTypeOperators[i];
-                Console.WriteLine(fto.ToString());
-            }
+            ShowList(S.GetAllFtos());
         }
 
         public override void HelpPrompt()

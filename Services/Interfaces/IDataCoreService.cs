@@ -15,13 +15,14 @@ namespace Services.Interfaces
         int Create(Operator op);
         int Create(Conjoiner cjr);
         int Create(FieldType fieldType, Operator op);
-        FieldType GetFieldType(string name);
-        Operator GetOperator(string name);
-        Conjoiner GetConjoiner(string name);
+        FieldType GetFieldType(int id);
+        Operator GetOperator(int id);
+        Conjoiner GetConjoiner(int id);
         FieldTypeOperator? GetFieldTypeOperator(FieldType ft, Operator op);
         IEnumerable<FieldType> GetAllFieldTypes();
         IEnumerable<Operator> GetAllOperators();
         IEnumerable<Conjoiner> GetAllConjoiners();
+        IEnumerable<FieldTypeOperator> GetAllFtos();
         IEnumerable<Operator> GetOperators(FieldType ft);
         IEnumerable<FieldType> GetFieldTypes(Operator ent);
 

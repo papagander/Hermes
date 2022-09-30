@@ -30,9 +30,7 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
     public int StatementId { get; set; }
 
     public Conjoiner Conjoiner { get; set; }
-    [NotMapped]
     public Statement Statement { get; set; }
-    [NotMapped]
     public List<Statement> Statements { get; set; }
     int ISubTypeOf<Statement>.MySuperId { get => StatementId; set => StatementId = value; }
     Statement ISubTypeOf<Statement>.MySuper { get => Statement; set => Statement = value; }

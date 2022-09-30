@@ -1,8 +1,8 @@
-﻿using DataAccess.EFCore;
+﻿global using Domain;
+using DataAccess.EFCore;
 
 using Domain.Models.DataCore;
 using Domain.Models.Queries;
-
 using Services;
 
 using System;
@@ -27,7 +27,7 @@ namespace TestConsole.DataCore.Entities
         {
             List<Conjoiner> Conjoiners = new List<Conjoiner>();
             Conjoiners.AddRange(S.GetAllConjoiners());
-            ShowNames(Conjoiners);
+            ShowList(Conjoiners);
         }
 
         public override void Add()
@@ -57,7 +57,7 @@ namespace TestConsole.DataCore.Entities
             Console.WriteLine("which combine multiple filters in order to build query logic.");
         }
 
-        public void ShowNames(List<Conjoiner> nameds) => GenericController.SelectFromList(nameds);
+        public void SelectName(List<Conjoiner> nameds) => GenericController.SelectFromList(nameds);
     }
 }
 

@@ -76,6 +76,8 @@ namespace Services
 
         public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
 
+        public IEnumerable<FieldTypeOperator> GetAllFtos() => U.FieldTypeOperators.GetAll();
+
         public FieldTypeOperator? GetFieldTypeOperator(FieldType ft, Operator op)
         {
             var ftos = U.FieldTypes.GetFieldTypeOperators(ft);
@@ -86,9 +88,10 @@ namespace Services
 
         public IEnumerable<Operator> GetOperators(FieldType ft) => U.FieldTypes.GetOperators(ft);
         public IEnumerable<FieldType> GetFieldTypes(Operator ent) => U.Operators.GetFieldTypes(ent);
-        public FieldType? GetFieldType(string name) => U.FieldTypes.Get(name);
-        public Operator? GetOperator(string name) => U.Operators.Get(name);
-        public Conjoiner? GetConjoiner(string name) => U.Conjoiners.Get(name);
+        public FieldType? GetFieldType(int id) => U.FieldTypes.Get(id);
+        public Operator? GetOperator(int id) => U.Operators.Get(id);
+        public Conjoiner? GetConjoiner(int id) => U.Conjoiners.Get(id);
+
         private int Complete => U.Complete();
     }
 }

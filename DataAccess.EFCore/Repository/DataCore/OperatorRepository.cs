@@ -1,4 +1,5 @@
-﻿using DataAccess.EFCore.Interfaces.Repositories.DataCore;
+﻿global using Domain;
+using DataAccess.EFCore.Interfaces.Repositories.DataCore;
 
 using System;
 using System.Collections.Generic;

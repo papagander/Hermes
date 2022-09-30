@@ -11,7 +11,7 @@ class Program
     public static void Main(string[] args)
     {
         var options = new DbContextOptionsBuilder<ReportContext>()
-            .UseSqlite(@"C:\Users\TimDolin\Desktop\TestDb.sqlite")
+            .UseSqlite(@"Data Source=C:\Users\Tim\Desktop\ReportDb.db")
             .Options;
 
         ReportContext context = new ReportContext(options);
