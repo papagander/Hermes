@@ -8,9 +8,8 @@ namespace Domain.Models.DataCore
     {
         // text, int, date, money?
         public List<Operator> Operators { get; set; }
-        List<Operator> IReferencedBy<Operator>.MyTs => Operators;
-        
-
+        [NotMapped]
+        public List<Operator> MyTs { get => Operators; set => Operators = value; }
     }
 
 }

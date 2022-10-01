@@ -19,7 +19,6 @@ namespace TestConsole.DataCore.Entities
     {
         public OperatorController(ReportContext context) : base(context)
         {
-            Functions.Add(new("showfts",ShowFieldTypes));
         }
 
         protected override string EntityType { get => "Operator"; }
@@ -50,19 +49,9 @@ namespace TestConsole.DataCore.Entities
         }
         public override void HelpPrompt()
         {
-            Console.WriteLine("Operators, such as '=', 'contains', or '<' are used to build query logic ");
+            Console.WriteLine("Operator, such as '=', 'contains', or '<' are used to build query logic ");
             Console.WriteLine("and define the filters which can be used on a field type.");
         }
 
-        public void ShowFieldTypes()
-        {
-            var op = SelectFromList(S.GetAllOperators());
-            if (op is null) 
-            {
-                Console.WriteLine("Selection cancelled.");
-                return;
-            }
-            ShowList(op.FieldTypes);
-        }
     }
 }

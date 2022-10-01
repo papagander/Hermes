@@ -4,12 +4,12 @@
 
 namespace Domain.Migrations
 {
-    public partial class query : Migration
+    public partial class asdf : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Conjoiners",
+                name: "Conjoiner",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -18,11 +18,11 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Conjoiners", x => x.Id);
+                    table.PrimaryKey("PK_Conjoiner", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DataSets",
+                name: "DataSet",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -31,11 +31,11 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DataSets", x => x.Id);
+                    table.PrimaryKey("PK_DataSet", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FieldTypes",
+                name: "FieldType",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -44,11 +44,11 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FieldTypes", x => x.Id);
+                    table.PrimaryKey("PK_FieldType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Operators",
+                name: "Operator",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -57,37 +57,62 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Operators", x => x.Id);
+                    table.PrimaryKey("PK_Operator", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FieldTypeOperators",
+                name: "Field",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    DataSetId = table.Column<int>(type: "INTEGER", nullable: false),
                     FieldTypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    OperatorId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FieldTypeOperators", x => x.Id);
+                    table.PrimaryKey("PK_Field", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FieldTypeOperators_FieldTypes_FieldTypeId",
-                        column: x => x.FieldTypeId,
-                        principalTable: "FieldTypes",
+                        name: "FK_Field_DataSet_DataSetId",
+                        column: x => x.DataSetId,
+                        principalTable: "DataSet",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FieldTypeOperators_Operators_OperatorId",
-                        column: x => x.OperatorId,
-                        principalTable: "Operators",
+                        name: "FK_Field_FieldType_FieldTypeId",
+                        column: x => x.FieldTypeId,
+                        principalTable: "FieldType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Conjunctions",
+                name: "FieldTypeOperator",
+                columns: table => new
+                {
+                    FieldTypesId = table.Column<int>(type: "INTEGER", nullable: false),
+                    OperatorsId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FieldTypeOperator", x => new { x.FieldTypesId, x.OperatorsId });
+                    table.ForeignKey(
+                        name: "FK_FieldTypeOperator_FieldType_FieldTypesId",
+                        column: x => x.FieldTypesId,
+                        principalTable: "FieldType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FieldTypeOperator_Operator_OperatorsId",
+                        column: x => x.OperatorsId,
+                        principalTable: "Operator",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Conjunction",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -97,17 +122,17 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Conjunctions", x => x.Id);
+                    table.PrimaryKey("PK_Conjunction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Conjunctions_Conjoiners_ConjoinerId",
+                        name: "FK_Conjunction_Conjoiner_ConjoinerId",
                         column: x => x.ConjoinerId,
-                        principalTable: "Conjoiners",
+                        principalTable: "Conjoiner",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Statements",
+                name: "Statement",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -116,76 +141,16 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Statements", x => x.Id);
+                    table.PrimaryKey("PK_Statement", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Statements_Conjunctions_ConjunctionId",
+                        name: "FK_Statement_Conjunction_ConjunctionId",
                         column: x => x.ConjunctionId,
-                        principalTable: "Conjunctions",
+                        principalTable: "Conjunction",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Queries",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DataSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    StatementId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Queries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Queries_DataSets_DataSetId",
-                        column: x => x.DataSetId,
-                        principalTable: "DataSets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Queries_Statements_StatementId",
-                        column: x => x.StatementId,
-                        principalTable: "Statements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Fields",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DataSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    FieldTypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    QueryId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Fields", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Fields_DataSets_DataSetId",
-                        column: x => x.DataSetId,
-                        principalTable: "DataSets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Fields_FieldTypes_FieldTypeId",
-                        column: x => x.FieldTypeId,
-                        principalTable: "FieldTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Fields_Queries_QueryId",
-                        column: x => x.QueryId,
-                        principalTable: "Queries",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Criteria",
+                name: "Criterion",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -196,55 +161,56 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Criteria", x => x.Id);
+                    table.PrimaryKey("PK_Criterion", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Criteria_Fields_FieldId",
+                        name: "FK_Criterion_Field_FieldId",
                         column: x => x.FieldId,
-                        principalTable: "Fields",
+                        principalTable: "Field",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Criteria_Operators_OperatorId",
+                        name: "FK_Criterion_Operator_OperatorId",
                         column: x => x.OperatorId,
-                        principalTable: "Operators",
+                        principalTable: "Operator",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Criteria_Statements_StatementId",
+                        name: "FK_Criterion_Statement_StatementId",
                         column: x => x.StatementId,
-                        principalTable: "Statements",
+                        principalTable: "Statement",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "QueryFields",
+                name: "Query",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    QueryId = table.Column<int>(type: "INTEGER", nullable: false),
-                    FieldId = table.Column<int>(type: "INTEGER", nullable: false)
+                    DataSetId = table.Column<int>(type: "INTEGER", nullable: false),
+                    StatementId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QueryFields", x => x.Id);
+                    table.PrimaryKey("PK_Query", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QueryFields_Fields_FieldId",
-                        column: x => x.FieldId,
-                        principalTable: "Fields",
+                        name: "FK_Query_DataSet_DataSetId",
+                        column: x => x.DataSetId,
+                        principalTable: "DataSet",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_QueryFields_Queries_QueryId",
-                        column: x => x.QueryId,
-                        principalTable: "Queries",
+                        name: "FK_Query_Statement_StatementId",
+                        column: x => x.StatementId,
+                        principalTable: "Statement",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CriterionValues",
+                name: "CriterionValue",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -254,100 +220,109 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CriterionValues", x => x.Id);
+                    table.PrimaryKey("PK_CriterionValue", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CriterionValues_Criteria_CriterionId",
+                        name: "FK_CriterionValue_Criterion_CriterionId",
                         column: x => x.CriterionId,
-                        principalTable: "Criteria",
+                        principalTable: "Criterion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FieldQuery",
+                columns: table => new
+                {
+                    FieldsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    QueriesId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FieldQuery", x => new { x.FieldsId, x.QueriesId });
+                    table.ForeignKey(
+                        name: "FK_FieldQuery_Field_FieldsId",
+                        column: x => x.FieldsId,
+                        principalTable: "Field",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FieldQuery_Query_QueriesId",
+                        column: x => x.QueriesId,
+                        principalTable: "Query",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Conjunctions_ConjoinerId",
-                table: "Conjunctions",
+                name: "IX_Conjunction_ConjoinerId",
+                table: "Conjunction",
                 column: "ConjoinerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Conjunctions_StatementId",
-                table: "Conjunctions",
+                name: "IX_Conjunction_StatementId",
+                table: "Conjunction",
                 column: "StatementId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Criteria_FieldId",
-                table: "Criteria",
+                name: "IX_Criterion_FieldId",
+                table: "Criterion",
                 column: "FieldId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Criteria_OperatorId",
-                table: "Criteria",
+                name: "IX_Criterion_OperatorId",
+                table: "Criterion",
                 column: "OperatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Criteria_StatementId",
-                table: "Criteria",
+                name: "IX_Criterion_StatementId",
+                table: "Criterion",
                 column: "StatementId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CriterionValues_CriterionId",
-                table: "CriterionValues",
+                name: "IX_CriterionValue_CriterionId",
+                table: "CriterionValue",
                 column: "CriterionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Fields_DataSetId",
-                table: "Fields",
+                name: "IX_Field_DataSetId",
+                table: "Field",
                 column: "DataSetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Fields_FieldTypeId",
-                table: "Fields",
+                name: "IX_Field_FieldTypeId",
+                table: "Field",
                 column: "FieldTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Fields_QueryId",
-                table: "Fields",
-                column: "QueryId");
+                name: "IX_FieldQuery_QueriesId",
+                table: "FieldQuery",
+                column: "QueriesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FieldTypeOperators_FieldTypeId",
-                table: "FieldTypeOperators",
-                column: "FieldTypeId");
+                name: "IX_FieldTypeOperator_OperatorsId",
+                table: "FieldTypeOperator",
+                column: "OperatorsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FieldTypeOperators_OperatorId",
-                table: "FieldTypeOperators",
-                column: "OperatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Queries_DataSetId",
-                table: "Queries",
+                name: "IX_Query_DataSetId",
+                table: "Query",
                 column: "DataSetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Queries_StatementId",
-                table: "Queries",
+                name: "IX_Query_StatementId",
+                table: "Query",
                 column: "StatementId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QueryFields_FieldId",
-                table: "QueryFields",
-                column: "FieldId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QueryFields_QueryId",
-                table: "QueryFields",
-                column: "QueryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Statements_ConjunctionId",
-                table: "Statements",
+                name: "IX_Statement_ConjunctionId",
+                table: "Statement",
                 column: "ConjunctionId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Conjunctions_Statements_StatementId",
-                table: "Conjunctions",
+                name: "FK_Conjunction_Statement_StatementId",
+                table: "Conjunction",
                 column: "StatementId",
-                principalTable: "Statements",
+                principalTable: "Statement",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -355,48 +330,48 @@ namespace Domain.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Conjunctions_Conjoiners_ConjoinerId",
-                table: "Conjunctions");
+                name: "FK_Conjunction_Conjoiner_ConjoinerId",
+                table: "Conjunction");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Conjunctions_Statements_StatementId",
-                table: "Conjunctions");
+                name: "FK_Conjunction_Statement_StatementId",
+                table: "Conjunction");
 
             migrationBuilder.DropTable(
-                name: "CriterionValues");
+                name: "CriterionValue");
 
             migrationBuilder.DropTable(
-                name: "FieldTypeOperators");
+                name: "FieldQuery");
 
             migrationBuilder.DropTable(
-                name: "QueryFields");
+                name: "FieldTypeOperator");
 
             migrationBuilder.DropTable(
-                name: "Criteria");
+                name: "Criterion");
 
             migrationBuilder.DropTable(
-                name: "Fields");
+                name: "Query");
 
             migrationBuilder.DropTable(
-                name: "Operators");
+                name: "Field");
 
             migrationBuilder.DropTable(
-                name: "FieldTypes");
+                name: "Operator");
 
             migrationBuilder.DropTable(
-                name: "Queries");
+                name: "DataSet");
 
             migrationBuilder.DropTable(
-                name: "DataSets");
+                name: "FieldType");
 
             migrationBuilder.DropTable(
-                name: "Conjoiners");
+                name: "Conjoiner");
 
             migrationBuilder.DropTable(
-                name: "Statements");
+                name: "Statement");
 
             migrationBuilder.DropTable(
-                name: "Conjunctions");
+                name: "Conjunction");
         }
     }
 }

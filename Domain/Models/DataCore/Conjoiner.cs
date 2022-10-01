@@ -9,11 +9,6 @@ namespace Domain.Models.DataCore
     public class Conjoiner : Named
     {
         // AND, OR
-
-
-        //string INamed.Name { get { return Name; } set { Name = value; } }
-        //int IIndexed.Id { get { return Id; } set { Id = value; } }
-        
     }
 
 }

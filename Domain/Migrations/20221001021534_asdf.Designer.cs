@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    [Migration("20220930214533_query")]
-    partial class query
+    [Migration("20221001021534_asdf")]
+    partial class asdf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Conjoiners");
+                    b.ToTable("Conjoiner");
                 });
 
             modelBuilder.Entity("Domain.Models.DataCore.FieldType", b =>
@@ -46,28 +46,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FieldTypes");
-                });
-
-            modelBuilder.Entity("Domain.Models.DataCore.FieldTypeOperator", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("FieldTypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("OperatorId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FieldTypeId");
-
-                    b.HasIndex("OperatorId");
-
-                    b.ToTable("FieldTypeOperators");
+                    b.ToTable("FieldType");
                 });
 
             modelBuilder.Entity("Domain.Models.DataCore.Operator", b =>
@@ -82,7 +61,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Operators");
+                    b.ToTable("Operator");
                 });
 
             modelBuilder.Entity("Domain.Models.DataSets.DataSet", b =>
@@ -97,7 +76,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataSets");
+                    b.ToTable("DataSet");
                 });
 
             modelBuilder.Entity("Domain.Models.DataSets.Field", b =>
@@ -116,18 +95,13 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("QueryId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DataSetId");
 
                     b.HasIndex("FieldTypeId");
 
-                    b.HasIndex("QueryId");
-
-                    b.ToTable("Fields");
+                    b.ToTable("Field");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Conjunction", b =>
@@ -148,7 +122,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("StatementId");
 
-                    b.ToTable("Conjunctions");
+                    b.ToTable("Conjunction");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Criterion", b =>
@@ -174,7 +148,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("StatementId");
 
-                    b.ToTable("Criteria");
+                    b.ToTable("Criterion");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.CriterionValue", b =>
@@ -194,7 +168,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("CriterionId");
 
-                    b.ToTable("CriterionValues");
+                    b.ToTable("CriterionValue");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Query", b =>
@@ -219,28 +193,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("StatementId");
 
-                    b.ToTable("Queries");
-                });
-
-            modelBuilder.Entity("Domain.Models.Queries.QueryField", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("FieldId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("QueryId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FieldId");
-
-                    b.HasIndex("QueryId");
-
-                    b.ToTable("QueryFields");
+                    b.ToTable("Query");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Statement", b =>
@@ -256,26 +209,37 @@ namespace Domain.Migrations
 
                     b.HasIndex("ConjunctionId");
 
-                    b.ToTable("Statements");
+                    b.ToTable("Statement");
                 });
 
-            modelBuilder.Entity("Domain.Models.DataCore.FieldTypeOperator", b =>
+            modelBuilder.Entity("FieldQuery", b =>
                 {
-                    b.HasOne("Domain.Models.DataCore.FieldType", "FieldType")
-                        .WithMany("FieldTypeOperators")
-                        .HasForeignKey("FieldTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("FieldsId")
+                        .HasColumnType("INTEGER");
 
-                    b.HasOne("Domain.Models.DataCore.Operator", "Operator")
-                        .WithMany("FieldTypeOperators")
-                        .HasForeignKey("OperatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("QueriesId")
+                        .HasColumnType("INTEGER");
 
-                    b.Navigation("FieldType");
+                    b.HasKey("FieldsId", "QueriesId");
 
-                    b.Navigation("Operator");
+                    b.HasIndex("QueriesId");
+
+                    b.ToTable("FieldQuery");
+                });
+
+            modelBuilder.Entity("FieldTypeOperator", b =>
+                {
+                    b.Property<int>("FieldTypesId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OperatorsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("FieldTypesId", "OperatorsId");
+
+                    b.HasIndex("OperatorsId");
+
+                    b.ToTable("FieldTypeOperator");
                 });
 
             modelBuilder.Entity("Domain.Models.DataSets.Field", b =>
@@ -291,10 +255,6 @@ namespace Domain.Migrations
                         .HasForeignKey("FieldTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Models.Queries.Query", null)
-                        .WithMany("Fields")
-                        .HasForeignKey("QueryId");
 
                     b.Navigation("DataSet");
 
@@ -377,25 +337,6 @@ namespace Domain.Migrations
                     b.Navigation("Statement");
                 });
 
-            modelBuilder.Entity("Domain.Models.Queries.QueryField", b =>
-                {
-                    b.HasOne("Domain.Models.DataSets.Field", "Field")
-                        .WithMany()
-                        .HasForeignKey("FieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.Queries.Query", "Query")
-                        .WithMany()
-                        .HasForeignKey("QueryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Field");
-
-                    b.Navigation("Query");
-                });
-
             modelBuilder.Entity("Domain.Models.Queries.Statement", b =>
                 {
                     b.HasOne("Domain.Models.Queries.Conjunction", "Conjunction")
@@ -405,14 +346,34 @@ namespace Domain.Migrations
                     b.Navigation("Conjunction");
                 });
 
-            modelBuilder.Entity("Domain.Models.DataCore.FieldType", b =>
+            modelBuilder.Entity("FieldQuery", b =>
                 {
-                    b.Navigation("FieldTypeOperators");
+                    b.HasOne("Domain.Models.DataSets.Field", null)
+                        .WithMany()
+                        .HasForeignKey("FieldsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Queries.Query", null)
+                        .WithMany()
+                        .HasForeignKey("QueriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Models.DataCore.Operator", b =>
+            modelBuilder.Entity("FieldTypeOperator", b =>
                 {
-                    b.Navigation("FieldTypeOperators");
+                    b.HasOne("Domain.Models.DataCore.FieldType", null)
+                        .WithMany()
+                        .HasForeignKey("FieldTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.DataCore.Operator", null)
+                        .WithMany()
+                        .HasForeignKey("OperatorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Models.DataSets.DataSet", b =>
@@ -428,11 +389,6 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Models.Queries.Criterion", b =>
                 {
                     b.Navigation("CriterionValues");
-                });
-
-            modelBuilder.Entity("Domain.Models.Queries.Query", b =>
-                {
-                    b.Navigation("Fields");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Statement", b =>

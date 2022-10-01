@@ -10,6 +10,6 @@ public class DataSet : Named, IReferencedBy<Field>
 
     //public DataSet(string name)=> Name = name;
 
-    List<Field> IReferencedBy<Field>.MyTs{get => Fields; }
+    List<Field> IReferencedBy<Field>.MyTs{ get => Fields; set => Fields = value; }
 }
 

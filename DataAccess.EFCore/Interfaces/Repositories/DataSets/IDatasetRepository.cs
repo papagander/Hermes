@@ -10,6 +10,6 @@ namespace DataAccess.EFCore.Interfaces.Repositories.DataSets
 {
     public interface IDatasetRepository : INamedRepository<DataSet>, IReferencedByRepository<DataSet, Field>
     {
-
+        IEnumerable<Field> GetFields(DataSet dt);
     }
 }

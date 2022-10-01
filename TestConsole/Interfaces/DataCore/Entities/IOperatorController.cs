@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace TestConsole.Interfaces.DataCore.Entities
 {
-    internal interface IOperatorController : IEntityController<Operator>
+    internal interface IOperatorController : 
+        IEntityController<Operator>
     {
-        public void ShowFieldTypes();
     }
 }

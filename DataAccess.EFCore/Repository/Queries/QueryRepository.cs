@@ -1,4 +1,6 @@
-﻿using Domain.Models.DataSets;
+﻿using DataAccess.EFCore.Interfaces.Repositories.Queries;
+
+using Domain.Models.DataSets;
 using Domain.Models.Queries;
 
 using System;
@@ -11,16 +13,22 @@ namespace DataAccess.EFCore.Repository.Queries
 {
     public class QueryRepository : NamedRepository<Query>, IQueryRepository
     {
-        ReferencedByRepository<Query, Field> RefF;
-        ReferencesRepository<Query, DataSet> RefDS;
+        ReferencedByRepository<Query, Field> f;
+        ReferencesRepository<Query, DataSet> ds;
         public QueryRepository(ReportContext _context) : base(_context)
         {
-            RefF = new ReferencedByRepository<Query, Field>(_context);
-            RefDS = new ReferencesRepository<Query, DataSet>(_context);
+            f = new ReferencedByRepository<Query, Field>(_context);
+            ds = new ReferencesRepository<Query, DataSet>(_context);
         }
 
-        public IEnumerable<Field> GetChildren(Query MyT) => RefF.GetChildren(MyT);
+        public void AddChildren(Query tRef, IEnumerable<Field> Children) => f.AddChildren(tRef, Children);
 
-        public IEnumerable<Query> GetRange(DataSet MyTRef) => RefDS.GetRange(MyTRef);
+        public IEnumerable<Field> GetChildren(Query MyT) => f.GetChildren(MyT);
+
+        public IEnumerable<Query> GetRange(DataSet MyTRef) => ds.GetRange(MyTRef);
+
+        public void RemoveChildren(Query tRef, IEnumerable<Field> Children) => f.RemoveChildren(tRef, Children);
+
+        void IReferencedByRepository<Query, Field>.SetChildren(Query tRef, IEnumerable<Field> Children) => f.RemoveChildren(tRef, Children);
     }
 }

@@ -21,7 +21,6 @@ namespace DataAccess.EFCore.UnitOfWork
         public IConjunctionRepository Conjunctions { get; private set; }
         public ICriterionRepository Criteria { get; private set; }
         public ICriterionValueRepository CriterionValues { get; private set; }
-        public IQueryFieldRepository QueryFields { get; private set; }
 
 
 
@@ -33,7 +32,6 @@ namespace DataAccess.EFCore.UnitOfWork
             Conjunctions = new ConjunctionRepository(reportContext);
             Criteria = new CriterionRepository(reportContext);
             CriterionValues = new CriterionValueRepository(reportContext);
-            QueryFields = new QueryFieldRepository(reportContext);
         }
     }
 }

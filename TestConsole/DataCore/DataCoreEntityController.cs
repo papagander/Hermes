@@ -17,7 +17,7 @@ namespace TestConsole.DataCore
         protected DataCoreService S;
         public DataCoreEntityController(ReportContext context) : base(context)
         {
-            S= new DataCoreService(reportContext);
+            S = new DataCoreService(reportContext);
         }
 
     }

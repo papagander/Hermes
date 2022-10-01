@@ -21,12 +21,11 @@ namespace Services.Interfaces
         IEnumerable<Operator> GetAllOperators();
         IEnumerable<Conjoiner> GetAllConjoiners();
         IEnumerable<Operator> GetOperators(FieldType ft);
-        IEnumerable<FieldType> GetFieldTypes(Operator ent);
-
+        int SetOperators(FieldType ft, IEnumerable<Operator> op);
+        int AddOperators(FieldType ft, IEnumerable<Operator> op);
+        int RemoveOperators(FieldType ft, IEnumerable<Operator> op);
         int Remove(FieldType ft);
         int Remove(Operator op);
         int Remove(Conjoiner cjr);
-        int Remove(FieldType ft, Operator op);
-
     }
 }

@@ -8,7 +8,7 @@ namespace Domain.Models.Queries;
 public class Criterion : Indexed, IReferences<Field>, IReferences<Operator>, ISubTypeOf<Statement>, IReferencedBy<CriterionValue>
 {
     // e.g. Serial number equals, DateReceived greater than, Model Number contains.
-    // Criterions are pointed to by CriterionValues to support n values per criterion.
+    // Criterions are pointed to by CriterionValue to support n values per criterion.
     public override string ToString()
     {
         string output = "";
@@ -39,7 +39,7 @@ public class Criterion : Indexed, IReferences<Field>, IReferences<Operator>, ISu
     Operator IReferences<Operator>.MyTRef { get => Operator; /*set => Operator = value; */}
     Statement ISubTypeOf<Statement>.MySuper { get => Statement; set => Statement = value; }
     int ISubTypeOf<Statement>.MySuperId { get => StatementId; set => StatementId = value; }
-    List<CriterionValue> IReferencedBy<CriterionValue>.MyTs { get => CriterionValues; }
+    List<CriterionValue> IReferencedBy<CriterionValue>.MyTs { get => CriterionValues; set => CriterionValues = value; }
 }
 
 

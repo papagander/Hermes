@@ -10,12 +10,19 @@ namespace DataAccess.EFCore.Repository
         where T : class, IIndexed where TRef : class, IReferencedBy<T>
     {
         public ReferencedByRepository(ReportContext _context) : base(_context) { }
-        public IEnumerable<T> GetChildren(TRef MyTRef)
+
+        public void AddChildren(TRef tRef, IEnumerable<T> Children) => tRef.MyTs.AddRange(Children);
+
+        public IEnumerable<T> GetChildren(TRef tRef) => tRef.MyTs;
+
+
+        public void RemoveChildren(TRef tRef, IEnumerable<T> Children)
         {
-            return MyTRef.MyTs;
+            foreach (var child in Children)
+                if (tRef.MyTs.Contains(child))
+                    tRef.MyTs.Remove(child);
         }
 
-        /*public IEnumerable<T> GetChildren(int MyTRefId)
-         => (from MyT in _context.Set<T>() where MyT.MyTRefId == MyTRefId select MyT);*/
+        public void SetChildren(TRef tRef, IEnumerable<T> Children) => tRef.MyTs.AddRange(Children);
     }
 }

@@ -19,53 +19,35 @@ public class ReportContext : DbContext
     {
 
     }
-    
+
     // Core
-    public DbSet<Conjoiner> Conjoiners { get; set; }
-    public DbSet<FieldType> FieldTypes { get; set; }
-    public DbSet<Operator> Operators { get; set; }
+    public DbSet<Conjoiner> Conjoiner { get; set; }
+    public DbSet<FieldType> FieldType { get; set; }
+    public DbSet<Operator> Operator { get; set; }
 
-    // DataSets
-    public DbSet<DataSet> DataSets { get; set; }
-    public DbSet<Field> Fields { get; set; }
+    // DataSet
+    public DbSet<DataSet> DataSet { get; set; }
+    public DbSet<Field> Field { get; set; }
 
-    // Queries
-    public DbSet<Query> Queries { get; set; }
-    public DbSet<Conjunction> Conjunctions { get; set; }
-    public DbSet<Criterion> Criteria { get; set; }
-    public DbSet<CriterionValue> CriterionValues { get; set; }
-    public DbSet<Statement> Statements { get; set; }
-    public DbSet<QueryField> QueryFields { get; set; }
+    // Query
+    public DbSet<Query> Query { get; set; }
+    public DbSet<Conjunction> Conjunction { get; set; }
+    public DbSet<Criterion> Criterion { get; set; }
+    public DbSet<CriterionValue> CriterionValue { get; set; }
+    public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Conjunction>()
             .HasOne(cjn => cjn.Statement)
             .WithMany(s => s.Conjunctions);
         modelBuilder.Entity<Statement>()
-            .HasOne( st => st.Conjunction)
+            .HasOne(st => st.Conjunction)
             .WithMany(s => s.Statements);
         modelBuilder.Entity<FieldType>()
+            .HasMany(e => e.Operators)
+            .WithMany(e => e.FieldTypes);
+        modelBuilder.Entity<FieldType>()
             .Navigation(e => e.Operators).AutoInclude();
-        /*
-        modelBuilder.Entity<Operator>()
-            .HasMany(op => op.FieldTypeOperators)
-            .WithOne(fto => fto.Operator);
-        modelBuilder.Entity<FieldType>()
-            .HasMany(ft => ft.FieldTypeOperators)
-            .WithOne(fto => fto.FieldType);
-        modelBuilder.Entity<FieldType>()
-            .Navigation(e => e.FieldTypeOperators).AutoInclude();
-        modelBuilder.Entity<FieldTypeOperator>()
-            .Navigation(e => e.Operator).AutoInclude();
-        modelBuilder.Entity<FieldTypeOperator>().HasAlternateKey(e => new { e.OperatorId, e.FieldTypeId }).HasName("FieldTypeOperator");
-        */
-
-
-
     }
-    /*
-    DbContextOptions options = new DbContextOptionsBuilder<ReportContext>()
-        .UseSqlite(@"C:\Users\TimDolin\Desktop\TestDb.sqlite")
-        .Options;
-    */
+
 }

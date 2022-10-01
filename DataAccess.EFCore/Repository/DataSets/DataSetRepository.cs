@@ -12,12 +12,20 @@ namespace DataAccess.EFCore.Repository.DataSets
 {
     public class DataSetRepository : NamedRepository<DataSet>, IDatasetRepository
     {
-        private ReferencedByRepository<DataSet, Field> RefF;
+        private ReferencedByRepository<DataSet, Field> f;
         public DataSetRepository(ReportContext _context) : base(_context)
         {
-            RefF = new ReferencedByRepository<DataSet, Field>(_context);
+            f = new ReferencedByRepository<DataSet, Field>(_context);
         }
 
-        public IEnumerable<Field> GetChildren(DataSet MyT) => RefF.GetChildren(MyT);
+        public void AddChildren(DataSet tRef, IEnumerable<Field> Children) => f.AddChildren(tRef, Children);
+
+        public IEnumerable<Field> GetChildren(DataSet MyT) => f.GetChildren(MyT);
+
+        public IEnumerable<Field> GetFields(DataSet dt) => f.GetChildren(dt);
+
+        public void RemoveChildren(DataSet tRef, IEnumerable<Field> Children) => f.RemoveChildren(tRef, Children);
+
+        public void SetChildren(DataSet tRef, IEnumerable<Field> Children) => f.SetChildren(tRef, Children);
     }
 }

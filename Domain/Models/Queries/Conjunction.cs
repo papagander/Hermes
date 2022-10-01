@@ -8,7 +8,7 @@ namespace Domain.Models.Queries;
 
 public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner>, IReferencedBy<Statement>
 {
-    // A Conjunctions is pointed to by n statements (conjugants).
+    // A Conjunction is pointed to by n statements (conjugants).
     // These statements are joined by the conjoiner
     // To form a higher statement, pointed to by the 
     // statement Id.
@@ -36,7 +36,7 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
     Statement ISubTypeOf<Statement>.MySuper { get => Statement; set => Statement = value; }
     int IReferences<Conjoiner>.MyTRefId { get => ConjoinerId; /*set => Id = value;*/ }
     Conjoiner IReferences<Conjoiner>.MyTRef { get => Conjoiner; /*set => Conjoiner = value;*/ }
-    List<Statement> IReferencedBy<Statement>.MyTs { get => Statements; }
+    List<Statement> IReferencedBy<Statement>.MyTs { get => Statements; set => Statements = value; }
 }
 
 

@@ -53,7 +53,7 @@ namespace TestConsole.DataCore.Entities
 
         public override void HelpPrompt()
         {
-            Console.WriteLine("Conjoiners, like 'and' or 'or', are used to build conjunctions");
+            Console.WriteLine("Conjoiner, like 'and' or 'or', are used to build conjunctions");
             Console.WriteLine("which combine multiple filters in order to build query logic.");
         }
 

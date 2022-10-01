@@ -2,7 +2,7 @@
 
 public interface IReferencedBy<T> : IIndexed where T : IIndexed
 {
-    public List<T> MyTs { get; }
+    public List<T> MyTs { get; set; }
 }
 /*
     public interface IJunctionTable<T1, T2> : IIndexed where T1 : IIndexed where T2 : IIndexed

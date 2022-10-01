@@ -14,7 +14,7 @@ public class Query : Named, IReferences<DataSet>, IReferencedBy<Field>
     public List<Field> Fields { get; set; }
     int IReferences<DataSet>.MyTRefId { get => DataSetId; /*set => Id = value;*/ }
     DataSet IReferences<DataSet>.MyTRef { get => DataSet; /*set => DataSet = value;*/ }
-    List<Field>? IReferencedBy<Field>.MyTs { get => Fields; }
+    List<Field> IReferencedBy<Field>.MyTs { get => Fields; set => Fields = value; }
     //int IReferences<Statement>.MyTRefId { get => Id; /*set => Id = value;*/ }
     //Statement IReferences<Statement>.MyTRef { get => Statement; /*set => Statement = value;*/ }
 }

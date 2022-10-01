@@ -2,6 +2,7 @@
 using DataAccess.EFCore;
 using DataAccess.EFCore.UnitOfWork.DataCore;
 
+using Domain;
 using Domain.Models.DataCore;
 
 using Services.Interfaces;
@@ -53,10 +54,21 @@ namespace Services
 
         public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
         public IEnumerable<Operator> GetOperators(FieldType ft) => U.FieldTypes.GetOperators(ft);
-        public IEnumerable<FieldType> GetFieldTypes(Operator ent) => U.Operators.GetFieldTypes(ent);
         public FieldType? GetFieldType(int id) => U.FieldTypes.Get(id);
         public Operator? GetOperator(int id) => U.Operators.Get(id);
         public Conjoiner? GetConjoiner(int id) => U.Conjoiners.Get(id);
+
+        public int SetOperators(FieldType ft, IEnumerable<Operator> op) { U.FieldTypes.SetChildren(ft, op); return Complete; }
+
+        public int AddOperators(FieldType ft, IEnumerable<Operator> op)
+        {
+            U.FieldTypes.AddChildren(ft, op); return Complete;
+        }
+
+        public int RemoveOperators(FieldType ft, IEnumerable<Operator> op)
+        {
+            U.FieldTypes.RemoveChildren(ft, op); return Complete;
+        }
 
         private int Complete => U.Complete();
     }

@@ -1,4 +1,6 @@
-﻿using Domain.Models.Queries;
+﻿using DataAccess.EFCore.Interfaces.Repositories.Queries;
+
+using Domain.Models.Queries;
 
 using System;
 using System.Collections.Generic;

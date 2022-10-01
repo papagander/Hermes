@@ -70,8 +70,6 @@ public abstract class GenericController : IController
             Console.WriteLine(function.Name);
         Console.WriteLine("quit");
         Console.WriteLine();
-        Console.WriteLine("Press enter to close to return to the main menu.");
-        Console.ReadLine();
     }
     public abstract void HelpPrompt();
     internal static F? SelectFromList<F>(IEnumerable<F> items) where F : class
