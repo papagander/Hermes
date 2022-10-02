@@ -24,8 +24,8 @@ namespace TestConsole
         protected GenericEntityController(ReportContext context) : base(context)
         {
             Functions.Add(new Function("add", Add));
-            Functions.Add(new Function("get", ShowAll));
-            Functions.Add(new Function("remove", Remove));
+            Functions.Add(new Function("show", ShowAll));
+            Functions.Add(new Function("remove", RemoveRange));
         }
 
         protected abstract string EntityType { get; }
@@ -35,7 +35,6 @@ namespace TestConsole
         }
         public abstract void Add();
         public abstract void ShowAll();
-        public abstract void Remove();
         protected string NamePrompt(string entityType)
         {
             Console.WriteLine($"Please provide {entityType} name");
@@ -47,5 +46,6 @@ namespace TestConsole
             }
             return name;
         }
+        public abstract void RemoveRange();
     }
 }

@@ -20,7 +20,6 @@ namespace TestConsole.DataCore.Entities
         public FieldTypeController(ReportContext context) : base(context)
         {
             Functions.Add(new("addops", AddOperators));
-            Functions.Add(new("showops", ShowOperators));
             Functions.Add(new("delops", RemoveOperators));
         }
 
@@ -81,22 +80,6 @@ namespace TestConsole.DataCore.Entities
             Console.WriteLine($"{output} rows changed.");
         }
 
-        private static List<T> SelectListFromList<T>(IEnumerable<T> source)
-            where T : class
-        {
-            List<T> list = source.ToList();
-            List<T> output = new();
-            var op = SelectFromList(source);
-            while (op is not null)
-            {
-                list.Remove(op);
-                output.Add(op);
-                op = SelectFromList(list);
-            }
-            return output;
-        }
-
-        public override void ShowAll() => ShowList(S.GetAllFieldTypes());
 
         public override void HelpPrompt()
         {
@@ -104,23 +87,29 @@ namespace TestConsole.DataCore.Entities
             Console.WriteLine("and specify what filters can be applied to them.");
         }
 
-        public override void Remove()
+        public override void RemoveRange()
         {
-            string name = NamePrompt(EntityType);
-            var ft = new FieldType { Name = name };
-            int output;
-            output = S.Create(ft);
-            if (output == 0) Console.WriteLine("Failed to create field type.");
-            if (output == 1) Console.WriteLine($"Created field type '{name}'");
-            else Console.WriteLine($"Service returned: {output}");
+            var fts = SelectListFromList(S.GetAllFieldTypes());
+            if (fts.Count == 0)
+            {
+                Console.WriteLine("Cancelling");
+                return;
+            }
+            int output =0;
+            foreach (var remove in fts) output += S.Remove(remove);
+            Console.WriteLine($"Changed {output} rows.");
         }
 
         public void ShowNames(List<FieldType> nameds) => GenericController.SelectFromList(nameds);
-        public void ShowOperators()
+        public override void ShowAll()
         {
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("______________________");
             string header = string.Format("{0, 8} {1,10}", "Field Type", "Operator");
             Console.WriteLine(header);
             foreach (var ft in S.GetAllFieldTypes())
+                if (ft.MyTs.Count == 0)
                 foreach (var op in ft.Operators)
                     Console.WriteLine( string.Format("{0,8} {1,10}", ft.Name, op.Name));
         }

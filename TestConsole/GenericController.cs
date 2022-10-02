@@ -104,4 +104,32 @@ public abstract class GenericController : IController
             Console.WriteLine($"{item.Id}\t{item.ToString()}");
         }
     }
+    protected static List<T> SelectListFromList<T>(IEnumerable<T> source)
+        where T : class
+    {
+        List<T> list = source.ToList();
+        List<T> output = new();
+        var op = SelectFromList(source);
+        while (op is not null)
+        {
+            list.Remove(op);
+            output.Add(op);
+            op = SelectFromList(list);
+        }
+        return output;
+    }
+    /// <summary>
+    /// Spacing: 10, 12
+    /// </summary>
+    /// <param name=""></param>
+    public void Show<T>(IEnumerable<IReferencedBy<T>> tRefs)
+        where T : class, IIndexed
+        
+    {
+        foreach (var tRef in tRefs)
+            if (tRef.MyTs.Count != 0)
+                foreach (var t in tRef.MyTs)
+                    Console.WriteLine(string.Format("{0,10} {1,12}", tRef.ToString(), t.ToString()));
+    }
+
 }

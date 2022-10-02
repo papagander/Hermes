@@ -40,16 +40,19 @@ namespace TestConsole.DataCore.Entities
             else Console.WriteLine($"Service returned: {output}");
         }
 
-        public override void Remove()
+        public override void RemoveRange()
         {
-            string name = NamePrompt(EntityType);
-            var ent = new Conjoiner { Name = name };
-            int output = S.Remove(ent);
-            if (output == 0) Console.WriteLine("Failed to remove conjoiner.");
-            if (output == 1) Console.WriteLine($"Removed conjoiner {name}");
-            else Console.WriteLine($"Service returned: {output}");
-
+            var es = SelectListFromList(S.GetAllConjoiners());
+            if (es.Count == 0)
+            {
+                Console.WriteLine("Cancelling");
+                return;
+            }
+            int output = 0;
+            foreach (var e in es) output += S.Remove(e);
+            Console.WriteLine($"Changed {output} rows.");
         }
+
 
         public override void HelpPrompt()
         {
@@ -75,7 +78,7 @@ private void Run()
                 Add();
                 break;
             case "get":
-                ShowAll();
+                Show();
                 break;
             case "help":
                 ConjoinerHelp();

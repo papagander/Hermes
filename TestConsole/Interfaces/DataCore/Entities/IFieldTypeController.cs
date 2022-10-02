@@ -10,6 +10,5 @@ namespace TestConsole.Interfaces.DataCore.Entities
 {
     internal interface IFieldTypeController : IEntityController<FieldType>
     {
-        public void ShowOperators();
     }
 }

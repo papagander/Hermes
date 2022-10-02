@@ -34,19 +34,19 @@ namespace TestConsole.DataCore.Entities
         }
 
         public override void ShowAll() =>            ShowList(S.GetAllOperators());
-        
-
-        public override void Remove()
+        public override void RemoveRange()
         {
-            Console.WriteLine("Select and operator to delete.");
-            var ent = SelectFromList(S.GetAllOperators());
-            if (ent is null)
+            var es = SelectListFromList(S.GetAllOperators());
+            if (es.Count == 0)
             {
-                Console.WriteLine("Removed cancelled.");
+                Console.WriteLine("Cancelling");
                 return;
             }
-            S.Remove(ent);
+            int output = 0;
+            foreach (var e in es) output += S.Remove(e);
+            Console.WriteLine($"Changed {output} rows.");
         }
+
         public override void HelpPrompt()
         {
             Console.WriteLine("Operator, such as '=', 'contains', or '<' are used to build query logic ");
