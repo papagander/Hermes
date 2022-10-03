@@ -16,8 +16,6 @@ namespace Services.Interfaces
         int UpdateFieldSet(FieldSet fieldSet, IEnumerable<Field> fields);
         int Remove(FieldSet fieldSet);
         int Remove(string name);
-        IEnumerable<Field> GetFields();
-        IEnumerable<Field> GetFields(FieldSet fieldSet);
         IEnumerable<FieldSet> GetFieldSets();
         IEnumerable<FieldType> GetFieldTypes();
     }

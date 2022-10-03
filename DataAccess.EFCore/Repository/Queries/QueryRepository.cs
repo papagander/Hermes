@@ -14,18 +14,18 @@ namespace DataAccess.EFCore.Repository.Queries
     public class QueryRepository : NamedRepository<Query>, IQueryRepository
     {
         ReferencedByRepository<Query, Field> f;
-        ReferencesRepository<Query, FieldSet> ds;
+        ReferencesRepository<Query, DataSet> ds;
         public QueryRepository(ReportContext _context) : base(_context)
         {
             f = new ReferencedByRepository<Query, Field>(_context);
-            ds = new ReferencesRepository<Query, FieldSet>(_context);
+            ds = new ReferencesRepository<Query, DataSet>(_context);
         }
 
         public void AddChildren(Query tRef, IEnumerable<Field> Children) => f.AddChildren(tRef, Children);
 
         public IEnumerable<Field> GetChildren(Query MyT) => f.GetChildren(MyT);
 
-        public IEnumerable<Query> GetRange(FieldSet MyTRef) => ds.GetRange(MyTRef);
+        public IEnumerable<Query> GetRange(DataSet MyTRef) => ds.GetRange(MyTRef);
 
         public void RemoveChildren(Query tRef, IEnumerable<Field> Children) => f.RemoveChildren(tRef, Children);
 

@@ -33,7 +33,7 @@ namespace TestConsole.DataCore.Entities
             else Console.WriteLine($"Service returned: {output}");
         }
 
-        public override void ShowAll() =>            ShowList(S.GetAllOperators());
+        public override void Show() =>            ShowList(S.GetAllOperators());
         public override void RemoveRange()
         {
             var es = SelectListFromList(S.GetAllOperators());

@@ -14,7 +14,7 @@ namespace TestConsole.Controllers.FieldSets
         GenericEntityController<FieldSet>
         , IFieldSetController
     {
-
+        private 
         public FieldSetController(ReportContext context) : base(context)
         {
         }
@@ -23,7 +23,12 @@ namespace TestConsole.Controllers.FieldSets
 
         public override void Add()
         {
-            throw new NotImplementedException();
+            string fsName = NamePrompt("Field Set");
+            var field = CreateField()
+        }
+        public Field CreateField()
+        {
+            var fts = 
         }
 
         public void AddFields()
@@ -51,7 +56,7 @@ namespace TestConsole.Controllers.FieldSets
             throw new NotImplementedException();
         }
 
-        public override void ShowAll()
+        public override void Show()
         {
             throw new NotImplementedException();
         }

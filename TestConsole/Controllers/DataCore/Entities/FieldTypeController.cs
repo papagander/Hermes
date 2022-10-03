@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using TestConsole.Controllers;
 using TestConsole.Interfaces;
 using TestConsole.Interfaces.DataCore.Entities;
@@ -95,23 +96,30 @@ namespace TestConsole.DataCore.Entities
                 Console.WriteLine("Cancelling");
                 return;
             }
-            int output =0;
+            int output = 0;
             foreach (var remove in fts) output += S.Remove(remove);
             Console.WriteLine($"Changed {output} rows.");
         }
 
         public void ShowNames(List<FieldType> nameds) => GenericController.SelectFromList(nameds);
-        public override void ShowAll()
+        public override void Show()
         {
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("______________________");
-            string header = string.Format("{0, 8} {1,10}", "Field Type", "Operator");
+            Console.WriteLine("_______________________");
+            string header = string.Format("{0, 10} {1,12}", "Field Type", "Operator");
             Console.WriteLine(header);
-            foreach (var ft in S.GetAllFieldTypes())
+            var fts = S.GetAllFieldTypes();
+            Show<Operator>(fts);
+            Console.WriteLine("_______________________");
+            Console.WriteLine();
+            Console.WriteLine();
+            /*
+            foreach ()
                 if (ft.MyTs.Count == 0)
                 foreach (var op in ft.Operators)
                     Console.WriteLine( string.Format("{0,8} {1,10}", ft.Name, op.Name));
+            */
         }
     }
 }

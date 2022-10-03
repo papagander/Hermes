@@ -15,7 +15,7 @@ namespace Domain;
 
 public class ReportContext : DbContext
 {
-    public static string CONSTRNG { get => Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ReportDb.db"; }
+    public static string CONSTRNG { get => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\ArcHermes\ReportDb.db"; }
     public ReportContext(DbContextOptions<ReportContext> options) : base(options)
     {
 
@@ -27,7 +27,7 @@ public class ReportContext : DbContext
     public DbSet<Operator> Operator { get; set; }
 
     // FieldSet
-    public DbSet<FieldSet> FieldSet { get; set; }
+    public DbSet<Models.FieldSets.FieldSet> FieldSet { get; set; }
     public DbSet<Field> Field { get; set; }
 
     // Query

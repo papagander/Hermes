@@ -130,6 +130,7 @@ public abstract class GenericController : IController
             if (tRef.MyTs.Count != 0)
                 foreach (var t in tRef.MyTs)
                     Console.WriteLine(string.Format("{0,10} {1,12}", tRef.ToString(), t.ToString()));
+            else Console.WriteLine(String.Format("{0,10} {1,12}", tRef.ToString(), "none"));
     }
 
 }
