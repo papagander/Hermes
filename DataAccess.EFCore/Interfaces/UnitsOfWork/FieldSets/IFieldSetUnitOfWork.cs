@@ -7,5 +7,6 @@ public interface IFieldSetUnitOfWork : IUnitOfWork
 
     IFieldSetRepository FieldSets { get; }
     IFieldRepository Fields { get; }
+    IReadRepository<FieldType> FieldTypes { get; }
 }
 

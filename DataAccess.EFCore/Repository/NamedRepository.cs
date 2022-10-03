@@ -10,18 +10,25 @@ namespace DataAccess.EFCore.Repository
     {
         // need to not allow insert if name exists
         public NamedRepository(ReportContext _context) : base(_context) { }
-        public T Get(string Name)
+        public T? Get(string name)
         {
-            return (from myT in _context.Set<T>() where myT.Name == Name select myT).ElementAt(0);
-
+            var ns  = (from myT in context.Set<T>() where myT.Name == name select myT);
+            if (ns == null | ns.Count() == 0) return null;
+            else if (ns.Count() > 1) throw new InvalidDataException($"{ns.Count()} entities w name {name}");
         }
-
+        public override void Add(T entity)
+        {
+            var t = Get(entity.Name);
+            if (t is null) base.Add(entity);
+            else throw new InvalidDataException($"Cannot insert {entity.Name}: name must be unique.");
+        }
         public IEnumerable<T> GetRange(IEnumerable<string> names)
         {
             List<T> Ts = new List<T>();
             foreach (var name in names)
             {
-                Ts.Add(Get(name));
+                var n = Get(name);
+                if (n != null) Ts.Add(n);
             }
             return Ts;
         }
@@ -29,13 +36,13 @@ namespace DataAccess.EFCore.Repository
         public void Remove(string Name)
         {
             T MyT = Get(Name);
-            _context.Set<T>().Remove(MyT);
+            context.Set<T>().Remove(MyT);
         }
 
         public void RemoveRange(IEnumerable<string> Names)
         {
             IEnumerable<T> Ts = GetRange(Names);
-            _context.Set<T>().RemoveRange(Ts);
+            context.Set<T>().RemoveRange(Ts);
         }
 
         public void Rename(string OldName, string NewName)

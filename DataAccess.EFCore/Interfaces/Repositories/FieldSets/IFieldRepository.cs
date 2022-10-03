@@ -6,7 +6,7 @@ using System;
 namespace DataAccess.EFCore.Interfaces.Repositories.FieldSets
 {
     public interface IFieldRepository : 
-        INamedRepository<Field>
+        IIndexedRepository<Field>
         , IReferencesRepository<Field, FieldSet>
 
     {

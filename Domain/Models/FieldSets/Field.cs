@@ -4,9 +4,10 @@ using Domain.Models.Queries;
 
 namespace Domain.Models.FieldSets;
 
-public class Field : Named, IReferences<FieldSet>, IReferences<FieldType>
+public class Field : Indexed, IReferences<FieldSet>, IReferences<FieldType>
 {
-    public override string ToString() => $"{FieldSet.Name}.{Name}";
+    public String FieldName;
+    public override string ToString() => $"{FieldSet.Name}.{FieldName}";
     public int FieldSetId { get; set; }
     public int FieldTypeId { get; set; }
     public FieldType FieldType { get; set; }

@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 namespace DataAccess.EFCore.Repository.FieldSets
 {
-    public class FieldRepository : NamedRepository<Field>, IFieldRepository
+    public class FieldRepository : IndexedRepository<Field>, IFieldRepository
     {
         private ReferencesRepository<Field, FieldSet> Fs;
         public FieldRepository(ReportContext reportContext) : base(reportContext)

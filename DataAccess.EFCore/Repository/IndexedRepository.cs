@@ -10,23 +10,23 @@ namespace DataAccess.EFCore.Repository
     {
         public IndexedRepository(ReportContext reportContext) : base(reportContext){        }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
-            _context.Set<T>().Add(entity);
+            context.Set<T>().Add(entity);
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
-            _context.Set<T>().AddRange(entities);
+            context.Set<T>().AddRange(entities);
         }
         public IEnumerable<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            return context.Set<T>().ToList();
         }
         
         public T Get(int id)
         {
-            return _context.Set<T>().Find(id);
+            return context.Set<T>().Find(id);
         }
         public IEnumerable<T> GetRange(IEnumerable< int> ids)
         {
@@ -35,12 +35,12 @@ namespace DataAccess.EFCore.Repository
 
         public void Remove(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            context.Set<T>().Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
-            _context.Set<T>().RemoveRange(entities);
+            context.Set<T>().RemoveRange(entities);
         }
 
     }

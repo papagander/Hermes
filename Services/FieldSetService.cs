@@ -36,20 +36,21 @@ namespace Services
 
         public IEnumerable<FieldSet> GetFieldSets() => U.FieldSets.GetAll();
 
-        public IEnumerable<FieldType> GetFieldTypes()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<FieldType> GetFieldTypes() => U.FieldTypes.GetAll();
 
         public int Remove(FieldSet fieldSet)
         {
-            throw new NotImplementedException();
+            var fds = fieldSet.Fields;
+            U.Fields.RemoveRange(fds);
+            U.FieldSets.Remove(fieldSet);
+            return Complete;
         }
 
         public int Remove(string name)
         {
-            throw new NotImplementedException();
+            var fs = U.FieldSets.Get(name);
         }
+
 
         public int UpdateFieldSet(FieldSet fieldSet, IEnumerable<Field> fields)
         {
