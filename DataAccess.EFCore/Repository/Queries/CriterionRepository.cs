@@ -1,5 +1,5 @@
 ﻿using Domain.Models.Queries;
-using Domain.Models.DataSets;
+using Domain.Models.FieldSets;
 
 using System;
 using DataAccess.EFCore.Interfaces.Repositories.Queries;

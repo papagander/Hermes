@@ -1,6 +1,6 @@
-﻿using DataAccess.EFCore.Interfaces.Repositories.DataSets;
-using DataAccess.EFCore.Interfaces.UnitsOfWork.DataSets;
-using DataAccess.EFCore.Repository.DataSets;
+﻿using DataAccess.EFCore.Interfaces.Repositories.FieldSets;
+using DataAccess.EFCore.Interfaces.UnitsOfWork.FieldSets;
+using DataAccess.EFCore.Repository.FieldSets;
 using DataAccess.EFCore.Repository;
 
 using System;
@@ -9,15 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.EFCore.UnitOfWork.DataSets
+namespace DataAccess.EFCore.UnitOfWork.FieldSets
 {
-    public class DataSetUnitOfWork : GenericUnitOfWork, IDataSetUnitOfWork
+    public class FieldSetUnitOfWork : GenericUnitOfWork, IFieldSetUnitOfWork
     {
-        public IDatasetRepository DataSets { get; private set; }
+        public IFieldSetRepository FieldSets { get; private set; }
         public IFieldRepository Fields { get; private set; }
-        public DataSetUnitOfWork(ReportContext reportContext) : base(reportContext)
+        public FieldSetUnitOfWork(ReportContext reportContext) : base(reportContext)
         {
-            DataSets = new DataSetRepository(reportContext);
+            FieldSets = new FieldSetRepository(reportContext);
             Fields = new FieldRepository(reportContext);
         }
     }

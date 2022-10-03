@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Xml.Serialization;
 using DataAccess.EFCore.Interfaces.Repositories.DataCore;
-using DataAccess.EFCore.Interfaces.Repositories.DataSets;
+using DataAccess.EFCore.Interfaces.Repositories.FieldSets;
 using DataAccess.EFCore.Interfaces.Repositories.Queries;
 using DataAccess.EFCore.Repository;
 using DataAccess.EFCore.Repository.DataCore;
-using DataAccess.EFCore.Repository.DataSets;
+using DataAccess.EFCore.Repository.FieldSets;
 using DataAccess.EFCore.Repository.Queries;
 using Domain.Models.DataCore;
 

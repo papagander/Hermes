@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using TestConsole.Interfaces;
 
 
-namespace TestConsole;
+namespace TestConsole.Controllers;
 
 public abstract class GenericController : IController
 {
@@ -124,7 +124,7 @@ public abstract class GenericController : IController
     /// <param name=""></param>
     public void Show<T>(IEnumerable<IReferencedBy<T>> tRefs)
         where T : class, IIndexed
-        
+
     {
         foreach (var tRef in tRefs)
             if (tRef.MyTs.Count != 0)

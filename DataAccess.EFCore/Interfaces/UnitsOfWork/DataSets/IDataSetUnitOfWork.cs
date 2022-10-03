@@ -1,11 +1,11 @@
-﻿using DataAccess.EFCore.Interfaces.Repositories.DataSets;
+﻿using DataAccess.EFCore.Interfaces.Repositories.FieldSets;
 using System;
-namespace DataAccess.EFCore.Interfaces.UnitsOfWork.DataSets
+namespace DataAccess.EFCore.Interfaces.UnitsOfWork.FieldSets
 {
-    public interface IDataSetUnitOfWork : IUnitOfWork
+    public interface IFieldSetUnitOfWork : IUnitOfWork
     {
 
-        IDatasetRepository DataSets { get; }
+        IFieldSetRepository FieldSets { get; }
         IFieldRepository Fields { get; }
     }
 }

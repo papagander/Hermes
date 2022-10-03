@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestConsole.Controllers;
 using TestConsole.DataCore.Entities;
 using TestConsole.Interfaces;
 

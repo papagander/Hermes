@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 using TestConsole.Interfaces;
 
-namespace TestConsole
+namespace TestConsole.Controllers
 {
     public abstract class GenericEntityController<T> :
         GenericController

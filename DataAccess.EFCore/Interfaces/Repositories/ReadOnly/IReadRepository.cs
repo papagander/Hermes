@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestConsole.Interfaces.DataSet
+namespace DataAccess.EFCore.Interfaces.Repositories.ReadOnly
 {
-    public interface IDataSetController
+    public interface IReadRepository<T>
     {
+        IEnumerable<T> GetAll();
     }
 }

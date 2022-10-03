@@ -1,19 +1,19 @@
 ﻿
 using Domain.Interfaces.Models;
-using Domain.Models.DataSets;
+using Domain.Models.FieldSets;
 
 namespace Domain.Models.Queries;
 
-public class Query : Named, IReferences<DataSet>, IReferencedBy<Field>
+public class Query : Named, IReferences<FieldSet>, IReferencedBy<Field>
 {
-    public override string ToString() => $"{DataSet.Name}.{Name}";
-    public int DataSetId { get; set; }
+    public override string ToString() => $"{FieldSet.Name}.{Name}";
+    public int FieldSetId { get; set; }
     public int StatementId { get; set; }
-    public DataSet DataSet { get; set; }
+    public FieldSet FieldSet { get; set; }
     public Statement Statement { get; set; }
     public List<Field> Fields { get; set; }
-    int IReferences<DataSet>.MyTRefId { get => DataSetId; /*set => Id = value;*/ }
-    DataSet IReferences<DataSet>.MyTRef { get => DataSet; /*set => DataSet = value;*/ }
+    int IReferences<FieldSet>.MyTRefId { get => FieldSetId; /*set => Id = value;*/ }
+    FieldSet IReferences<FieldSet>.MyTRef { get => FieldSet; /*set => FieldSet = value;*/ }
     List<Field> IReferencedBy<Field>.MyTs { get => Fields; set => Fields = value; }
     //int IReferences<Statement>.MyTRefId { get => Id; /*set => Id = value;*/ }
     //Statement IReferences<Statement>.MyTRef { get => Statement; /*set => Statement = value;*/ }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Domain.Models;
 using Domain.Models.DataCore;
-using Domain.Models.DataSets;
+using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 
 namespace Domain;
@@ -25,8 +25,8 @@ public class ReportContext : DbContext
     public DbSet<FieldType> FieldType { get; set; }
     public DbSet<Operator> Operator { get; set; }
 
-    // DataSet
-    public DbSet<DataSet> DataSet { get; set; }
+    // FieldSet
+    public DbSet<FieldSet> FieldSet { get; set; }
     public DbSet<Field> Field { get; set; }
 
     // Query

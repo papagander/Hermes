@@ -1,7 +1,7 @@
 ﻿
 using Domain.Interfaces.Models;
 using Domain.Models.DataCore;
-using Domain.Models.DataSets;
+using Domain.Models.FieldSets;
 
 namespace Domain.Models.Queries;
 
