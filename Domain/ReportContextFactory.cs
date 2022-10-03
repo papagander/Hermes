@@ -14,7 +14,7 @@ namespace Domain
         public ReportContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ReportContext>();
-            optionsBuilder.UseSqlite(@"Data Source=C:\Users\Tim\Desktop\ReportDb.db");
+            optionsBuilder.UseSqlite($"Data Source={ReportContext.CONSTRNG}");
 
             return new ReportContext(optionsBuilder.Options);
         }

@@ -15,6 +15,7 @@ namespace Domain;
 
 public class ReportContext : DbContext
 {
+    public static string CONSTRNG { get => Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ReportDb.db"; }
     public ReportContext(DbContextOptions<ReportContext> options) : base(options)
     {
 
@@ -43,6 +44,7 @@ public class ReportContext : DbContext
         modelBuilder.Entity<Statement>()
             .HasOne(st => st.Conjunction)
             .WithMany(s => s.Statements);
+
         modelBuilder.Entity<FieldType>()
             .HasMany(e => e.Operators)
             .WithMany(e => e.FieldTypes);
