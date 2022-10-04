@@ -10,7 +10,7 @@ namespace DataAccess.EFCore.Interfaces.Repositories
 {
     public interface IIndexedRepository<T> where T : IIndexed
     {
-        T Get(int dex);
+        T? Get(int dex);
         IEnumerable<T> GetRange(IEnumerable<int> dexes);
         IEnumerable<T> GetAll();
         void Add(T entity);

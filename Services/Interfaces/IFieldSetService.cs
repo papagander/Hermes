@@ -11,7 +11,6 @@ namespace Services.Interfaces
 {
     public interface IFieldSetService
     {
-        int Complete { get; }
         int CreateFieldSet(string name, IEnumerable<Field> fields);
         int UpdateFieldSet(FieldSet fieldSet, IEnumerable<Field> fields);
         int Remove(FieldSet fieldSet);

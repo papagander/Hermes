@@ -38,18 +38,40 @@ public class ReportContext : DbContext
     public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Conjunction>()
-            .HasOne(cjn => cjn.Statement)
-            .WithMany(s => s.Conjunctions);
-        modelBuilder.Entity<Statement>()
-            .HasOne(st => st.Conjunction)
-            .WithMany(s => s.Statements);
-
+        //[Relationships]
+        //  [Data Core]
         modelBuilder.Entity<FieldType>()
             .HasMany(e => e.Operators)
             .WithMany(e => e.FieldTypes);
+
+        //  [Field Sets]
+
+        //  [Queries]
+        modelBuilder.Entity<Query>()
+            .HasMany(e => e.Fields)
+            .WithMany(e => e.Queries);
+
+        //  [Conjunctions]
+        modelBuilder.Entity<Statement>()
+            .HasOne(st => st.Conjunction)
+            .WithMany(s => s.Statements);
+        modelBuilder.Entity<Conjunction>()
+            .HasOne(cjn => cjn.Statement)
+            .WithMany(s => s.Conjunctions);
+        modelBuilder.Entity<Criterion>()
+            .HasOne(crt => crt.Statement)
+            .WithMany(s => s.Criterions);
+
+        //  [Navigations]
+        //      [Data Core]
         modelBuilder.Entity<FieldType>()
             .Navigation(e => e.Operators).AutoInclude();
+
+        //      [Field Sets]
+        modelBuilder.Entity<FieldSet>()
+            .Navigation(e => e.Fields).AutoInclude();
+        modelBuilder.Entity<Field>()
+            .Navigation(e => e.FieldType).AutoInclude();
     }
 
 }

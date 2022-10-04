@@ -11,7 +11,7 @@ namespace DataAccess.EFCore.Interfaces.Repositories.Queries
 {
     public interface IQueryRepository : 
         INamedRepository<Query>
-        , IReferencesRepository<Query, DataSet>
+        , IReferencesRepository<Query, FieldSet>
         , IReferencedByRepository<Query, Field>
     {
 

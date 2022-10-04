@@ -11,7 +11,6 @@ namespace Domain.Models
     public abstract class Named : Indexed, INamed
     {
         public string Name { get; set; }
-
         public override string ToString() => Name;
     }
 }

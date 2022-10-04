@@ -1,4 +1,6 @@
-﻿using Domain.Models.FieldSets;
+﻿global using Services;
+using Domain.Models.FieldSets;
+
 
 using System;
 using System.Collections.Generic;
@@ -14,21 +16,55 @@ namespace TestConsole.Controllers.FieldSets
         GenericEntityController<FieldSet>
         , IFieldSetController
     {
-        private 
+        private FieldSetService S;
         public FieldSetController(ReportContext context) : base(context)
         {
+            S = new FieldSetService(context);
+
+            string nm; Action a;
+            nm = "AddF"; a = AddFields;
+            Acts.Add(new (nm, a));
+            nm = "RemF"; a = RemoveFields;
+            Acts.Add (new (nm, a));
+            nm = "SetF"; a = SetFields;
+            Acts.Add(new(nm, a));
+            nm = "fdeets"; a = ShowFieldDetails;
+            Acts.Add(new(nm, a));
         }
 
-        protected override string EntityType { get; }
+        protected override string EntityType { get => "Field Set"; }
 
         public override void Add()
         {
-            string fsName = NamePrompt("Field Set");
-            var field = CreateField()
+            string? fsName = NamePrompt("Field Set");
+            if (fsName is null)
+            {
+                Console.WriteLine("Cancelling");
+                return;
+            }
+            var fields = CreateList(CreateField);
+            if (fields is null)
+            {
+                Console.WriteLine("Cancelling");
+                return;
+            }
+            int output = S.CreateFieldSet(fsName, fields);
+            Console.WriteLine($"Changed {output} rows.");
         }
-        public Field CreateField()
+        public void ShowFieldDetails()
         {
-            var fts = 
+            throw new NotImplementedException("waaaaaaaah");
+        }
+        protected Field? CreateField()
+        {
+            string? fdName = NamePrompt("Field");
+            if (fdName is null) return null;
+            var fts = S.GetFieldTypes();
+            Console.WriteLine("Select a field type for this field.");
+            var ft = SelectFromList(fts);
+            if (ft is null) return null;
+            else return new Field { Name = fdName, FieldType = ft };
+
         }
 
         public void AddFields()
@@ -36,10 +72,8 @@ namespace TestConsole.Controllers.FieldSets
             throw new NotImplementedException();
         }
 
-        public override void HelpPrompt()
-        {
-            throw new NotImplementedException();
-        }
+        public override void HelpPrompt() => Console.WriteLine("This menu is used to create field sets" +
+            "for stakeholders to build queries against.");
 
         public void RemoveFields()
         {
@@ -58,7 +92,16 @@ namespace TestConsole.Controllers.FieldSets
 
         public override void Show()
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("_______________________");
+            string header = string.Format("{0, 10} {1,12}", "Field Set", "Field");
+            Console.WriteLine(header);
+            var fz = S.GetFieldSets();
+            Show<Field>(fz);
+            Console.WriteLine("_______________________");
+            Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    [Migration("20221003182851_vcg")]
-    partial class vcg
+    [Migration("20221004194500_asdf")]
+    partial class asdf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -175,6 +175,9 @@ namespace Domain.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DataSetId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("FieldSetId")

@@ -23,9 +23,9 @@ namespace TestConsole.Controllers
     {
         protected GenericEntityController(ReportContext context) : base(context)
         {
-            Functions.Add(new Function("add", Add));
-            Functions.Add(new Function("show", Show));
-            Functions.Add(new Function("remove", RemoveRange));
+            Acts.Add(new Function("add", Add));
+            Acts.Add(new Function("show", Show));
+            Acts.Add(new Function("remove", RemoveRange));
         }
 
         protected abstract string EntityType { get; }
@@ -35,14 +35,13 @@ namespace TestConsole.Controllers
         }
         public abstract void Add();
         public abstract void Show();
-        protected string NamePrompt(string entityType)
+        protected string? NamePrompt(string entityType)
         {
             Console.WriteLine($"Please provide {entityType} name");
-            string? name = Console.ReadLine();
-            if (name is null)
+            string? name = Console.ReadLine().Trim();
+            if (name is null | name == "")
             {
-                Console.WriteLine("No name provided.");
-                return NamePrompt(entityType);
+                return null;
             }
             return name;
         }

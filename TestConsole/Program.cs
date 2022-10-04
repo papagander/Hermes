@@ -4,6 +4,8 @@ using DataAccess.EFCore;
 
 using Microsoft.EntityFrameworkCore;
 
+using TestConsole.Controllers;
+using TestConsole.Controllers.FieldSets;
 using TestConsole.DataCore;
 
 class Program 
@@ -15,8 +17,11 @@ class Program
             .Options;
 
         ReportContext context = new ReportContext(options);
-        DataCoreController myController = new DataCoreController(context);
-        myController.Run();
+        FieldSetController controller = new(context);
+        controller.Run();
+        
+        MainMenu mm = new(context);
+        mm.Run();
 
     }
 }

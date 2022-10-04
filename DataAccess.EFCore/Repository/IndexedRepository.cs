@@ -24,7 +24,7 @@ namespace DataAccess.EFCore.Repository
             return context.Set<T>().ToList();
         }
         
-        public T Get(int id)
+        public T? Get(int id)
         {
             return context.Set<T>().Find(id);
         }

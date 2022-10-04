@@ -12,9 +12,10 @@ namespace DataAccess.EFCore.Repository
         public NamedRepository(ReportContext _context) : base(_context) { }
         public T? Get(string name)
         {
-            var ns  = (from myT in context.Set<T>() where myT.Name == name select myT);
-            if (ns == null | ns.Count() == 0) return null;
-            else if (ns.Count() > 1) throw new InvalidDataException($"{ns.Count()} entities w name {name}");
+            var output = (from myT in context.Set<T>() where myT.Name == name select myT);
+            if (output == null | output.Count() == 0) return null;
+            else if (output.Count() > 1) throw new InvalidDataException($"{output.Count()} entities w name {name}");
+            else return output.First();
         }
         public override void Add(T entity)
         {

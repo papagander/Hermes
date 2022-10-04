@@ -18,12 +18,12 @@ namespace TestConsole.Controllers;
 public abstract class GenericController : IController
 {
     //public abstract string ControllerName { get;}
-    protected List<Function> Functions = new List<Function>();
-    protected readonly ReportContext reportContext;
+    protected List<Function> Acts = new List<Function>();
+    protected readonly ReportContext context;
     public GenericController(ReportContext context)
     {
-        reportContext = context;
-        Functions.Add(new Function("help", Help));
+        this.context = context;
+        Acts.Add(new Function("help", Help));
     }
     public void Pause(int seconds)
     {
@@ -47,7 +47,7 @@ public abstract class GenericController : IController
                 continue;
             }
             input = input.ToLower().Trim();
-            foreach (var function in Functions)
+            foreach (var function in Acts)
             {
                 if (function.Name == input)
                 {
@@ -66,7 +66,7 @@ public abstract class GenericController : IController
         HelpPrompt();
         Console.WriteLine();
         Console.WriteLine("Available commands:");
-        foreach (var function in Functions)
+        foreach (var function in Acts)
             Console.WriteLine(function.Name);
         Console.WriteLine("quit");
         Console.WriteLine();
@@ -96,6 +96,20 @@ public abstract class GenericController : IController
         }
         return _[intput];
 
+    }
+    protected IEnumerable<T>? CreateList<T>(Func<T?> Create)
+        where T : class, IIndexed
+    {
+        var output = new List<T>();
+        var t = Create();
+        while (t is not null)
+        {
+            output.Add(t);
+            ShowList(output);
+            t = Create();
+        }
+        if (output.Count == 0) return null;
+        else return output;
     }
     protected void ShowList<T>(IEnumerable<T> items) where T : class, IIndexed
     {

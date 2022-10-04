@@ -1,5 +1,6 @@
 ﻿
 using DataAccess.EFCore;
+using DataAccess.EFCore.Interfaces.UnitsOfWork.DataCore;
 using DataAccess.EFCore.UnitOfWork.DataCore;
 
 using Domain;
@@ -9,12 +10,15 @@ using Services.Interfaces;
 
 namespace Services
 {
-    public class DataCoreService : IDataCoreService
+    public class DataCoreService : 
+        GenericService
+        , IDataCoreService
     {
-        DataCoreUnitOfWork U { get; set; }
-        public DataCoreService(ReportContext reportContext)
+        protected IDataCoreUnitOfWork U { get; set; }
+        public DataCoreService(ReportContext reportContext) : base(reportContext)
         {
             U = new DataCoreUnitOfWork(reportContext);
+            UnitOfWork = U;
         }
         public int Create(Conjoiner e)
         {
@@ -70,6 +74,5 @@ namespace Services
             U.FieldTypes.RemoveChildren(ft, op); return Complete;
         }
 
-        private int Complete => U.Complete();
     }
 }

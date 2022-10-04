@@ -20,8 +20,8 @@ namespace TestConsole.DataCore.Entities
     {
         public FieldTypeController(ReportContext context) : base(context)
         {
-            Functions.Add(new("addops", AddOperators));
-            Functions.Add(new("delops", RemoveOperators));
+            Acts.Add(new("addops", AddOperators));
+            Acts.Add(new("delops", RemoveOperators));
         }
 
         protected override string EntityType { get => "FieldType"; }
@@ -114,12 +114,6 @@ namespace TestConsole.DataCore.Entities
             Console.WriteLine("_______________________");
             Console.WriteLine();
             Console.WriteLine();
-            /*
-            foreach ()
-                if (ft.MyTs.Count == 0)
-                foreach (var op in ft.Operators)
-                    Console.WriteLine( string.Format("{0,8} {1,10}", ft.Name, op.Name));
-            */
         }
     }
 }

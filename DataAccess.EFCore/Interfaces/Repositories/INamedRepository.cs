@@ -11,7 +11,7 @@ namespace DataAccess.EFCore.Interfaces.Repositories
     public interface INamedRepository<T> : IIndexedRepository<T> where T : INamed
     {
         //void Rename(string OldName, string NewName);
-        T Get(string Name);
+        T? Get(string Name);
         IEnumerable<T> GetRange(IEnumerable<string> Names);
         //void Remove(string Name);
         //void RemoveRange(IEnumerable<string> Names);

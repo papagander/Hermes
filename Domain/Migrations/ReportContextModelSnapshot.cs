@@ -175,6 +175,9 @@ namespace Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("DataSetId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("FieldSetId")
                         .HasColumnType("INTEGER");
 

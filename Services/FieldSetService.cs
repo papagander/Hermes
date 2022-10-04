@@ -22,15 +22,15 @@ namespace Services
         public FieldSetService(ReportContext context) : base(context)
         {
             U = new FieldSetUnitOfWork(context);
+            UnitOfWork = U;
         }
-
-        public int Complete { get; }
-
         public int CreateFieldSet(string name, IEnumerable<Field> fields)
         {
-            U.Fields.AddRange(fields);
-            var fs = new FieldSet { Name = name, Fields = fields.ToList() };
+            var fs = new FieldSet { Name = name};
             U.FieldSets.Add(fs);
+            var fds = fields.ToList();
+            for (int i = 0; i < fds.Count; i++) fds[i].FieldSet = fs;
+            U.Fields.AddRange(fds);
             return Complete;
         }
 
@@ -49,12 +49,20 @@ namespace Services
         public int Remove(string name)
         {
             var fs = U.FieldSets.Get(name);
+            var fds = fs.Fields;
+            U.Fields.RemoveRange(fds);
+            U.FieldSets.Remove(fs);
+            return Complete;
         }
 
 
         public int UpdateFieldSet(FieldSet fieldSet, IEnumerable<Field> fields)
         {
-            throw new NotImplementedException();
+            if (U.FieldSets.Get(fieldSet.Id) is null) return -1;
+            U.Fields.RemoveRange(  fieldSet.Fields);
+            fieldSet.Fields = fields.ToList();
+            U.Fields.AddRange(fields);
+            return Complete;
         }
     }
 }

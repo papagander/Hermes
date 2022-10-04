@@ -4,7 +4,7 @@
 
 namespace Domain.Migrations
 {
-    public partial class vcg : Migration
+    public partial class asdf : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,9 +66,9 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     FieldSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    FieldTypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    FieldTypeId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -188,8 +188,9 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    FieldSetId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DataSetId = table.Column<int>(type: "INTEGER", nullable: false),
                     StatementId = table.Column<int>(type: "INTEGER", nullable: false),
+                    FieldSetId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
