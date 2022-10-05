@@ -41,41 +41,71 @@ public class ReportContext : DbContext
     public DbSet<Criterion> Criterion { get; set; }
     public DbSet<CriterionValue> CriterionValue { get; set; }
     public DbSet<Statement> Statement { get; set; }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder m)
     {
-        //[Relationships]
-        //  [Data Core]
-        modelBuilder.Entity<FieldType>()
+// Seed
+//  Data Core
+        m.Entity<Conjoiner>().HasData(
+            new Conjoiner {  Id = 1, Name = "and" }
+            , new Conjoiner { Id = 2, Name = "or" }
+            );;
+
+        int i = 1;
+        var equals = new Operator {  Id = i, Name = "=" };
+        i++;
+        var nequals = new Operator { Id = i, Name = "!=" };
+        i++;
+        var lessThan = new Operator { Id = i, Name = "<" };
+        i++;
+        var greaterThan = new Operator { Id = i, Name = ">" };
+        i++;
+        var isLastWeek = new Operator { Id = i, Name = "isLastWeek" };
+
+        i = 1;
+        var text = new FieldType { Id = i, Name = "text" };
+        i++;
+        var integer = new FieldType {Id = i,  Name = "integer" };
+        i++;
+        var date = new FieldType { Id = i, Name = "date" };
+        m.Entity<Operator>().HasData(equals, nequals, greaterThan, lessThan, isLastWeek);
+        m.Entity<FieldType>().HasData(text, integer, date);
+
+        m.Entity<FieldType>().OwnsMany(e => e.Operators).HasData()    
+
+
+// Relationships
+//  Data Core
+        m.Entity<FieldType>()
             .HasMany(e => e.Operators)
             .WithMany(e => e.FieldTypes);
 
-        //  [Field Sets]
+        //  Field Sets
 
-        //  [Queries]
-        modelBuilder.Entity<Query>()
+        //  Queries
+        m.Entity<Query>()
             .HasMany(e => e.Fields)
             .WithMany(e => e.Queries);
 
-        //  [Conjunctions]
-        modelBuilder.Entity<Statement>()
+        //  Conjunctions
+        m.Entity<Statement>()
             .HasOne(st => st.Conjunction)
             .WithMany(s => s.Statements);
-        modelBuilder.Entity<Conjunction>()
+        m.Entity<Conjunction>()
             .HasOne(cjn => cjn.Statement)
             .WithMany(s => s.Conjunctions);
-        modelBuilder.Entity<Criterion>()
+        m.Entity<Criterion>()
             .HasOne(crt => crt.Statement)
             .WithMany(s => s.Criterions);
 
-        //  [Navigations]
-        //      [Data Core]
-        modelBuilder.Entity<FieldType>()
+        // Navigations
+        //  Data Core
+        m.Entity<FieldType>()
             .Navigation(e => e.Operators).AutoInclude();
 
-        //      [Field Sets]
-        modelBuilder.Entity<FieldSet>()
+        //  Field Sets
+        m.Entity<FieldSet>()
             .Navigation(e => e.Fields).AutoInclude();
-        modelBuilder.Entity<Field>()
+        m.Entity<Field>()
             .Navigation(e => e.FieldType).AutoInclude();
     }
 
