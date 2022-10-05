@@ -15,7 +15,12 @@ namespace Domain;
 
 public class ReportContext : DbContext
 {
-    public static string CONSTRNG { get => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\ArcHermes\ReportDb.db"; }
+    const string SQLITEDBNAME = "ReportDb.db";
+    public static string SqliteDbPath { get => Path.Combine(DirPath, SQLITEDBNAME); }
+    public static string DirPath
+    {
+        get => Directory.GetCurrentDirectory();
+    }
     public ReportContext(DbContextOptions<ReportContext> options) : base(options)
     {
 
@@ -74,4 +79,8 @@ public class ReportContext : DbContext
             .Navigation(e => e.FieldType).AutoInclude();
     }
 
+    public static DbContextOptionsBuilder<ReportContext> SqlLiteOptionsBuilder()
+    {
+        return new DbContextOptionsBuilder<ReportContext>().UseSqlite($"Data Source = {ReportContext.SqliteDbPath}");
+    }
 }

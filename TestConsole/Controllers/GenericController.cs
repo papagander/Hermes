@@ -15,10 +15,13 @@ using TestConsole.Interfaces;
 
 namespace TestConsole.Controllers;
 
-public abstract class GenericController : IController
+public abstract class GenericController :
+    IController
+    , IDisposable
 {
     //public abstract string ControllerName { get;}
     protected List<Function> Acts = new List<Function>();
+    private bool disposedValue;
     protected readonly ReportContext context;
     public GenericController(ReportContext context)
     {
@@ -147,4 +150,32 @@ public abstract class GenericController : IController
             else Console.WriteLine(String.Format("{0,10} {1,12}", tRef.ToString(), "none"));
     }
 
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
+        {
+            if (disposing)
+            {
+                // TODO: dispose managed state (managed objects)
+            }
+
+            // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+            // TODO: set large fields to null
+            disposedValue = true;
+        }
+    }
+
+    // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+    // ~GenericController()
+    // {
+    //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+    //     Dispose(disposing: false);
+    // }
+
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
 }

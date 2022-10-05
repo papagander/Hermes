@@ -13,10 +13,15 @@ namespace Domain
     {
         public ReportContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ReportContext>();
-            optionsBuilder.UseSqlite($"Data Source={ReportContext.CONSTRNG}");
+            SetupSqlite();
+            var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
 
             return new ReportContext(optionsBuilder.Options);
+        }
+        void SetupSqlite()
+        {
+            if (!Directory.Exists(ReportContext.DirPath)) Directory.CreateDirectory(ReportContext.DirPath);
+            if (!File.Exists(ReportContext.SqliteDbPath)) File.Create(ReportContext.SqliteDbPath);
         }
     }
 }

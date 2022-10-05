@@ -4,7 +4,7 @@
 
 namespace Domain.Migrations
 {
-    public partial class asdf : Migration
+    public partial class FieldSets : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

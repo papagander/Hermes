@@ -12,16 +12,23 @@ class Program
 {
     public static void Main(string[] args)
     {
-        var options = new DbContextOptionsBuilder<ReportContext>()
-            .UseSqlite($"Data Source={ReportContext.CONSTRNG}")
-            .Options;
+        var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
 
-        ReportContext context = new ReportContext(options);
-        FieldSetController controller = new(context);
-        controller.Run();
-        
-        MainMenu mm = new(context);
-        mm.Run();
+        ReportContext context = new ReportContext(optionsBuilder.Options);
+        using (DataCoreController dc = new DataCoreController(context))
+        {
+            dc.Run();
+        }
+        /*
+        using (FieldSetController controller = new(context))
+        {
+            controller.Run();
+        }
+        */
 
+        using (MainMenu mm = new(context))
+        {
+            mm.Run();
+        }
     }
 }
