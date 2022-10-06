@@ -20,17 +20,17 @@ namespace Services
             U = new DataCoreUnitOfWork(reportContext);
             UnitOfWork = U;
         }
-        public int Create(Conjoiner e)
+        public int Add(Conjoiner e)
         {
             U.Conjoiners.Add(e);
             return Complete;
         }
-        public int Create(Operator e)
+        public int Add(Operator e)
         {
             U.Operators.Add(e);
             return Complete;
         }
-        public int Create(FieldType e)
+        public int Add(FieldType e)
         {
             U.FieldTypes.Add(e);
             return Complete;

@@ -75,13 +75,13 @@ public abstract class GenericController :
         Console.WriteLine();
     }
     public abstract void HelpPrompt();
-    internal static F? SelectFromList<F>(IEnumerable<F> items) where F : class
+    internal static T? SelectFromList<T>(IEnumerable<T> items) where T : class
     {
         var _ = items.ToList();
         Console.WriteLine("Enter a number to select an item. Press enter to terminate selection.");
         for (int i = 0; i < _.Count; i++)
         {
-            F item = _[i];
+            T item = _[i];
             Console.WriteLine($"{i}. {item.ToString()}");
         }
         string? input = Console.ReadLine();

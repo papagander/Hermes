@@ -31,7 +31,7 @@ namespace TestConsole.DataCore.Entities
             string name = NamePrompt(EntityType);
             var ft = new FieldType { Name = name };
             int output;
-            output = S.Create(ft);
+            output = S.Add(ft);
             if (output == 0) Console.WriteLine("Failed to create field type.");
             if (output == 1) Console.WriteLine($"Created field type '{name}'");
             else Console.WriteLine($"Service returned: {output}");

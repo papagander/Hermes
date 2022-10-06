@@ -11,9 +11,9 @@ namespace Services.Interfaces
     public interface IDataCoreService
     {
         // Field Type
-        int Create(FieldType ft);
-        int Create(Operator op);
-        int Create(Conjoiner cjr);
+        int Add(FieldType ft);
+        int Add(Operator op);
+        int Add(Conjoiner cjr);
         FieldType GetFieldType(int id);
         Operator GetOperator(int id);
         Conjoiner GetConjoiner(int id);

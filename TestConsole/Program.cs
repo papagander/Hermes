@@ -2,6 +2,8 @@
 
 using DataAccess.EFCore;
 
+using HermesSeeder;
+
 using Microsoft.EntityFrameworkCore;
 
 using TestConsole.Controllers;
@@ -15,6 +17,10 @@ class Program
         var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
 
         ReportContext context = new ReportContext(optionsBuilder.Options);
+        using (DataCoreSeeder seed = new DataCoreSeeder(context))
+        {
+            seed.Seed();
+        }
         using (DataCoreController dc = new DataCoreController(context))
         {
             dc.Run();

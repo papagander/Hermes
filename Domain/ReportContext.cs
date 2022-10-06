@@ -43,6 +43,7 @@ public class ReportContext : DbContext
     public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder m)
     {
+        /*
 // Seed
 //  Data Core
         m.Entity<Conjoiner>().HasData(
@@ -70,8 +71,8 @@ public class ReportContext : DbContext
         m.Entity<Operator>().HasData(equals, nequals, greaterThan, lessThan, isLastWeek);
         m.Entity<FieldType>().HasData(text, integer, date);
 
-        m.Entity<FieldType>().OwnsMany(e => e.Operators).HasData()    
-
+       // m.Entity<FieldType>().OwnsMany(e => e.Operators).HasData();    
+        */
 
 // Relationships
 //  Data Core

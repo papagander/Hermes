@@ -27,7 +27,7 @@ namespace TestConsole.DataCore.Entities
         {
             string name = NamePrompt(EntityType);
             var ent = new Operator { Name = name };
-            int output = S.Create(ent);
+            int output = S.Add(ent);
             if (output == 0) Console.WriteLine("Failed to create operator.");
             if (output == 1) Console.WriteLine($"Created operator '{name}'");
             else Console.WriteLine($"Service returned: {output}");
