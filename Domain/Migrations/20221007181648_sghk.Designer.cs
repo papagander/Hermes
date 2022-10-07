@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    [Migration("20221005193945_FieldSets")]
-    partial class FieldSets
+    [Migration("20221007181648_sghk")]
+    partial class sghk
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -11,7 +11,11 @@ namespace DataAccess.EFCore.Repository
     {
         public ReferencedByRepository(ReportContext _context) : base(_context) { }
 
-        public void AddChildren(TRef tRef, IEnumerable<T> Children) => tRef.MyTs.AddRange(Children);
+        public void AddChildren(TRef tRef, IEnumerable<T> Children)
+        {
+            if (tRef.MyTs is null)  SetChildren(tRef, Children);
+            else tRef.MyTs.AddRange(Children);
+        }
 
         public IEnumerable<T> GetChildren(TRef tRef) => tRef.MyTs;
 
@@ -23,6 +27,6 @@ namespace DataAccess.EFCore.Repository
                     tRef.MyTs.Remove(child);
         }
 
-        public void SetChildren(TRef tRef, IEnumerable<T> Children) => tRef.MyTs.AddRange(Children);
+        public void SetChildren(TRef tRef, IEnumerable<T> Children) => tRef.MyTs = Children.ToList();
     }
 }

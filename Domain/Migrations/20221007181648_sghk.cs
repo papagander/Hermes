@@ -4,7 +4,7 @@
 
 namespace Domain.Migrations
 {
-    public partial class FieldSets : Migration
+    public partial class sghk : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

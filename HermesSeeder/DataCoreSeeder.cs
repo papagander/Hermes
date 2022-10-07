@@ -52,13 +52,13 @@ namespace HermesSeeder
             S.AddOperators(_int, _equality);
             S.AddOperators(_decimal, _equality);
             S.AddOperators(_date, _equality);
-
+              
             S.AddOperators(_int, _greaterOrLessThan);
             S.AddOperators(_decimal, _greaterOrLessThan);
             S.AddOperators(_date, _greaterOrLessThan);
-
+              
             S.AddOperators(_date, _dateInlast);
-
+              
             S.AddOperators(_text, _stringCompare);
 
 
