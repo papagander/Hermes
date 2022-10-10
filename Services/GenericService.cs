@@ -12,11 +12,11 @@ namespace Services
 {
     public abstract class GenericService
     {
-        protected virtual IUnitOfWork UnitOfWork { get; set; }
-        ReportContext _context { get; set; }
-        public GenericService(ReportContext context)
+        protected  IUnitOfWork  UnitOfWork { get; set; }
+        protected ReportContext context {  get; private set; }
+        public GenericService(ReportContext _)
         {
-            _context = context;
+            context = _;
         }
         protected int Complete => UnitOfWork.Complete();
     }

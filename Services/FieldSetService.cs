@@ -22,7 +22,7 @@ namespace Services
         public FieldSetService(ReportContext context) : base(context)
         {
             U = new FieldSetUnitOfWork(context);
-            UnitOfWork = U;
+            base.UnitOfWork = U;
         }
         public int CreateFieldSet(string name, IEnumerable<Field> fields)
         {

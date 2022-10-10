@@ -47,18 +47,19 @@ namespace HermesSeeder
             var _int = S.GetFieldType(INT.Id);
             var _decimal = S.GetFieldType(DECIMAL.Id);
             var _date = S.GetFieldType(DATE.Id);
-
+#pragma warning disable CS8604 // Possible null reference argument.
             S.AddOperators(_text, _equality);
             S.AddOperators(_int, _equality);
             S.AddOperators(_decimal, _equality);
             S.AddOperators(_date, _equality);
-              
+#pragma warning restore CS8604 // Possible null reference argument.
+
             S.AddOperators(_int, _greaterOrLessThan);
             S.AddOperators(_decimal, _greaterOrLessThan);
             S.AddOperators(_date, _greaterOrLessThan);
-              
+
             S.AddOperators(_date, _dateInlast);
-              
+
             S.AddOperators(_text, _stringCompare);
 
 
@@ -149,10 +150,10 @@ namespace HermesSeeder
                 return output;
             }
         }
-        public static FieldType TEXT { get => BaseFieldTypes[0];  }
+        public static FieldType TEXT { get => BaseFieldTypes[0]; }
         public static FieldType INT { get => BaseFieldTypes[1]; }
         public static FieldType DECIMAL { get => BaseFieldTypes[2]; }
-        public static FieldType DATE { get => BaseFieldTypes[3];  }
+        public static FieldType DATE { get => BaseFieldTypes[3]; }
 
         protected virtual void Dispose(bool disposing)
         {

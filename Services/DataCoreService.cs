@@ -18,7 +18,7 @@ namespace Services
         public DataCoreService(ReportContext reportContext) : base(reportContext)
         {
             U = new DataCoreUnitOfWork(reportContext);
-            UnitOfWork = U;
+            base.UnitOfWork = U;
         }
         public int Add(Conjoiner e)
         {
