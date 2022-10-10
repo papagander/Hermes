@@ -27,48 +27,92 @@ public class QueryService
 
     public int AddFields(Query query, IEnumerable<Field> fields)
     {
-        if (!query.Equals(U.Queries.Get(query.Id))) throw new Exception("Query does not match stored query w same Id.");
-        FieldSet fs = query.FieldSet;
-        foreach (Field field in fields) if (field.FieldSet != fs) throw new Exception($"{field.Name} is not in {fs.Name}");
-        query.Fields.AddRange(fields);
-        U.Queries.Add(query);
-        return Complete;
+        try
+        {
+            Verify(query, fields);
+            U.Queries.AddChildren(query, fields);
+            return Complete;
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
     }
 
     public int CreateQuery(string name, FieldSet fieldSet, IEnumerable<Field> fields)
     {
         foreach (Field field in fields) if (field.FieldSet != fieldSet) return 0;
-        var Query = new Query { Name = name, FieldSet = fieldSet, };
+        var Query = new Query { Name = name, FieldSet = fieldSet, Fields = fields.ToList() };
+        U.Queries.Add(Query);
+        return Complete;
 
     }
 
-    public Query GetQuery(string name)
+    public Query? GetQuery(string name)
     {
-        throw new NotImplementedException();
+        return U.Queries.Get(name);
     }
 
-    public Query GetQuery(int id)
+    public Query? GetQuery(int id)
     {
-        throw new NotImplementedException();
+        return U.Queries.Get(id);
     }
 
     public int RemoveQuery(int id)
     {
-        throw new NotImplementedException();
+        var query = U.Queries.Get(id);
+        if (query is null) throw new Exception($"No query with id {id}");
+        return RemoveQuery(query);
+
     }
 
     public int RemoveQuery(string name)
     {
-        throw new NotImplementedException();
+        var Query = U.Queries.Get(name);
+        if (Query is null) throw new Exception($"No query with name {name}");
+        return RemoveQuery(Query);
     }
 
     public int RemoveQuery(Query query)
     {
-        throw new NotImplementedException();
+        if (!query.Equals(U.Queries.Get(query.Id)))
+            throw new Exception($"Query {query.Name} with Id {query.Id} does not match {U.Queries.Get(query.Id).Name}");
+        U.Queries.Remove(query);
+        return Complete;
+
     }
 
     public int SetFields(Query query, IEnumerable<Field> fields)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Verify(query, fields);
+            U.Queries.SetChildren(query, fields);
+            return Complete;
+
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+
+    }
+    protected bool Verify(Query query)
+    {
+        if (query is null) 
+            return false;
+        if (!(query.Name == (U.Queries.Get(query.Id).Name))) 
+            return false;
+        if (!(query.FieldSet == (U.Queries.Get(query.Id).FieldSet)))
+            return false;
+        return true;
+    }
+    protected bool Verify(Query query, IEnumerable<Field> fields)
+    {
+        if (!Verify(query)) return false;
+        foreach (var field in fields)
+            if (field.FieldSet != query.FieldSet)
+                throw new Exception($"Field {field.Name} is not on {query.Name}'s fieldset {query.FieldSet.Name}");
+        return true;
     }
 }

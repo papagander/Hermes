@@ -9,7 +9,7 @@ public class Field : Indexed, IReferences<FieldSet>, IReferences<FieldType>
     public override string ToString()
     {
 
-        if (FieldSet is not null) return $"{FieldSet.Name}.{Name}";
+        if (FieldSet is not null) return $"{FieldSet.Name}.{Name} ({FieldType.Name})";
         else return Name;
     }
     public string Name { get; set; }
