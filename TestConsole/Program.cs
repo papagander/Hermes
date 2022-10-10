@@ -17,7 +17,11 @@ class Program
         var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
 
         ReportContext context = new ReportContext(optionsBuilder.Options);
-        using (DataCoreSeeder seed = new DataCoreSeeder(context))
+        using (var seed = new DataCoreSeeder(context))
+        {
+            seed.Seed();
+        }
+        using (var seed = new FieldSetSeeder(context))
         {
             seed.Seed();
         }

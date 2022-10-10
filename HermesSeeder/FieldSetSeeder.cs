@@ -4,6 +4,8 @@ using Domain.Models.FieldSets;
 
 using HermesSeeder.Interfaces;
 
+using Microsoft.EntityFrameworkCore;
+
 using Services;
 
 using System;
@@ -12,6 +14,8 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HermesSeeder;
 public class FieldSetSeeder
@@ -28,7 +32,12 @@ public class FieldSetSeeder
 
     public void Seed()
     {
-        throw new NotImplementedException();
+
+        Context.Database.ExecuteSqlRaw("DELETE FROM FieldSet");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Field");
+        S.CreateFieldSet(ReceivingSet.Name, ReceivingFields);
+        
+
     }
     public static FieldSet ReceivingSet { 
         get

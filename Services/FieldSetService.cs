@@ -30,7 +30,7 @@ namespace Services
             U.FieldSets.Add(fs);
             var fds = fields.ToList();
             for (int i = 0; i < fds.Count; i++) fds[i].FieldSet = fs;
-            U.Fields.AddRange(fds);
+            U.FieldSets.AddChildren(fs, fds);
             return Complete;
         }
 
