@@ -25,17 +25,6 @@ class Program
         {
             seed.Seed();
         }
-        using (DataCoreController dc = new DataCoreController(context))
-        {
-            dc.Run();
-        }
-        /*
-        using (FieldSetController controller = new(context))
-        {
-            controller.Run();
-        }
-        */
-
         using (MainMenu mm = new(context))
         {
             mm.Run();

@@ -1,6 +1,7 @@
 ﻿namespace Domain.Interfaces.Models;
 
-public interface INamed : IIndexed
+public interface INamed 
+    : IIndexed
 {
     // A table with an index and a name.
     public string Name { get; set; }

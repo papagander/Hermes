@@ -43,51 +43,24 @@ public class ReportContext : DbContext
     public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder m)
     {
-        /*
-// Seed
-//  Data Core
-        m.Entity<Conjoiner>().HasData(
-            new Conjoiner {  Id = 1, Name = "and" }
-            , new Conjoiner { Id = 2, Name = "or" }
-            );;
-
-        int i = 1;
-        var equals = new Operator {  Id = i, Name = "=" };
-        i++;
-        var nequals = new Operator { Id = i, Name = "!=" };
-        i++;
-        var lessThan = new Operator { Id = i, Name = "<" };
-        i++;
-        var greaterThan = new Operator { Id = i, Name = ">" };
-        i++;
-        var isLastWeek = new Operator { Id = i, Name = "isLastWeek" };
-
-        i = 1;
-        var text = new FieldType { Id = i, Name = "text" };
-        i++;
-        var integer = new FieldType {Id = i,  Name = "integer" };
-        i++;
-        var date = new FieldType { Id = i, Name = "date" };
-        m.Entity<Operator>().HasData(equals, nequals, greaterThan, lessThan, isLastWeek);
-        m.Entity<FieldType>().HasData(text, integer, date);
-
-       // m.Entity<FieldType>().OwnsMany(e => e.Operators).HasData();    
-        */
 
 // Relationships
-//  Data Core
+    //  Data Core
         m.Entity<FieldType>()
             .HasMany(e => e.Operators)
             .WithMany(e => e.FieldTypes);
+        m.Entity<Operator>()
+            .HasMany(e => e.Parameters)
+            .WithOne(e => e.Operator);
 
-        //  Field Sets
+    //  Field Sets
 
-        //  Queries
+    //  Queries
         m.Entity<Query>()
             .HasMany(e => e.Fields)
             .WithMany(e => e.Queries);
 
-        //  Conjunctions
+    //  Conjunctions
         m.Entity<Statement>()
             .HasOne(st => st.Conjunction)
             .WithMany(s => s.Statements);
@@ -98,12 +71,14 @@ public class ReportContext : DbContext
             .HasOne(crt => crt.Statement)
             .WithMany(s => s.Criterions);
 
-        // Navigations
-        //  Data Core
+// Navigations
+    //  Data Core
         m.Entity<FieldType>()
             .Navigation(e => e.Operators).AutoInclude();
+        m.Entity<Operator>()
+            .Navigation(e => e.Parameters).AutoInclude();
 
-        //  Field Sets
+    //  Field Sets
         m.Entity<FieldSet>()
             .Navigation(e => e.Fields).AutoInclude();
         m.Entity<Field>()
