@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 namespace DataAccess.EFCore.Interfaces.Repositories.DataCore;
 public interface IOperatorRepository
     : IUniquelyNamedRepository<Operator>
-    , IReferencedByRepository< Operator, OperatorFieldType>
+    , IReferencedByRepository<Operator, OperatorFieldType>
     , IReferencedByRepository<Operator, Parameter>
 {
-    public void Add(string name, string executionString,  IEnumerable<DbType> types, IEnumerable<Parameter> parameters);
+    public void Add(string name, string executionString, IEnumerable<DbType> types, IEnumerable<Parameter> parameters);
 }

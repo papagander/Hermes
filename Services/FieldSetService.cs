@@ -36,8 +36,6 @@ namespace Services
 
         public IEnumerable<FieldSet> GetFieldSets() => U.FieldSets.GetAll();
 
-        public IEnumerable<FieldType> GetFieldTypes() => U.FieldTypes.GetAll();
-
         public int Remove(FieldSet fieldSet)
         {
             var fds = fieldSet.Fields;

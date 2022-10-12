@@ -1,6 +1,7 @@
-﻿global using Domain;
+﻿global using Domain.Models.DataCore;
 
 using DataAccess.EFCore.Interfaces.Repositories.DataCore;
+
 
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,17 @@ namespace DataAccess.EFCore.Repository.DataCore
             p = new(context);
         }
 
-        void IOperatorRepository.Add(string name, string executionString, IEnumerable<DbType> types, IEnumerable<Parameter> parameters)
+        void IOperatorRepository.Add(string name, string executionString, IEnumerable<SqlDbType> dbTypes, IEnumerable<Parameter> parameters)
         {
             throw new NotImplementedException();
             if (!NameIsAvailable(name)) throw new InvalidOperationException("Name is not unique");
-            var _types = new List<Type>();
-            var op = new Operator { Name = name, ExecutionString = executionString };
+            var types = new List<OperatorFieldType>();
+            foreach (var dbType  in dbTypes)
+            {
+                types.Add(new OperatorFieldType { DbType = dbType });
+            }
+            var op = new Operator { Name = name, ExecutionString = executionString, OperatorFieldTypes = types, Parameters = parameters.ToList() };
+            Add(op);
         }
 
         void IReferencedByRepository<Operator, OperatorFieldType>.AddChildren(Operator tRef, IEnumerable<OperatorFieldType> Children) => ft.AddChildren(tRef, Children);

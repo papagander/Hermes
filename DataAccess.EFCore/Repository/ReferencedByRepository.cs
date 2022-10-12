@@ -1,4 +1,6 @@
-﻿using System;
+﻿global using DataAccess.EFCore.Interfaces.Repositories;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

@@ -7,12 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Interfaces\Repositories\DataCore\IFieldTypeRepository.cs" />
     <Compile Remove="Repository\DataCore\FieldTypeRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Interfaces\Repositories\DataCore\IFieldTypeRepository.cs" />
     <None Include="Repository\DataCore\FieldTypeRepository.cs" />
   </ItemGroup>
 

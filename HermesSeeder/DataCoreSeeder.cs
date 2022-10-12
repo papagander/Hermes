@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 using Services;
 
+using System.Data;
+
 namespace HermesSeeder
 {
     public class DataCoreSeeder
@@ -23,7 +25,6 @@ namespace HermesSeeder
         public void Seed()
         {
             Context.Database.ExecuteSqlRaw("DELETE FROM Operator");
-            Context.Database.ExecuteSqlRaw("DELETE FROM FieldType");
             Context.Database.ExecuteSqlRaw("DELETE FROM Conjoiner");
             foreach (var item in Equality) S.Add(item);
             foreach (var item in GreaterOrLessThan) S.Add(item);
@@ -64,6 +65,46 @@ namespace HermesSeeder
 
 
 
+        }
+        protected static List<SqlDbType> Numeric
+        {
+            get
+            {
+                var output = new List<SqlDbType>();
+                output.Add(SqlDbType.Int);
+                output.Add(SqlDbType.SmallInt);
+                output.Add(SqlDbType.BigInt);
+                output.Add(SqlDbType.Decimal);
+                output.Add(SqlDbType.Float);
+                output.Add(SqlDbType.Money);
+                output.Add(SqlDbType.SmallMoney);
+                output.Add(SqlDbType.Real);
+                return output;
+            }
+        }
+        protected static List<SqlDbType> Textual
+        {
+            get
+            {
+                var output = new List<SqlDbType>();
+                output.Add(SqlDbType.Text);
+                output.Add(SqlDbType.NText);
+                output.Add(SqlDbType.VarChar);
+                output.Add(SqlDbType.NVarChar);
+                output.Add(SqlDbType.NChar);
+                return output;
+            }
+        }
+        protected static List<SqlDbType> Temporal
+        {
+            get
+            {
+                var output = new List<SqlDbType>();
+                output.Add(SqlDbType.Date);
+                output.Add(SqlDbType.DateTime);
+                output.Add(SqlDbType.DateTime2);
+                return output;
+            }
         }
         public static List<Operator> Equality
         {

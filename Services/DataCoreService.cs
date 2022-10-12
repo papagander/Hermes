@@ -12,69 +12,71 @@ using System.Data;
 
 namespace Services
 {
-    public class DataCoreService : 
+    public class DataCoreService :
         GenericService
         , IDataCoreService
     {
-        protected IDataCoreUnitOfWork U { get; set; }
-        public DataCoreService(ReportContext reportContext) : base(reportContext)
+        DataCoreUnitOfWork U { get; set; }
+        public DataCoreService(ReportContext _context) : base(_context)
         {
-            U = new DataCoreUnitOfWork(reportContext);
-            base.UnitOfWork = U;
+            U = new(context);
+            UnitOfWork = U;
         }
-        public int AddConjoiner(Conjoiner e)
-        {
-            U.Conjoiners.Add(e);
-            return Complete;
-        }
+
         public int AddOperator(string name, string executionString, IEnumerable<DbType> dbTypes, IEnumerable<Parameter> parameters)
         {
             U.Operators.Add(name, executionString, dbTypes, parameters);
             return Complete;
         }
-        public int Add(FieldType e)
+
+        public Operator GetOperator(int id)
         {
-            U.FieldTypes.Add(e);
-            return Complete;
+            throw new NotImplementedException();
         }
 
-        public int Remove(Conjoiner e)
+        public IEnumerable<Operator> GetAllOperators()
         {
-            U.Conjoiners.Remove(e);
-            return Complete;
-        }
-        public int Remove(FieldType e)
-        {
-            U.FieldTypes.Remove(e);
-            return Complete;
-        }
-        public int Remove(Operator e)
-        {
-            U.Operators.Remove(e);
-            return Complete;
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Conjoiner> GetAllConjoiners() => U.Conjoiners.GetAll();
-
-        public IEnumerable<FieldType> GetAllFieldTypes() => U.FieldTypes.GetAll();
-
-        public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
-        public IEnumerable<Operator> GetOperators(FieldType ft) => U.FieldTypes.GetOperators(ft);
-        public FieldType? GetFieldType(int id) => U.FieldTypes.Get(id);
-        public Operator? GetOperator(int id) => U.Operators.Get(id);
-        public Conjoiner? GetConjoiner(int id) => U.Conjoiners.Get(id);
-
-        public int SetOperators(FieldType ft, IEnumerable<Operator> op) { U.FieldTypes.SetChildren(ft, op); return Complete; }
-
-        public int AddOperators(FieldType ft, IEnumerable<Operator> op)
+        public int RemoveOperator(Operator op)
         {
-            U.FieldTypes.AddChildren(ft, op); return Complete;
+            throw new NotImplementedException();
         }
 
-        public int RemoveOperators(FieldType ft, IEnumerable<Operator> op)
+        public IEnumerable<Operator> GetOperators(DbType dbType)
         {
-            U.FieldTypes.RemoveChildren(ft, op); return Complete;
+            throw new NotImplementedException();
         }
 
+        public int AddFieldTypes(string operatorName, IEnumerable<DbType> dbTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddConjoiner(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Conjoiner GetConjoiner(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Conjoiner GetConjoiner(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Conjoiner> GetAllConjoiners()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int RemoveConjoiner(Conjoiner cjr)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

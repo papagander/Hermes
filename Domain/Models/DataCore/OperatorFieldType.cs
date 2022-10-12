@@ -16,7 +16,7 @@ namespace Domain.Models.DataCore
     {
         public Operator Operator { get; set; }
         public int OperatorId { get; set; }
-        public DbType DbType { get; set; }
+        public SqlDbType DbType { get; set; }
         [NotMapped]
         Operator IReferences<Operator>.MyTRef { get => Operator; }
         [NotMapped]
