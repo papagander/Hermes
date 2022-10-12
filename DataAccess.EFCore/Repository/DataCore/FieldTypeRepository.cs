@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace DataAccess.EFCore.Repository.DataCore
 {
     public class FieldTypeRepository :
-        NamedRepository<FieldType>
+        UniquelyNamedRepository<FieldType>
         , IFieldTypeRepository
     {
         ReferencedByRepository<FieldType, Operator> RefOp;

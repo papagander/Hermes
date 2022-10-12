@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Repository
 {
-    public class NamedRepository<T> : IndexedRepository<T>, INamedRepository<T> where T : class, INamed
+    public class UniquelyNamedRepository<T> : IndexedRepository<T>, IUniquelyNamedRepository<T> where T : class, INamed
     {
         // need to not allow insert if name exists
-        public NamedRepository(ReportContext _context) : base(_context) { }
+        public UniquelyNamedRepository(ReportContext _context) : base(_context) { }
         public T? Get(string name)
         {
             var output = (from myT in context.Set<T>() where myT.Name == name select myT);

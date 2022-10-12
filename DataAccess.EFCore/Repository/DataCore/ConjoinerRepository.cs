@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Repository.DataCore
 {
-    public class ConjoinerRepository : NamedRepository<Conjoiner>, IConjoinerRepository
+    public class ConjoinerRepository : UniquelyNamedRepository<Conjoiner>, IConjoinerRepository
     {
         public ConjoinerRepository(ReportContext _context) : base(_context)
         {

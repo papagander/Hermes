@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DataAccess.EFCore.Interfaces.Repositories.Queries
 {
     public interface IQueryRepository : 
-        INamedRepository<Query>
+        IUniquelyNamedRepository<Query>
         , IReferencesRepository<Query, FieldSet>
         , IReferencedByRepository<Query, Field>
     {

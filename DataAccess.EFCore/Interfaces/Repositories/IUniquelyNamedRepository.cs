@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Interfaces.Repositories
 {
-    public interface INamedRepository<T> : IIndexedRepository<T> where T : INamed
+    public interface IUniquelyNamedRepository<T> : IIndexedRepository<T> where T : INamed
     {
         //void Rename(string OldName, string NewName);
         T? Get(string Name);

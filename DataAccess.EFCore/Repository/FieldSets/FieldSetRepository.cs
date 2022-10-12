@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Repository.FieldSets;
-public class FieldSetRepository : NamedRepository<FieldSet>, IFieldSetRepository
+public class FieldSetRepository : UniquelyNamedRepository<FieldSet>, IFieldSetRepository
 {
     private ReferencedByRepository<FieldSet, Field> f;
     public FieldSetRepository(ReportContext _context) : base(_context)

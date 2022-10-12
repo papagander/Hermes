@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DataAccess.EFCore.Interfaces.Repositories.DataCore
 {
     public interface IFieldTypeRepository : 
-        INamedRepository<FieldType>
+        IUniquelyNamedRepository<FieldType>
         , IReferencedByRepository<FieldType,Operator>
     {
         IEnumerable<Operator> GetOperators(FieldType fieldType);

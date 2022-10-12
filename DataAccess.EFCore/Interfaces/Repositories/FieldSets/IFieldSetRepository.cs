@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Interfaces.Repositories.FieldSets
 {
-    public interface IFieldSetRepository : INamedRepository<FieldSet>, IReferencedByRepository<FieldSet, Field>
+    public interface IFieldSetRepository : IUniquelyNamedRepository<FieldSet>, IReferencedByRepository<FieldSet, Field>
     {
         IEnumerable<Field> GetFields(FieldSet dt);
     }

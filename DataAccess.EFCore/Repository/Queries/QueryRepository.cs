@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Repository.Queries
 {
-    public class QueryRepository : NamedRepository<Query>, IQueryRepository
+    public class QueryRepository : UniquelyNamedRepository<Query>, IQueryRepository
     {
         ReferencedByRepository<Query, Field> f;
         ReferencesRepository<Query, FieldSet> ds;

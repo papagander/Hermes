@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Domain.Models.DataCore
 {
 
-    public class Conjoiner : Named
+    public class Conjoiner : UniquelyNamed
     {
         // AND, OR
     }

@@ -10,15 +10,13 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.DataCore
 {
-    public class Parameter
-        : Named
+    public class OperatorFieldType 
+        : Indexed
         , IReferences<Operator>
     {
         public Operator Operator { get; set; }
         public int OperatorId { get; set; }
-        public DbType? DbType { get; set; }
-        // If DbType is null, type is same as field
-
+        public DbType DbType { get; set; }
         [NotMapped]
         Operator IReferences<Operator>.MyTRef { get => Operator; }
         [NotMapped]
