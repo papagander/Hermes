@@ -3,6 +3,7 @@ using Domain.Models.DataCore;
 using Domain.Models.Queries;
 
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Domain.Models.FieldSets;
 
@@ -14,8 +15,9 @@ public class Field : Named, IReferences<FieldSet>
         if (FieldSet is not null) return $"{FieldSet.Name}.{Name} ({Type.ToString()})";
         else return Name;
     }
+    [NotNull]
     public int FieldSetId { get; set; }
-    public int FieldTypeId { get; set; }
+    [NotNull]
     public DbType Type { get; set; }
     public FieldSet FieldSet { get; set; }
     internal List<Query> Queries { get; set; }

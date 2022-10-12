@@ -8,6 +8,8 @@ using Domain.Models.DataCore;
 
 using Services.Interfaces;
 
+using System.Data;
+
 namespace Services
 {
     public class DataCoreService : 
@@ -20,14 +22,14 @@ namespace Services
             U = new DataCoreUnitOfWork(reportContext);
             base.UnitOfWork = U;
         }
-        public int Add(Conjoiner e)
+        public int AddConjoiner(Conjoiner e)
         {
             U.Conjoiners.Add(e);
             return Complete;
         }
-        public int Add(Operator e)
+        public int AddOperator(string name, string executionString, IEnumerable<DbType> dbTypes, IEnumerable<Parameter> parameters)
         {
-            U.Operators.Add(e);
+            U.Operators.Add(name, executionString, dbTypes, parameters);
             return Complete;
         }
         public int Add(FieldType e)

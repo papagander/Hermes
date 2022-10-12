@@ -28,7 +28,6 @@ public class ReportContext : DbContext
 
     // Core
     public DbSet<Conjoiner> Conjoiner { get; set; }
-    public DbSet<FieldType> FieldType { get; set; }
     public DbSet<Operator> Operator { get; set; }
 
     // FieldSet
@@ -44,18 +43,18 @@ public class ReportContext : DbContext
     protected override void OnModelCreating(ModelBuilder m)
     {
 
-// Relationships
-    //  Data Core
-        m.Entity<FieldType>()
-            .HasMany(e => e.Operators)
-            .WithMany(e => e.FieldTypes);
+        // Relationships
+        //  Data Core
         m.Entity<Operator>()
             .HasMany(e => e.Parameters)
             .WithOne(e => e.Operator);
 
-    //  Field Sets
+        m.Entity<Operator>()
+            .HasMany(e => e.OperatorFieldTypes)
+            .WithOne(e => e.Operator);
+        //  Field Sets
 
-    //  Queries
+        //  Queries
         m.Entity<Query>()
             .HasMany(e => e.Fields)
             .WithMany(e => e.Queries);
@@ -73,16 +72,14 @@ public class ReportContext : DbContext
 
 // Navigations
     //  Data Core
-        m.Entity<FieldType>()
-            .Navigation(e => e.Operators).AutoInclude();
         m.Entity<Operator>()
             .Navigation(e => e.Parameters).AutoInclude();
+        m.Entity<Operator>()
+            .Navigation(e => e.OperatorFieldTypes).AutoInclude();
 
-    //  Field Sets
+        //  Field Sets
         m.Entity<FieldSet>()
             .Navigation(e => e.Fields).AutoInclude();
-        m.Entity<Field>()
-            .Navigation(e => e.FieldType).AutoInclude();
     }
 
     public static DbContextOptionsBuilder<ReportContext> SqlLiteOptionsBuilder()

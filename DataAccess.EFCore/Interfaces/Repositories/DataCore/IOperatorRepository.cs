@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
+﻿using Domain.Models.DataCore;
+
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 using System;
 using System.Collections.Generic;
@@ -8,8 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Interfaces.Repositories.DataCore;
-public interface IOperatorRepository :
-    IUniquelyNamedRepository<Operator>
+public interface IOperatorRepository
+    : IUniquelyNamedRepository<Operator>
+    , IReferencedByRepository< Operator, OperatorFieldType>
+    , IReferencedByRepository<Operator, Parameter>
 {
-    public void Add(string name, IEnumerable<DbType> types);
+    public void Add(string name, string executionString,  IEnumerable<DbType> types, IEnumerable<Parameter> parameters);
 }

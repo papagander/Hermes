@@ -1,4 +1,4 @@
-﻿global using Domain;
+﻿global using Domain.Models.DataCore;
 using DataAccess.EFCore.Interfaces.Repositories.DataCore;
 
 

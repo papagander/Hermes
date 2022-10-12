@@ -12,20 +12,16 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.EFCore.Interfaces.UnitsOfWork;
 
-namespace DataAccess.EFCore.UnitOfWork.DataCore
+namespace DataAccess.EFCore.UnitOfWork.DataCore;
+public class DataCoreUnitOfWork 
+    : GenericUnitOfWork
+    , IDataCoreUnitOfWork
 {
-    public class DataCoreUnitOfWork : GenericUnitOfWork, IDataCoreUnitOfWork
+    public IOperatorRepository Operators { get; private set; }
+    public IConjoinerRepository Conjoiners { get; private set; }
+    public DataCoreUnitOfWork(ReportContext reportContext) : base(reportContext)
     {
-        public IFieldTypeRepository  FieldTypes { get; private set; }
-        public IOperatorRepository Operators { get; private set; }
-        public IConjoinerRepository Conjoiners { get; private set; }
-        public DataCoreUnitOfWork(ReportContext reportContext) : base(reportContext)
-        {
-
-            FieldTypes = new FieldTypeRepository(reportContext);
-            Operators = new OperatorRepository(reportContext);
-            Conjoiners = new ConjoinerRepository(reportContext);
-        }
-
+        Operators = new OperatorRepository(reportContext);
+        Conjoiners = new ConjoinerRepository(reportContext);
     }
 }

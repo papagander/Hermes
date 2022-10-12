@@ -19,8 +19,7 @@ namespace DataAccess.EFCore.Repository
         }
         public override void Add(T entity)
         {
-            var t = Get(entity.Name);
-            if (t is null) base.Add(entity);
+            if (NameIsAvailable(entity.Name)) base.Add(entity);
             else throw new InvalidDataException($"Cannot insert {entity.Name}: name must be unique.");
         }
         public IEnumerable<T> GetRange(IEnumerable<string> names)
@@ -45,10 +44,9 @@ namespace DataAccess.EFCore.Repository
             IEnumerable<T> Ts = GetRange(Names);
             context.Set<T>().RemoveRange(Ts);
         }
-
-        public void Rename(string OldName, string NewName)
+        public bool NameIsAvailable(string name)
         {
-            throw new NotImplementedException();
+            return Get(name) == null;
         }
     }
 }

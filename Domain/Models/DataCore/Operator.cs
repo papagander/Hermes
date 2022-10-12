@@ -14,7 +14,7 @@ namespace Domain.Models.DataCore
         public List<OperatorFieldType> OperatorFieldTypes { get; set; }
         public List<Parameter> Parameters { get; set; }
         [NotNull]
-        string ExecutionString { get; set; }
+        public string ExecutionString { get; set; }
         [NotMapped]
         List<OperatorFieldType> IReferencedBy<OperatorFieldType>.MyTs { get => OperatorFieldTypes; set => OperatorFieldTypes = value; }
         [NotMapped]

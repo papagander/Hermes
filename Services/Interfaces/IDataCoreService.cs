@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,22 +11,20 @@ namespace Services.Interfaces
 {
     public interface IDataCoreService
     {
-        // Field Type
-        int Add(FieldType ft);
-        int Add(Operator op);
-        int Add(Conjoiner cjr);
-        FieldType GetFieldType(int id);
+        // Operator
+        int AddOperator(string name, string executionString, IEnumerable<DbType> dbTypes, IEnumerable<Parameter> parameters);
         Operator GetOperator(int id);
-        Conjoiner GetConjoiner(int id);
-        IEnumerable<FieldType> GetAllFieldTypes();
         IEnumerable<Operator> GetAllOperators();
+        int RemoveOperator(Operator op);
+        IEnumerable<Operator> GetOperators(DbType dbType);
+        int AddFieldTypes(string operatorName, IEnumerable<DbType> dbTypes);
+
+        int AddConjoiner(string name);
+        Conjoiner GetConjoiner(int id);
+        Conjoiner GetConjoiner(string name);
         IEnumerable<Conjoiner> GetAllConjoiners();
-        IEnumerable<Operator> GetOperators(FieldType ft);
-        int SetOperators(FieldType ft, IEnumerable<Operator> op);
-        int AddOperators(FieldType ft, IEnumerable<Operator> op);
-        int RemoveOperators(FieldType ft, IEnumerable<Operator> op);
-        int Remove(FieldType ft);
-        int Remove(Operator op);
-        int Remove(Conjoiner cjr);
+        int RemoveConjoiner(Conjoiner cjr);
+        //int RemoveFieldTypes(string operatorName, IEnumerable<DbType> dbTypes);
+        //int SetFieldTypes(string operatorName, IEnumerable<DbType> dbTypes);
     }
 }

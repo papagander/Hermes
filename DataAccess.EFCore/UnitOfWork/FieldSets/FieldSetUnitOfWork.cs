@@ -15,12 +15,10 @@ public class FieldSetUnitOfWork : GenericUnitOfWork, IFieldSetUnitOfWork
 {
     public IFieldSetRepository FieldSets { get; private set; }
     public IFieldRepository Fields { get; private set; }
-    public IReadRepository<FieldType> FieldTypes { get; private set; }
 
     public FieldSetUnitOfWork(ReportContext reportContext) : base(reportContext)
     {
         FieldSets = new FieldSetRepository(reportContext);
         Fields = new FieldRepository(reportContext);
-        FieldTypes = new ReadRepository<FieldType>(reportContext);
     }
 }
