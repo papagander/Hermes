@@ -1,6 +1,7 @@
 ﻿using DataAccess.EFCore.Interfaces;
 using DataAccess.EFCore.UnitOfWork;
 
+using Domain;
 using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 

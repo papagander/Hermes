@@ -12,16 +12,17 @@ namespace Services.Interfaces
     public interface IDataCoreService
     {
         // Operator
-        int AddOperator(string name, string executionString, IEnumerable<DbType> dbTypes, IEnumerable<Parameter> parameters);
-        Operator GetOperator(int id);
+        int AddOperator(string name, string executionString, IEnumerable<SqlDbType> dbTypes, IEnumerable<Parameter> parameters);
+        Operator? GetOperator(int id);
         IEnumerable<Operator> GetAllOperators();
-        int RemoveOperator(Operator op);
-        IEnumerable<Operator> GetOperators(DbType dbType);
-        int AddFieldTypes(string operatorName, IEnumerable<DbType> dbTypes);
+        int RemoveOperator(string name);
+        int RemoveOperator(int id);
+        IEnumerable<Operator> GetOperators(SqlDbType dbType);
+        int AddFieldTypes(int operatorId, IEnumerable<SqlDbType> dbTypes);
 
         int AddConjoiner(string name);
-        Conjoiner GetConjoiner(int id);
-        Conjoiner GetConjoiner(string name);
+        Conjoiner? GetConjoiner(int id);
+        Conjoiner? GetConjoiner(string name);
         IEnumerable<Conjoiner> GetAllConjoiners();
         int RemoveConjoiner(Conjoiner cjr);
         //int RemoveFieldTypes(string operatorName, IEnumerable<DbType> dbTypes);

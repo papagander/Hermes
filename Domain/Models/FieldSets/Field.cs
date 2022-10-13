@@ -18,7 +18,7 @@ public class Field : Named, IReferences<FieldSet>
     [NotNull]
     public int FieldSetId { get; set; }
     [NotNull]
-    public DbType Type { get; set; }
+    public SqlDbType Type { get; set; }
     public FieldSet FieldSet { get; set; }
     internal List<Query> Queries { get; set; }
     int IReferences<FieldSet>.MyTRefId { get => FieldSetId;  /*set => Id = value;  */}

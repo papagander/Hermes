@@ -9,4 +9,6 @@ using System.Threading.Tasks;
 namespace DataAccess.EFCore.Interfaces.Repositories.DataCore;
 public interface IConjoinerRepository 
     : IUniquelyNamedRepository<Conjoiner>
-{}
+{
+    void Add(string name);
+}

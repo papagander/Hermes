@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Repository
 {
-    public class UniquelyNamedRepository<T> : IndexedRepository<T>, IUniquelyNamedRepository<T> where T : class, INamed
+    public class UniquelyNamedRepository<T> 
+        : IndexedRepository<T>
+        , IUniquelyNamedRepository<T> 
+        where T 
+            : class
+            , INamed
+            , new()
     {
         // need to not allow insert if name exists
         public UniquelyNamedRepository(ReportContext _context) : base(_context) { }
@@ -47,6 +53,11 @@ namespace DataAccess.EFCore.Repository
         public bool NameIsAvailable(string name)
         {
             return Get(name) == null;
+        }
+        protected void AddNameOnly(string name)
+        {
+            if (NameIsAvailable(name))
+                context.Set<T>().Add(new T { Name = name });
         }
     }
 }

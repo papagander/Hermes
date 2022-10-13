@@ -23,60 +23,64 @@ namespace Services
             UnitOfWork = U;
         }
 
-        public int AddOperator(string name, string executionString, IEnumerable<DbType> dbTypes, IEnumerable<Parameter> parameters)
+        public int AddOperator(string name, string executionString, IEnumerable<SqlDbType> dbTypes, IEnumerable<Parameter> parameters)
         {
             U.Operators.Add(name, executionString, dbTypes, parameters);
             return Complete;
         }
 
-        public Operator GetOperator(int id)
+        public Operator? GetOperator(int id) => U.Operators.Get(id);
+
+        public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
+
+        public int RemoveOperator(string name)
         {
-            throw new NotImplementedException();
+            var op = U.Operators.Get(name);
+            if (op is not null) U.Operators.Remove(op);
+            return Complete;
+        }
+        public int RemoveOperator(int id)
+        {
+            var op = U.Operators.Get(id);
+            if (op is not null) U.Operators.Remove(op);
+            return Complete;
         }
 
-        public IEnumerable<Operator> GetAllOperators()
+        public IEnumerable<Operator> GetOperators(SqlDbType dbType)
         {
-            throw new NotImplementedException();
+            var output = new List<Operator>();
+            foreach (var op in U.Operators.GetAll())
+                foreach (var fto in op.OperatorFieldTypes)
+                    if (fto.DbType.Equals(dbType))
+                    {
+                        output.Add(op);
+                        break;
+                    }
+            return output;
         }
 
-        public int RemoveOperator(Operator op)
+        public int AddFieldTypes(int operatorId, IEnumerable<SqlDbType> dbTypes)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Operator> GetOperators(DbType dbType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int AddFieldTypes(string operatorName, IEnumerable<DbType> dbTypes)
-        {
-            throw new NotImplementedException();
+            var op = U.Operators.Get(operatorId);
+            if (op is null) return -1;
+            
         }
 
         public int AddConjoiner(string name)
         {
-            throw new NotImplementedException();
+            U.Conjoiners.Add(name);
+            return Complete;
         }
 
-        public Conjoiner GetConjoiner(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public Conjoiner? GetConjoiner(int id) => U.Conjoiners.Get(id);
+        public Conjoiner? GetConjoiner(string name) => U.Conjoiners.Get(name);
 
-        public Conjoiner GetConjoiner(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Conjoiner> GetAllConjoiners()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Conjoiner> GetAllConjoiners() => U.Conjoiners.GetAll();
 
         public int RemoveConjoiner(Conjoiner cjr)
         {
-            throw new NotImplementedException();
+            U.Conjoiners.Remove(cjr);
+            return Complete;    
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿global using Domain;
-using DataAccess.EFCore;
+﻿using DataAccess.EFCore;
 using DataAccess.EFCore.Interfaces.UnitsOfWork;
 
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

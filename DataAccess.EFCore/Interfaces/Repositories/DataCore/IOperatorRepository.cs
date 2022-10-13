@@ -15,5 +15,5 @@ public interface IOperatorRepository
     , IReferencedByRepository<Operator, OperatorFieldType>
     , IReferencedByRepository<Operator, Parameter>
 {
-    public void Add(string name, string executionString, IEnumerable<DbType> types, IEnumerable<Parameter> parameters);
+    public void Add(string name, string executionString, IEnumerable<SqlDbType> types, IEnumerable<Parameter> parameters);
 }

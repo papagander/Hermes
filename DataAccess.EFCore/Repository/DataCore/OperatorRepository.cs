@@ -25,7 +25,6 @@ namespace DataAccess.EFCore.Repository.DataCore
 
         void IOperatorRepository.Add(string name, string executionString, IEnumerable<SqlDbType> dbTypes, IEnumerable<Parameter> parameters)
         {
-            throw new NotImplementedException();
             if (!NameIsAvailable(name)) throw new InvalidOperationException("Name is not unique");
             var types = new List<OperatorFieldType>();
             foreach (var dbType  in dbTypes)
