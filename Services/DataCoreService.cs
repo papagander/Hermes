@@ -63,7 +63,7 @@ namespace Services
         {
             var op = U.Operators.Get(operatorId);
             if (op is null) return -1;
-            
+            throw new NotImplementedException();
         }
 
         public int AddConjoiner(string name)

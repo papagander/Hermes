@@ -15,7 +15,6 @@ namespace TestConsole.DataCore.Entities
 {
     internal class OperatorController :
         DataCoreEntityController<Operator>
-        , IOperatorController
     {
         public OperatorController(ReportContext context) : base(context)
         {
@@ -23,28 +22,26 @@ namespace TestConsole.DataCore.Entities
 
         protected override string EntityType { get => "Operator"; }
 
-        public override void Add()
+        public override void Show()
         {
-            string name = NamePrompt(EntityType);
-            var ent = new Operator { Name = name };
-            int output = S.Add(ent);
-            if (output == 0) Console.WriteLine("Failed to create operator.");
-            if (output == 1) Console.WriteLine($"Created operator '{name}'");
-            else Console.WriteLine($"Service returned: {output}");
+            var ops = S.GetAllOperators();
+            foreach (var op in ops)
+            {
+                string _name = string.Format("{0,4}", op.Name);
+                string _executionString = string.Format("{0,2}", op.ExecutionString);
+                Console.WriteLine(_name);
+                Console.WriteLine(_executionString);
+                Console.WriteLine(string.Format("{0,4}","Parameters:"));
+                foreach (var param in op.Parameters)
+                {
+                    Console.WriteLine(string.Format("{0,8}", $"{param.Name} : {param.DbType}"));
+                }
+                Console.WriteLine(string.Format("{0,4}","Types"));
+            }
         }
-
-        public override void Show() =>            ShowList(S.GetAllOperators());
         public override void RemoveRange()
         {
-            var es = SelectListFromList(S.GetAllOperators());
-            if (es.Count == 0)
-            {
-                Console.WriteLine("Cancelling");
-                return;
-            }
-            int output = 0;
-            foreach (var e in es) output += S.Remove(e);
-            Console.WriteLine($"Changed {output} rows.");
+            throw new NotImplementedException();
         }
 
         public override void HelpPrompt()
@@ -53,5 +50,9 @@ namespace TestConsole.DataCore.Entities
             Console.WriteLine("and define the filters which can be used on a field type.");
         }
 
+        public override void Add()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

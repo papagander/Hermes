@@ -25,10 +25,11 @@ public class ReportContext : DbContext
     {
 
     }
-
     // Core
     public DbSet<Conjoiner> Conjoiner { get; set; }
     public DbSet<Operator> Operator { get; set; }
+    public DbSet<OperatorFieldType> OperatorFieldTypes{ get; set; }
+    public DbSet<Parameter> Parameters{ get; set; }
 
     // FieldSet
     public DbSet<Models.FieldSets.FieldSet> FieldSet { get; set; }
@@ -53,6 +54,10 @@ public class ReportContext : DbContext
             .HasMany(e => e.OperatorFieldTypes)
             .WithOne(e => e.Operator);
         //  Field Sets
+        m.Entity<FieldSet>()
+            .HasMany(e => e.Fields)
+            .WithOne(e => e.FieldSet);
+
 
         //  Queries
         m.Entity<Query>()

@@ -19,7 +19,6 @@ namespace TestConsole.DataCore
         public DataCoreController(ReportContext context) : base(context)
         {
             Acts.Add(new("cjr", ConjoinerMenu));
-            Acts.Add(new("ft", FieldTypeMenu));
             Acts.Add(new("op", OperatorMenu));
             Acts.Add(new("about", About));
             Console.Clear();
@@ -59,11 +58,6 @@ namespace TestConsole.DataCore
         public void OperatorMenu()
         {
             OperatorController controller = new(context);
-            controller.Run();
-        }
-        public void FieldTypeMenu()
-        {
-            FieldTypeController controller = new(context);
             controller.Run();
         }
         public override void HelpPrompt()

@@ -16,7 +16,7 @@ namespace Domain.Models.DataCore
     {
         public Operator Operator { get; set; }
         public int OperatorId { get; set; }
-        public DbType? DbType { get; set; }
+        public SqlDbType? DbType { get; set; }
         // If DbType is null, type is same as field
 
         [NotMapped]
