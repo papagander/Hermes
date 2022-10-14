@@ -57,14 +57,7 @@ namespace TestConsole.Controllers.FieldSets
         }
         protected Field? CreateField()
         {
-            string? fdName = NamePrompt("Field");
-            if (fdName is null) return null;
-            var fts = S.GetFieldTypes();
-            Console.WriteLine("Select a field type for this field.");
-            var ft = SelectFromList(fts);
-            if (ft is null) return null;
-            else return new Field { Name = fdName, FieldType = ft };
-
+            throw new NotImplementedException();
         }
 
         public void AddFields()

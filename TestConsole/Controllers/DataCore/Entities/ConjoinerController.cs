@@ -32,9 +32,13 @@ namespace TestConsole.DataCore.Entities
 
         public override void Add()
         {
-            string name = NamePrompt(EntityType);
-            var ent = new Conjoiner { Name = name };
-            int output = S.Add(ent);
+            string? name = NamePrompt(EntityType);
+            if (name == null)
+            {
+                Console.WriteLine("Cancelling");
+                return;
+            }
+            int output = S.AddConjoiner(name);
             if (output == 0) Console.WriteLine("Failed to create conjoiner.");
             if (output == 1) Console.WriteLine($"Created conjoiner {name}");
             else Console.WriteLine($"Service returned: {output}");
@@ -49,7 +53,7 @@ namespace TestConsole.DataCore.Entities
                 return;
             }
             int output = 0;
-            foreach (var e in es) output += S.Remove(e);
+            foreach (var e in es) S.RemoveConjoiner(e);
             Console.WriteLine($"Changed {output} rows.");
         }
 
@@ -63,29 +67,3 @@ namespace TestConsole.DataCore.Entities
         public void SelectName(List<Conjoiner> nameds) => GenericController.SelectFromList(nameds);
     }
 }
-
-/*
-private void Run()
-{
-    Console.Write("Conjoiner.");
-    string? input = Console.ReadLine().ToLower();
-    while (true)
-    {
-        Console.Write("Conjoiner.");
-        switch (input)
-        {
-            case "add":
-                Add();
-                break;
-            case "get":
-                Show();
-                break;
-            case "help":
-                ConjoinerHelp();
-                break;
-        }
-        input = Console.ReadLine().ToLower();
-        Console.WriteLine();
-    }
-}
-*/

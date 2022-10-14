@@ -37,18 +37,7 @@ namespace TestConsole.DataCore
         }
         public void About()
         {
-            Console.WriteLine("The DataCore module is used to the base entities used for report logic:");
-            Pause(1);
-            Console.WriteLine("Field Types, Operator, FieldTypeOperators (which link FieldType to the Operator which can be used by them),");
-            Console.WriteLine("and Conjoiner, which are conjunctions like 'and' or 'or' which are used to build multi-condition filters.");
-            Pause(3);
-            Console.WriteLine("These are core to the funcitonality of all reports and should never be deleted in production.");
-            Console.WriteLine("Most of these, or at least the most important of these, will be in place at launch.");
-            Console.WriteLine("More can be added by a developer as needed.");
-            Pause(1);
-            Console.WriteLine("Press enter to return to main menu.");
-            Console.ReadLine();
-            Console.Clear();
+
         }
         public void ConjoinerMenu()
         {
@@ -62,10 +51,7 @@ namespace TestConsole.DataCore
         }
         public override void HelpPrompt()
         {
-            Console.WriteLine("Use this menu to access the entities in the DataCore module.");
-            Console.WriteLine("These types are atomic to global query logic and should");
-            Console.WriteLine("for the most part be preconfigured when Hermes is deployed,");
-            Console.WriteLine("although new operators may be desirable in the future.");
+
         }
     }
 }

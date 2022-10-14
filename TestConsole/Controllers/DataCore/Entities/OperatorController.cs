@@ -37,6 +37,10 @@ namespace TestConsole.DataCore.Entities
                     Console.WriteLine(string.Format("{0,8}", $"{param.Name} : {param.DbType}"));
                 }
                 Console.WriteLine(string.Format("{0,4}","Types"));
+                foreach (var type in op.OperatorFieldTypes)
+                {
+                    Console.WriteLine(string.Format("{0,8}", type.DbType));
+                }
             }
         }
         public override void RemoveRange()

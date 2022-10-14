@@ -25,8 +25,18 @@ namespace HermesSeeder
         }
         public void Seed()
         {
-            Context.Database.ExecuteSqlRaw("DELETE FROM Operator");
+            SeedOperators();
+            SeedConjoiners();
+        }
+        void SeedConjoiners()
+        {
             Context.Database.ExecuteSqlRaw("DELETE FROM Conjoiner");
+
+        }
+        void SeedOperators()
+        {
+
+            Context.Database.ExecuteSqlRaw("DELETE FROM Operator");
             var equals = BaseOperators[0];
             var equalsTypes = Numeric;
             equalsTypes.AddRange(Temporal);
@@ -53,7 +63,6 @@ namespace HermesSeeder
             var greaterThanOrEqualTypes = Numeric;
             notEqualTypes.AddRange(Temporal);
             S.AddOperator(greaterThanOrEqual.Name, greaterThanOrEqual.ExecutionString, greaterThanOrEqualTypes, greaterThanOrEqual.Parameters);
-
         }
         protected static List<SqlDbType> Numeric
         {
