@@ -1,4 +1,4 @@
-﻿namespace TestConsole
+﻿namespace TestConsole.Controllers
 {
     public class Function
     {

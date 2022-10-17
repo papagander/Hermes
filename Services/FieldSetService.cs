@@ -55,11 +55,10 @@ namespace Services
         }
 
 
-        public int UpdateFieldSet(FieldSet fieldSet, IEnumerable<Field> fields)
+        public int AddFields(FieldSet fieldSet, IEnumerable<Field> fields)
         {
             if (U.FieldSets.Get(fieldSet.Id) is null) return -1;
-            U.Fields.RemoveRange(  fieldSet.Fields);
-            fieldSet.Fields = fields.ToList();
+            foreach (var field in fields)                field.FieldSet = fieldSet;
             U.Fields.AddRange(fields);
             return Complete;
         }

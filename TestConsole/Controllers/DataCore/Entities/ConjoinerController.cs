@@ -44,26 +44,11 @@ namespace TestConsole.DataCore.Entities
             else Console.WriteLine($"Service returned: {output}");
         }
 
-        public override void RemoveRange()
-        {
-            var es = SelectListFromList(S.GetAllConjoiners());
-            if (es.Count == 0)
-            {
-                Console.WriteLine("Cancelling");
-                return;
-            }
-            int output = 0;
-            foreach (var e in es) S.RemoveConjoiner(e);
-            Console.WriteLine($"Changed {output} rows.");
-        }
-
-
         public override void HelpPrompt()
         {
             Console.WriteLine("Conjoiner, like 'and' or 'or', are used to build conjunctions");
             Console.WriteLine("which combine multiple filters in order to build query logic.");
         }
 
-        public void SelectName(List<Conjoiner> nameds) => GenericController.SelectFromList(nameds);
     }
 }

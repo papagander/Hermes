@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="FieldSetSeeder.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="FieldSetSeeder.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>

@@ -5,11 +5,13 @@ using Domain.Models.FieldSets;
 using HermesSeeder.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.FileIO;
 
 using Services;
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -36,7 +38,7 @@ public class FieldSetSeeder
         Context.Database.ExecuteSqlRaw("DELETE FROM FieldSet");
         Context.Database.ExecuteSqlRaw("DELETE FROM Field");
         S.CreateFieldSet(ReceivingSet.Name, ReceivingFields);
-        
+        S.CreateFieldSet("MockSet", MockSetFields);
 
     }
     public static FieldSet ReceivingSet { 
@@ -52,34 +54,52 @@ public class FieldSetSeeder
         get
         {
             var output = new List<Field>();
-            int id = 1;
-            string name = "Serial Number";
-            int fieldTypeId = DataCoreSeeder.TEXT.Id;
-            output.Add(new Field() { FieldTypeId = fieldTypeId, Id = id, Name = name });
-            id++;
+            string name;
+            SqlDbType dbType;
+            name = "Serial Number";
+            dbType = SqlDbType.VarChar;
+            output.Add(new Field() {  Name = name, Type = dbType }) ;
             name = "Model Number";
-            fieldTypeId = DataCoreSeeder.TEXT.Id;
-            output.Add(new Field() { FieldTypeId = fieldTypeId, Id = id, Name = name });
-            id++;
+            dbType= SqlDbType.VarChar;
+            output.Add(new Field() { Name = name, Type = dbType }) ;
             name = "Category";
-            fieldTypeId = DataCoreSeeder.TEXT.Id;
-            output.Add(new Field() { FieldTypeId = fieldTypeId, Id = id, Name = name });
-            id++;
+            dbType = SqlDbType.VarChar;
+            output.Add(new Field() {  Name = name, Type = dbType }) ;
             name = "Sub Category";
-            fieldTypeId = DataCoreSeeder.TEXT.Id;
-            output.Add(new Field() { FieldTypeId = fieldTypeId, Id = id, Name = name });
-            id++;
-            name = "Customer Name";
-            fieldTypeId = DataCoreSeeder.TEXT.Id;
-            output.Add(new Field() { FieldTypeId = fieldTypeId, Id = id, Name = name });
-            id++;
+            dbType = SqlDbType.VarChar;
+            output.Add(new Field() {  Name = name, Type = dbType }) ;
+            name = "Customer";
+            dbType = SqlDbType.VarChar;
+            output.Add(new Field() {  Name = name, Type = dbType });
             name = "Price";
-            fieldTypeId = DataCoreSeeder.DECIMAL.Id;
-            output.Add(new Field() { FieldTypeId = fieldTypeId, Id = id, Name = name });
-            id++;
+            dbType = SqlDbType.Money;
+            output.Add(new Field() { Name = name, Type = dbType });
             name = "Date Received";
-            fieldTypeId = DataCoreSeeder.DATE.Id;
-            output.Add(new Field() { FieldTypeId = fieldTypeId, Id = id, Name = name });
+            dbType = SqlDbType.Date;
+            output.Add(new Field() { Name = name, Type = dbType });
+
+            return output;
+        }
+    }
+    public static List<Field> MockSetFields
+    {
+        get
+        {
+            var output = new List<Field>();
+            string name;
+            SqlDbType dbType;
+            name = "Name";
+            dbType = SqlDbType.VarChar;
+            output.Add(new Field() { Name = name, Type = dbType });
+            name = "Price";
+            dbType = SqlDbType.Money;
+            output.Add(new Field() { Name = name, Type = dbType });
+            name = "My int";
+            dbType = SqlDbType.Int;
+            output.Add(new Field() { Name = name, Type = dbType });
+            name = "Date Received";
+            dbType = SqlDbType.Date;
+            output.Add(new Field() { Name = name, Type = dbType });
 
             return output;
         }

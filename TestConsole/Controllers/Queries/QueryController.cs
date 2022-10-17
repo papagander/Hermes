@@ -33,11 +33,6 @@ namespace TestConsole.Controllers.Queries
             throw new NotImplementedException();
         }
 
-        public override void RemoveRange()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Show()
         {
             throw new NotImplementedException();

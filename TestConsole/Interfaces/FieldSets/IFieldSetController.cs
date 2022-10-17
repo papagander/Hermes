@@ -12,8 +12,6 @@ namespace TestConsole.Interfaces.FieldSets
     internal interface IFieldSetController : IEntityController<FieldSet>
     {
         public void AddFields();
-        public void RemoveFields();
-        public void SetFields();
 
     }
 }

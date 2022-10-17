@@ -21,6 +21,10 @@ class Program
         {
             seed.Seed();
         }
+        using (var seed = new FieldSetSeeder(context))
+        {
+            seed.Seed();
+        }
         using (MainMenu mm = new(context))
         {
             mm.Run();

@@ -13,7 +13,6 @@ namespace TestConsole.Interfaces
         internal void Run();
         internal void Add();
         internal void Show();
-        internal void RemoveRange();
         internal void Help();
     }
 }

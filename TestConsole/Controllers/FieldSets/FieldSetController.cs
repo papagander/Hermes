@@ -1,9 +1,11 @@
 ﻿global using Services;
+
 using Domain.Models.FieldSets;
 
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,12 +25,6 @@ namespace TestConsole.Controllers.FieldSets
 
             string nm; Action a;
             nm = "AddF"; a = AddFields;
-            Acts.Add(new (nm, a));
-            nm = "RemF"; a = RemoveFields;
-            Acts.Add (new (nm, a));
-            nm = "SetF"; a = SetFields;
-            Acts.Add(new(nm, a));
-            nm = "fdeets"; a = ShowFieldDetails;
             Acts.Add(new(nm, a));
         }
 
@@ -42,59 +38,94 @@ namespace TestConsole.Controllers.FieldSets
                 Console.WriteLine("Cancelling");
                 return;
             }
-            var fields = CreateList(CreateField);
-            if (fields is null)
+            var fields = new List<Field>();
+            var field = CreateField();
+            while (field is not null)
+            {
+                fields.Add(field);
+                Console.WriteLine($"{fsName}'s fields:");
+                Console.WriteLine(String.Format("{0,4}{1,-20} | {2,-12}", "", "Field", "Type"));
+                foreach (var _field in fields)
+                {
+                    Console.WriteLine(String.Format("{0,4}{1,-20} | {2,-12}", "", _field.Name, _field.Type));
+                }
+                field = CreateField();
+            }
+            if (fields.Count == 0)
             {
                 Console.WriteLine("Cancelling");
                 return;
             }
+            Console.WriteLine($"Creating Field Set {fsName}...");
             int output = S.CreateFieldSet(fsName, fields);
             Console.WriteLine($"Changed {output} rows.");
         }
-        public void ShowFieldDetails()
-        {
-            throw new NotImplementedException("waaaaaaaah");
-        }
         protected Field? CreateField()
         {
+            string? name;
+            do
+            {
+                Console.WriteLine("Provide a field name. Type exit when all fields are created.");
+                name = Console.ReadLine();
+
+            } while (name is null || name == "");
+            if (name.ToLower() == "exit") return null;
+
+            var dbTypes = new List<SqlDbType>();
+            var _names = Enum.GetNames(typeof(SqlDbType));
+            foreach (var typeName in _names) dbTypes.Add((SqlDbType)Enum.Parse(typeof(SqlDbType), typeName));
+            int selectionId;
+            bool selectionIsValid;
+            do
+            {
+                Console.WriteLine("Select a field type by entering the corresponding number.");
+
+                for (int i = 0; i < dbTypes.Count; i++)
+                {
+                    SqlDbType _type = dbTypes[i];
+                    Console.WriteLine(String.Format("{0,-2}. {1,10}", i, _type));
+                }
+                selectionIsValid = int.TryParse(Console.ReadLine(), out selectionId);
+                selectionIsValid = selectionIsValid && selectionId < dbTypes.Count;
+            } while (!selectionIsValid);
+            var dbType = dbTypes[selectionId];
+            return new Field() { Name = name, Type = dbType };
+
             throw new NotImplementedException();
         }
 
         public void AddFields()
         {
-            throw new NotImplementedException();
+            var fs = SelectFromList(S.GetFieldSets());
+            var fields = CreateList(CreateField);
+            S.AddFields(fs, fields);
         }
 
-        public override void HelpPrompt() => Console.WriteLine("This menu is used to create field sets" +
+        public override void HelpPrompt() => Console.WriteLine("This menu is used to create field sets \n" +
             "for stakeholders to build queries against.");
 
-        public void RemoveFields()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RemoveRange()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetFields()
-        {
-            throw new NotImplementedException();
-        }
 
         public override void Show()
         {
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("_______________________");
-            string header = string.Format("{0, 10} {1,12}", "Field Set", "Field");
-            Console.WriteLine(header);
-            var fz = S.GetFieldSets();
-            Show<Field>(fz);
-            Console.WriteLine("_______________________");
-            Console.WriteLine();
-            Console.WriteLine();
+            var fsz = S.GetFieldSets();
+            Console.WriteLine(String.Format("{0,-16}|{1,16}|{2,16}", "Field Set", "Field", "Field Type"));
+            Console.WriteLine("**************************************************");
+            foreach (var fs in fsz)
+            {
+                if (fs.Fields is null || fs.Fields.Count == 0)
+                {
+                    Console.WriteLine(String.Format("{0,-16}|{1,16}", fs.Name, "No fields in this set"));
+
+                }
+                else
+                {
+                    foreach (var field in fs.Fields)
+                    {
+                        Console.WriteLine(String.Format("{0,-16}|{1,16}|{2, 16}", fs.Name, field.Name, field.Type));
+                    }
+                }
+                Console.WriteLine();
+            }
         }
     }
 }

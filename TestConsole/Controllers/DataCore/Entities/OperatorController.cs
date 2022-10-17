@@ -43,10 +43,6 @@ namespace TestConsole.DataCore.Entities
                 }
             }
         }
-        public override void RemoveRange()
-        {
-            throw new NotImplementedException();
-        }
 
         public override void HelpPrompt()
         {

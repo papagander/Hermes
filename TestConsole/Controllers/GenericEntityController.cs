@@ -25,7 +25,6 @@ namespace TestConsole.Controllers
         {
             Acts.Add(new Function("add", Add));
             Acts.Add(new Function("show", Show));
-            Acts.Add(new Function("remove", RemoveRange));
         }
 
         protected abstract string EntityType { get; }
@@ -45,6 +44,5 @@ namespace TestConsole.Controllers
             }
             return name;
         }
-        public abstract void RemoveRange();
     }
 }
