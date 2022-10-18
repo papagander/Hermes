@@ -204,7 +204,7 @@ namespace Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DataSetId")
+                    b.Property<int>("FieldSetId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("FieldSetId")

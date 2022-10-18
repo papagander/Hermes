@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TestConsole.Controllers.FieldSets;
+using TestConsole.Controllers.Queries;
 using TestConsole.DataCore;
 using TestConsole.Interfaces;
 
@@ -18,6 +19,7 @@ namespace TestConsole.Controllers
         {
             Acts.Add(new("dc", DataCoreMenu));
             Acts.Add(new("fs", FieldSetsMenu));
+            Acts.Add(new("q", QueriesMenu));
         }
 
         public override void HelpPrompt()
@@ -37,6 +39,11 @@ namespace TestConsole.Controllers
         protected void FieldSetsMenu()
         {
             FieldSetController controller = new FieldSetController(context);
+            controller.Run();
+        }
+        protected void QueriesMenu()
+        {
+            var controller = new QueryController(context);
             controller.Run();
         }
     }

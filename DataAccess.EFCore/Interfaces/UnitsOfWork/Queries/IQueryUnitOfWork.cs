@@ -3,6 +3,7 @@ using DataAccess.EFCore.Interfaces.Repositories.Queries;
 using DataAccess.EFCore.Interfaces.UnitsOfWork;
 
 using Domain.Models.DataCore;
+using Domain.Models.FieldSets;
 
 namespace DataAccess.EFCore.Interfaces
 {
@@ -13,7 +14,7 @@ namespace DataAccess.EFCore.Interfaces
         IConjunctionRepository Conjunctions { get; }
         ICriterionRepository Criteria { get; }
         ICriterionValueRepository CriterionValues { get; }
-
+        IReadRepository<FieldSet> FieldSets { get; }
 
     }
 }

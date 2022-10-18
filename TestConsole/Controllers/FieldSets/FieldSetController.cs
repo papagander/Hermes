@@ -83,7 +83,7 @@ namespace TestConsole.Controllers.FieldSets
                 for (int i = 0; i < dbTypes.Count; i++)
                 {
                     SqlDbType _type = dbTypes[i];
-                    Console.WriteLine(String.Format("{0,-2}. {1,10}", i, _type));
+                    Console.WriteLine(String.Format("{0,2}. {1,10}", i, _type));
                 }
                 selectionIsValid = int.TryParse(Console.ReadLine(), out selectionId);
                 selectionIsValid = selectionIsValid && selectionId < dbTypes.Count;

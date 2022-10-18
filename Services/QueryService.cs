@@ -49,6 +49,11 @@ public class QueryService
 
     }
 
+    public IEnumerable<FieldSet> GetFieldSets()
+    {
+        return U.FieldSets.GetAll();
+    }
+
     public Query? GetQuery(string name)
     {
         return U.Queries.Get(name);
@@ -100,9 +105,9 @@ public class QueryService
     }
     protected bool Verify(Query query)
     {
-        if (query is null) 
+        if (query is null)
             return false;
-        if (!(query.Name == (U.Queries.Get(query.Id).Name))) 
+        if (!(query.Name == (U.Queries.Get(query.Id).Name)))
             return false;
         if (!(query.FieldSet == (U.Queries.Get(query.Id).FieldSet)))
             return false;
