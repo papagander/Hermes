@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Services.Interfaces;
 public interface IQueryService
 {
-    int CreateQuery(string name, FieldSet fieldSet, IEnumerable<Field> fields);
+    int AddQuery(string name, FieldSet fieldSet, IEnumerable<Field> fields);
     Query GetQuery(string name);
     Query GetQuery(int id);
     int RemoveQuery(int id);

@@ -40,7 +40,7 @@ public class QueryService
         }
     }
 
-    public int CreateQuery(string name, FieldSet fieldSet, IEnumerable<Field> fields)
+    public int AddQuery(string name, FieldSet fieldSet, IEnumerable<Field> fields)
     {
         foreach (Field field in fields) if (field.FieldSet != fieldSet) return 0;
         var Query = new Query { Name = name, FieldSet = fieldSet, Fields = fields.ToList() };

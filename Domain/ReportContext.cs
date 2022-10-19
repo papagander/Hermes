@@ -39,7 +39,7 @@ public class ReportContext : DbContext
     public DbSet<Query> Query { get; set; }
     public DbSet<Conjunction> Conjunction { get; set; }
     public DbSet<Criterion> Criterion { get; set; }
-    public DbSet<CriterionValue> CriterionValue { get; set; }
+    public DbSet<CriterionParamater> CriterionValue { get; set; }
     public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder m)
     {

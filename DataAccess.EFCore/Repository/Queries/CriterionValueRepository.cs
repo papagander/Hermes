@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Repository.Queries
 {
-    public class CriterionValueRepository : IndexedRepository<CriterionValue>, ICriterionValueRepository
+    public class CriterionValueRepository : IndexedRepository<CriterionParamater>, ICriterionValueRepository
     {
-        ReferencesRepository<CriterionValue, Criterion> RefCr;
+        ReferencesRepository<CriterionParamater, Criterion> RefCr;
         public CriterionValueRepository(ReportContext reportContext) : base(reportContext)
         {
-            RefCr = new ReferencesRepository<CriterionValue, Criterion>(reportContext);
+            RefCr = new ReferencesRepository<CriterionParamater, Criterion>(reportContext);
         }
 
-        public IEnumerable<CriterionValue> GetRange(Criterion MyTRef) => RefCr.GetRange(MyTRef);
+        public IEnumerable<CriterionParamater> GetRange(Criterion MyTRef) => RefCr.GetRange(MyTRef);
     }
 }

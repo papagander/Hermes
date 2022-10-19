@@ -6,7 +6,7 @@ using DataAccess.EFCore.Interfaces.Repositories.Queries;
 
 namespace DataAccess.EFCore.Repository.Queries
 {
-    public class CriterionRepository : ReferencedByRepository<Criterion, CriterionValue>, ICriterionRepository
+    public class CriterionRepository : ReferencedByRepository<Criterion, CriterionParamater>, ICriterionRepository
     {
         ReferencesRepository<Criterion, Operator> RefOp;
         ReferencesRepository<Criterion, Field> RefF;

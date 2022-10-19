@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace TestConsole.Controllers.Queries
 {
@@ -23,10 +24,11 @@ namespace TestConsole.Controllers.Queries
 
         public override void Add()
         {
-            Console.WriteLine("Provide a name for this query.");
+            Query q;
             string name;
             FieldSet fs;
             List<Field> fields;
+            Console.WriteLine("Provide a name for this query.");
             name = NamePrompt(EntityType);
             if (name == null)
             {
@@ -53,7 +55,20 @@ namespace TestConsole.Controllers.Queries
                 isValid = int.TryParse(Console.ReadLine(), out selectionId);
                 isValid = isValid && (selectionId == 1 || selectionId == 2);
             } while (!isValid);
+            if (selectionId == 2)
+            //create query with no filter
+            {
+                int output = S.AddQuery(name, fs, fields);
+                Console.WriteLine("Changed " + output + " rows.");
+                return;
+            }
+            Console.WriteLine("First, you will create the criteria for the filters by choosing fields ands operations to perform. Next,");
+            Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
+            do
+            {
+                Console.WriteLine("Choose a field to filter on.");
 
+            } while (true);
         }
         FieldSet SelectFieldSet()
         {
