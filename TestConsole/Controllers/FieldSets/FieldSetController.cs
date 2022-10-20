@@ -44,10 +44,10 @@ namespace TestConsole.Controllers.FieldSets
             {
                 fields.Add(field);
                 Console.WriteLine($"{fsName}'s fields:");
-                Console.WriteLine(String.Format("{0,4}{1,-20} | {2,-12}", "", "Field", "Type"));
+                Console.WriteLine(String.Format("{0,4}{1,-20} | {2,-12}", "", "Field", "DbType"));
                 foreach (var _field in fields)
                 {
-                    Console.WriteLine(String.Format("{0,4}{1,-20} | {2,-12}", "", _field.Name, _field.Type));
+                    Console.WriteLine(String.Format("{0,4}{1,-20} | {2,-12}", "", _field.Name, _field.DbType));
                 }
                 field = CreateField();
             }
@@ -65,7 +65,7 @@ namespace TestConsole.Controllers.FieldSets
             string? name;
             do
             {
-                Console.WriteLine("Provide a field name. Type exit when all fields are created.");
+                Console.WriteLine("Provide a field name. DbType exit when all fields are created.");
                 name = Console.ReadLine();
 
             } while (name is null || name == "");
@@ -89,7 +89,7 @@ namespace TestConsole.Controllers.FieldSets
                 selectionIsValid = selectionIsValid && selectionId < dbTypes.Count;
             } while (!selectionIsValid);
             var dbType = dbTypes[selectionId];
-            return new Field() { Name = name, Type = dbType };
+            return new Field() { Name = name, DbType = dbType };
 
             throw new NotImplementedException();
         }
@@ -108,7 +108,7 @@ namespace TestConsole.Controllers.FieldSets
         public override void Show()
         {
             var fsz = S.GetFieldSets();
-            Console.WriteLine(String.Format("{0,-16}|{1,16}|{2,16}", "Field Set", "Field", "Field Type"));
+            Console.WriteLine(String.Format("{0,-16}|{1,16}|{2,16}", "Field Set", "Field", "Field DbType"));
             Console.WriteLine("**************************************************");
             foreach (var fs in fsz)
             {
@@ -121,7 +121,7 @@ namespace TestConsole.Controllers.FieldSets
                 {
                     foreach (var field in fs.Fields)
                     {
-                        Console.WriteLine(String.Format("{0,-16}|{1,16}|{2, 16}", fs.Name, field.Name, field.Type));
+                        Console.WriteLine(String.Format("{0,-16}|{1,16}|{2, 16}", fs.Name, field.Name, field.DbType));
                     }
                 }
                 Console.WriteLine();

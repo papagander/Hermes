@@ -150,7 +150,6 @@ public class QueryService
         if (conj.Statements.Count == 0) output++;
         foreach (var stat in conj.Statements) output += Verify(stat);
         return output;
-
     }
 
     private int Verify(Criterion crit)

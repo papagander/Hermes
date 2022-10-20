@@ -106,7 +106,7 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("DbType")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

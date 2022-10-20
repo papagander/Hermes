@@ -1,4 +1,5 @@
-﻿using Domain.Models.FieldSets;
+﻿using Domain.Models.DataCore;
+using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 
 using System;
@@ -61,13 +62,35 @@ namespace TestConsole.Controllers.Queries
                 Console.WriteLine("Changed " + output + " rows.");
                 return;
             }
+            var unlinkedCrits = new List<Criterion>();
             Console.WriteLine("First, you will create the criteria for the filters by choosing fields ands operations to perform. Next,");
             Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
             do
             {
-                Console.WriteLine("Choose a field to filter on.");
-                var fd = SelectFromList(fs.Fields);
-                Console.WriteLine();
+                Field? fd;
+                do
+                {
+                    Console.WriteLine("Choose a field to filter on.");
+                    fd = SelectFromList(fs.Fields);
+                } while (fd is null);
+                Operator? op;
+                var validOps = S.GetOperators(fd.DbType);
+                do
+                {
+                    Console.WriteLine("Select an operation to perform on this field");
+                    op = SelectFromList(validOps);
+
+                } while (op is null);
+                Criterion crit = new Criterion { Field = fd, Operator = op, CriterionParameters = new List<CriterionParameter>() };
+                Console.WriteLine("Input values for operator parameters.");
+                CriterionParameter critParam;
+                foreach (var param in op.Parameters)
+                {
+                    Console.WriteLine($"{param.Name}:");
+                    string val = Console.ReadLine();
+                    critParam = new CriterionParameter { Criterion = crit, Parameter = param, Value = val };
+                    crit.CriterionParameters.Add(critParam);
+                }
             } while (true);
         }
         FieldSet SelectFieldSet()

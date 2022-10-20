@@ -5,7 +5,12 @@ using Domain.Models.FieldSets;
 
 namespace Domain.Models.Queries;
 
-public class Criterion : Indexed, IReferences<Field>, IReferences<Operator>, ISubTypeOf<Statement>, IReferencedBy<CriterionParameter>
+public class Criterion
+    : Indexed
+    , IReferences<Field>
+    , IReferences<Operator>
+    , IReferencedBy<CriterionParameter>
+    , ISubTypeOf<Statement>
 {
     // e.g. Serial number equals, DateReceived greater than, Model Number contains.
     // Criterions are pointed to by CriterionParameter to support n values per criterion.
