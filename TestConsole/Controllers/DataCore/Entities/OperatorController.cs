@@ -27,20 +27,31 @@ namespace TestConsole.DataCore.Entities
             var ops = S.GetAllOperators();
             foreach (var op in ops)
             {
-                string _name = string.Format("{0,4}", op.Name);
-                string _executionString = string.Format("{0,2}", op.ExecutionString);
+                string _name = string.Format(op.Name);
+                string _executionString = string.Format("{0,10}", op.ExecutionString);
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(_name);
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine(_executionString);
-                Console.WriteLine(string.Format("{0,4}","Parameters:"));
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine(string.Format("{1,-10}", "", "Parameters:"));
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 foreach (var param in op.Parameters)
                 {
-                    Console.WriteLine(string.Format("{0,8}", $"{param.Name} : {param.DbType}"));
+                    string paramName = param.Name;
+                    string? dbType = param.DbType.ToString();
+                    if (dbType is null || dbType == "") dbType = "default";
+
+                    Console.WriteLine(string.Format("{0,4}{1,-10}", "", $"{paramName} : {dbType}"));
                 }
-                Console.WriteLine(string.Format("{0,4}","Types"));
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine(string.Format("{1,-10}", "", "Types"));
+                Console.ForegroundColor = ConsoleColor.Green;
                 foreach (var type in op.OperatorFieldTypes)
                 {
-                    Console.WriteLine(string.Format("{0,8}", type.DbType));
+                    Console.WriteLine(string.Format("{0,4}{1,-10}", "", type.DbType));
                 }
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 

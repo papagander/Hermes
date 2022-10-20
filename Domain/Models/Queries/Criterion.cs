@@ -5,10 +5,10 @@ using Domain.Models.FieldSets;
 
 namespace Domain.Models.Queries;
 
-public class Criterion : Indexed, IReferences<Field>, IReferences<Operator>, ISubTypeOf<Statement>, IReferencedBy<CriterionParamater>
+public class Criterion : Indexed, IReferences<Field>, IReferences<Operator>, ISubTypeOf<Statement>, IReferencedBy<CriterionParameter>
 {
     // e.g. Serial number equals, DateReceived greater than, Model Number contains.
-    // Criterions are pointed to by CriterionParamater to support n values per criterion.
+    // Criterions are pointed to by CriterionParameter to support n values per criterion.
     public override string ToString()
     {
         string output = "";
@@ -16,7 +16,7 @@ public class Criterion : Indexed, IReferences<Field>, IReferences<Operator>, ISu
         output += "{";
         for (int i = 0; i < CriterionParameters.Count; i++)
         {
-            CriterionParamater? criterionParameter = CriterionParameters[i];
+            CriterionParameter? criterionParameter = CriterionParameters[i];
             output += " ";
             output += criterionParameter.Value;
             output += ",";
@@ -32,14 +32,14 @@ public class Criterion : Indexed, IReferences<Field>, IReferences<Operator>, ISu
     public Field Field { get; set; }
     public Operator Operator { get; set; }
     public Statement Statement { get; set; }
-    public List<CriterionParamater> CriterionParameters { get; set; }
+    public List<CriterionParameter> CriterionParameters { get; set; }
     int IReferences<Field>.MyTRefId { get => FieldId; /*set => Id = value; */}
     Field IReferences<Field>.MyTRef { get => Field; /*set => Field = value;*/ }
     int IReferences<Operator>.MyTRefId { get => OperatorId; /*set => Id = value; */}
     Operator IReferences<Operator>.MyTRef { get => Operator; /*set => Operator = value; */}
     Statement ISubTypeOf<Statement>.MySuper { get => Statement; set => Statement = value; }
     int ISubTypeOf<Statement>.MySuperId { get => StatementId; set => StatementId = value; }
-    List<CriterionParamater> IReferencedBy<CriterionParamater>.MyTs { get => CriterionParameters; set => CriterionParameters = value; }
+    List<CriterionParameter> IReferencedBy<CriterionParameter>.MyTs { get => CriterionParameters; set => CriterionParameters = value; }
 }
 
 

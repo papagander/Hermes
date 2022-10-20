@@ -24,7 +24,6 @@ namespace TestConsole.Controllers.Queries
 
         public override void Add()
         {
-            Query q;
             string name;
             FieldSet fs;
             List<Field> fields;
@@ -67,12 +66,12 @@ namespace TestConsole.Controllers.Queries
             do
             {
                 Console.WriteLine("Choose a field to filter on.");
-
+                var fd = SelectFromList(fs.Fields);
+                Console.WriteLine();
             } while (true);
         }
         FieldSet SelectFieldSet()
         {
-
             var _fsz = S.GetFieldSets().ToList();
             int selectionId;
             bool selectionIsValid;
@@ -92,9 +91,11 @@ namespace TestConsole.Controllers.Queries
         }
         public override void HelpPrompt()
         {
+            Console.WriteLine("Queries define the data which should be included on a report.");
             Console.WriteLine("Each query has a source table (or field set) which contains the data");
-            Console.WriteLine("filtered by the query. A subset of the table's fields are selected,");
-            Console.WriteLine("And a combian");
+            Console.WriteLine("the query will pull from. A subset of the table's fields are selected.");
+            Console.WriteLine("These will be shown on the report. From there, the user can select fields");
+            Console.WriteLine();
         }
 
         public override void Show()

@@ -210,7 +210,7 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CriterionParamater",
+                name: "CriterionParameter",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -280,7 +280,7 @@ namespace Domain.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_CriterionValue_CriterionId",
-                table: "CriterionParamater",
+                table: "CriterionParameter",
                 column: "CriterionId");
 
             migrationBuilder.CreateIndex(
@@ -338,7 +338,7 @@ namespace Domain.Migrations
                 table: "Conjunction");
 
             migrationBuilder.DropTable(
-                name: "CriterionParamater");
+                name: "CriterionParameter");
 
             migrationBuilder.DropTable(
                 name: "FieldQuery");

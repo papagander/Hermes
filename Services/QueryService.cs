@@ -2,6 +2,7 @@
 using DataAccess.EFCore.UnitOfWork;
 
 using Domain;
+using Domain.Models.DataCore;
 using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 
@@ -120,5 +121,51 @@ public class QueryService
             if (field.FieldSet != query.FieldSet)
                 throw new Exception($"Field {field.Name} is not on {query.Name}'s fieldset {query.FieldSet.Name}");
         return true;
+    }
+    protected int AddFilter(Query query, Statement parentStatement)
+    {
+        if (Verify(parentStatement) != 0) return -1;
+        query.Statement = parentStatement;
+        return Complete;
+    }
+    protected int Verify(Statement statement)
+    {
+        // I'm not crazy!
+        // I am N0T Crazy~!
+        if (!(
+            (statement.Criterions.Count == 1 & statement.Conjunctions.Count == 0)
+            |
+            (statement.Conjunctions.Count == 1 & statement.Criterions.Count == 0)
+            )) return 1;
+        int output = 0;
+        foreach (var crit in statement.Criterions) output += Verify(crit);
+        foreach (var conj in statement.Conjunctions) output += Verify(conj);
+        return output;
+
+    }
+
+    private int Verify(Conjunction conj)
+    {
+        int output = 0;
+        if (conj.Statements.Count == 0) output++;
+        foreach (var stat in conj.Statements) output += Verify(stat);
+        return output;
+
+    }
+
+    private int Verify(Criterion crit)
+    {
+        return  0;
+    }
+
+    public IEnumerable<Operator> GetOperators(SqlDbType sqlDbType)
+    {
+        var output = new List<Operator>();
+        var all = U.Operators.GetAll();
+        foreach (var op in all)
+            foreach (var fto in op.OperatorFieldTypes)
+                if (fto.DbType == sqlDbType)
+                    output.Add(op);
+        return output;
     }
 }

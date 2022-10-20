@@ -1,8 +1,10 @@
-﻿using Domain.Models.FieldSets;
+﻿using Domain.Models.DataCore;
+using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,4 +21,5 @@ public interface IQueryService
 
     int SetFields(Query query, IEnumerable<Field> fields);
     int AddFields(Query query, IEnumerable<Field> fields);
+    IEnumerable<Operator> GetOperators(SqlDbType sqlDbType);
 }

@@ -180,7 +180,7 @@ namespace Domain.Migrations
                     b.ToTable("Criterion");
                 });
 
-            modelBuilder.Entity("Domain.Models.Queries.CriterionParamater", b =>
+            modelBuilder.Entity("Domain.Models.Queries.CriterionParameter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -197,7 +197,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("CriterionId");
 
-                    b.ToTable("CriterionParamater");
+                    b.ToTable("CriterionParameter");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Query", b =>
@@ -338,7 +338,7 @@ namespace Domain.Migrations
                     b.Navigation("Statement");
                 });
 
-            modelBuilder.Entity("Domain.Models.Queries.CriterionParamater", b =>
+            modelBuilder.Entity("Domain.Models.Queries.CriterionParameter", b =>
                 {
                     b.HasOne("Domain.Models.Queries.Criterion", "Criterion")
                         .WithMany("CriterionParameters")

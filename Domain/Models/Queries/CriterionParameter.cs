@@ -4,7 +4,7 @@ using Domain.Models.DataCore;
 
 namespace Domain.Models.Queries;
 
-public class CriterionParamater 
+public class CriterionParameter 
     :  Indexed
     , IReferences<Criterion>
     , IReferences<Parameter>
