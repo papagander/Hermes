@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    [Migration("20221014210238_asdf")]
+    [Migration("20221021184655_asdf")]
     partial class asdf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,15 +101,15 @@ namespace Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("DbType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("FieldSetId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("DbType")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -189,6 +189,9 @@ namespace Domain.Migrations
                     b.Property<int>("CriterionId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ParameterId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -197,16 +200,15 @@ namespace Domain.Migrations
 
                     b.HasIndex("CriterionId");
 
-                    b.ToTable("CriterionParameter");
+                    b.HasIndex("ParameterId");
+
+                    b.ToTable("CriterionValue");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Query", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("FieldSetId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("FieldSetId")
@@ -346,7 +348,15 @@ namespace Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Models.DataCore.Parameter", "Parameter")
+                        .WithMany()
+                        .HasForeignKey("ParameterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Criterion");
+
+                    b.Navigation("Parameter");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Query", b =>

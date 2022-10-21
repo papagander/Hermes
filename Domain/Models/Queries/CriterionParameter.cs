@@ -4,8 +4,8 @@ using Domain.Models.DataCore;
 
 namespace Domain.Models.Queries;
 
-public class CriterionParameter 
-    :  Indexed
+public class CriterionParameter
+    : Indexed
     , IReferences<Criterion>
     , IReferences<Parameter>
 {
@@ -15,12 +15,8 @@ public class CriterionParameter
     public int ParameterId { get; set; }
     public Criterion Criterion { get; set; }
     public Parameter Parameter { get; set; }
-    public string Value { get => Value; set 
-        {
-            Value = value;
-        }
-    }
-    int IReferences<Criterion>.MyTRefId { get => CriterionId;  }
+    public string Value { get; set; }
+    int IReferences<Criterion>.MyTRefId { get => CriterionId; }
     Criterion IReferences<Criterion>.MyTRef { get => Criterion; }
     Parameter IReferences<Parameter>.MyTRef { get => Parameter; }
     int IReferences<Parameter>.MyTRefId { get => ParameterId; }

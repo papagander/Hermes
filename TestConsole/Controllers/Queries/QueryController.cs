@@ -67,30 +67,15 @@ namespace TestConsole.Controllers.Queries
             Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
             do
             {
-                Field? fd;
+                unlinkedCrits.Add( CreateCriterion(fs));
+                ConsoleKey input;
                 do
                 {
-                    Console.WriteLine("Choose a field to filter on.");
-                    fd = SelectFromList(fs.Fields);
-                } while (fd is null);
-                Operator? op;
-                var validOps = S.GetOperators(fd.DbType);
-                do
-                {
-                    Console.WriteLine("Select an operation to perform on this field");
-                    op = SelectFromList(validOps);
-
-                } while (op is null);
-                Criterion crit = new Criterion { Field = fd, Operator = op, CriterionParameters = new List<CriterionParameter>() };
-                Console.WriteLine("Input values for operator parameters.");
-                CriterionParameter critParam;
-                foreach (var param in op.Parameters)
-                {
-                    Console.WriteLine($"{param.Name}:");
-                    string val = Console.ReadLine();
-                    critParam = new CriterionParameter { Criterion = crit, Parameter = param, Value = val };
-                    crit.CriterionParameters.Add(critParam);
-                }
+                    Console.WriteLine("Would you like to create additional criteria for this report?");
+                    Console.WriteLine("y/n");
+                    input = Console.ReadKey().Key;
+                } while ((input != ConsoleKey.Y) & (input != ConsoleKey.N));
+                if (input == ConsoleKey.N) break;
             } while (true);
         }
         FieldSet SelectFieldSet()
@@ -120,7 +105,34 @@ namespace TestConsole.Controllers.Queries
             Console.WriteLine("These will be shown on the report. From there, the user can select fields");
             Console.WriteLine();
         }
+        Criterion CreateCriterion(FieldSet fs)
+        {
+            Field? fd;
+            Operator? op;
+            List<CriterionParameter> critParams = new List<CriterionParameter>();
+            do
+            {
+                Console.WriteLine("Choose a field to filter on.");
+                fd = SelectFromList(fs.Fields);
+            } while (fd is null);
+            var validOps = S.GetOperators(fd.DbType);
+            do
+            {
+                Console.WriteLine("Select an operation to perform on this field");
+                op = SelectFromList(validOps);
 
+            } while (op is null);
+            Console.WriteLine("Input values for operator parameters.");
+            CriterionParameter critParam;
+            foreach (var param in op.Parameters)
+            {
+                Console.WriteLine($"{param.Name}:");
+                string val = Console.ReadLine();
+                critParam = new CriterionParameter { Parameter = param, Value = val };
+                critParams.Add(critParam);
+            }
+            return new Criterion { Field = fd, Operator = op, CriterionParameters = critParams };
+        }
         public override void Show()
         {
             throw new NotImplementedException();
