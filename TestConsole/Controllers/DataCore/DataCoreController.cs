@@ -30,7 +30,7 @@ namespace TestConsole.DataCore
 
         protected override void MenuPrompt()
         {
-            Console.WriteLine("Type 'about' to learn more about the DataCore module or 'help'");
+            Console.WriteLine("DbType 'about' to learn more about the DataCore module or 'help'");
             Console.WriteLine("for a guide on using this interface.");
             Console.WriteLine();
             Console.WriteLine("Otherwise, enter an entity table to access.");

@@ -99,15 +99,15 @@ namespace Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("DbType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("FieldSetId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -178,13 +178,16 @@ namespace Domain.Migrations
                     b.ToTable("Criterion");
                 });
 
-            modelBuilder.Entity("Domain.Models.Queries.CriterionParamater", b =>
+            modelBuilder.Entity("Domain.Models.Queries.CriterionParameter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CriterionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ParameterId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Value")
@@ -195,16 +198,15 @@ namespace Domain.Migrations
 
                     b.HasIndex("CriterionId");
 
-                    b.ToTable("CriterionParamater");
+                    b.HasIndex("ParameterId");
+
+                    b.ToTable("CriterionValue");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Query", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("FieldSetId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("FieldSetId")
@@ -336,7 +338,7 @@ namespace Domain.Migrations
                     b.Navigation("Statement");
                 });
 
-            modelBuilder.Entity("Domain.Models.Queries.CriterionParamater", b =>
+            modelBuilder.Entity("Domain.Models.Queries.CriterionParameter", b =>
                 {
                     b.HasOne("Domain.Models.Queries.Criterion", "Criterion")
                         .WithMany("CriterionParameters")
@@ -344,7 +346,15 @@ namespace Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Models.DataCore.Parameter", "Parameter")
+                        .WithMany()
+                        .HasForeignKey("ParameterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Criterion");
+
+                    b.Navigation("Parameter");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Query", b =>

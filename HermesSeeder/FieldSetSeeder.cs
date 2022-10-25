@@ -58,25 +58,25 @@ public class FieldSetSeeder
             SqlDbType dbType;
             name = "Serial Number";
             dbType = SqlDbType.VarChar;
-            output.Add(new Field() {  Name = name, Type = dbType }) ;
+            output.Add(new Field() {  Name = name, DbType = dbType }) ;
             name = "Model Number";
             dbType= SqlDbType.VarChar;
-            output.Add(new Field() { Name = name, Type = dbType }) ;
+            output.Add(new Field() { Name = name, DbType = dbType }) ;
             name = "Category";
             dbType = SqlDbType.VarChar;
-            output.Add(new Field() {  Name = name, Type = dbType }) ;
+            output.Add(new Field() {  Name = name, DbType = dbType }) ;
             name = "Sub Category";
             dbType = SqlDbType.VarChar;
-            output.Add(new Field() {  Name = name, Type = dbType }) ;
+            output.Add(new Field() {  Name = name, DbType = dbType }) ;
             name = "Customer";
             dbType = SqlDbType.VarChar;
-            output.Add(new Field() {  Name = name, Type = dbType });
+            output.Add(new Field() {  Name = name, DbType = dbType });
             name = "Price";
             dbType = SqlDbType.Money;
-            output.Add(new Field() { Name = name, Type = dbType });
+            output.Add(new Field() { Name = name, DbType = dbType });
             name = "Date Received";
             dbType = SqlDbType.Date;
-            output.Add(new Field() { Name = name, Type = dbType });
+            output.Add(new Field() { Name = name, DbType = dbType });
 
             return output;
         }
@@ -90,16 +90,16 @@ public class FieldSetSeeder
             SqlDbType dbType;
             name = "Name";
             dbType = SqlDbType.VarChar;
-            output.Add(new Field() { Name = name, Type = dbType });
+            output.Add(new Field() { Name = name, DbType = dbType });
             name = "Price";
             dbType = SqlDbType.Money;
-            output.Add(new Field() { Name = name, Type = dbType });
+            output.Add(new Field() { Name = name, DbType = dbType });
             name = "My int";
             dbType = SqlDbType.Int;
-            output.Add(new Field() { Name = name, Type = dbType });
+            output.Add(new Field() { Name = name, DbType = dbType });
             name = "Date Received";
             dbType = SqlDbType.Date;
-            output.Add(new Field() { Name = name, Type = dbType });
+            output.Add(new Field() { Name = name, DbType = dbType });
 
             return output;
         }

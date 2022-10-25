@@ -38,32 +38,57 @@ public class DataCoreSeeder
     {
 
         Context.Database.ExecuteSqlRaw("DELETE FROM Operator");
-        var equals = BaseOperators[0];
-        var equalsTypes = Numeric;
-        equalsTypes.AddRange(Temporal);
-        equalsTypes.AddRange(Textual);
-        S.AddOperator(equals.Name, equals.ExecutionString, equalsTypes, equals.Parameters);
-        var notEqual = BaseOperators[1];
-        var notEqualTypes = Numeric;
-        notEqualTypes.AddRange(Temporal);
-        notEqualTypes.AddRange(Textual);
-        S.AddOperator(notEqual.Name, notEqual.ExecutionString, notEqualTypes, notEqual.Parameters);
-        var lessThan = BaseOperators[2];
-        var lessThanTypes = Numeric;
-        notEqualTypes.AddRange(Temporal);
-        S.AddOperator(lessThan.Name, lessThan.ExecutionString, lessThanTypes, lessThan.Parameters);
-        var greaterThan = BaseOperators[3];
-        var greaterThanTypes = Numeric;
-        notEqualTypes.AddRange(Temporal);
-        S.AddOperator(greaterThan.Name, greaterThan.ExecutionString, greaterThanTypes, greaterThan.Parameters);
-        var lessThanOrEqual = BaseOperators[4];
-        var lessThanOrEqualTypes = Numeric;
-        notEqualTypes.AddRange(Temporal);
-        S.AddOperator(lessThanOrEqual.Name, lessThanOrEqual.ExecutionString, lessThanOrEqualTypes, lessThanOrEqual.Parameters);
-        var greaterThanOrEqual = BaseOperators[5];
-        var greaterThanOrEqualTypes = Numeric;
-        notEqualTypes.AddRange(Temporal);
-        S.AddOperator(greaterThanOrEqual.Name, greaterThanOrEqual.ExecutionString, greaterThanOrEqualTypes, greaterThanOrEqual.Parameters);
+        int i = 0;
+        Operator op;
+        List<SqlDbType> dbTypes;
+        // Equals
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
+        dbTypes.AddRange(Numeric);
+        dbTypes.AddRange(Temporal);
+        dbTypes.AddRange(Textual);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+
+        i++;
+        // Not Equals
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
+        dbTypes.AddRange(Numeric);
+        dbTypes.AddRange(Temporal);
+        dbTypes.AddRange(Textual);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+
+        i++;
+        // Less Than
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
+        dbTypes.AddRange(Numeric);
+        dbTypes.AddRange(Temporal);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+
+        i++;
+        // Greater Than
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
+        dbTypes.AddRange(Numeric);
+        dbTypes.AddRange(Temporal);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+
+        i++;
+        // Less Than or equal
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
+        dbTypes.AddRange(Numeric);
+        dbTypes.AddRange(Temporal);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+
+        i++;
+        // Greater Than or equal
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
+        dbTypes.AddRange(Numeric);
+        dbTypes.AddRange(Temporal);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
     }
     public static List<Operator> BaseOperators
     {

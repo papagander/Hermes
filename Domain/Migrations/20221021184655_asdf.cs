@@ -55,7 +55,7 @@ namespace Domain.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FieldSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    DbType = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -187,9 +187,8 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DataSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    StatementId = table.Column<int>(type: "INTEGER", nullable: false),
                     FieldSetId = table.Column<int>(type: "INTEGER", nullable: false),
+                    StatementId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -210,12 +209,13 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CriterionParamater",
+                name: "CriterionValue",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CriterionId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ParameterId = table.Column<int>(type: "INTEGER", nullable: false),
                     Value = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -225,6 +225,12 @@ namespace Domain.Migrations
                         name: "FK_CriterionValue_Criterion_CriterionId",
                         column: x => x.CriterionId,
                         principalTable: "Criterion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CriterionValue_Parameters_ParameterId",
+                        column: x => x.ParameterId,
+                        principalTable: "Parameters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -280,8 +286,13 @@ namespace Domain.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_CriterionValue_CriterionId",
-                table: "CriterionParamater",
+                table: "CriterionValue",
                 column: "CriterionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CriterionValue_ParameterId",
+                table: "CriterionValue",
+                column: "ParameterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Field_FieldSetId",
@@ -338,7 +349,7 @@ namespace Domain.Migrations
                 table: "Conjunction");
 
             migrationBuilder.DropTable(
-                name: "CriterionParamater");
+                name: "CriterionValue");
 
             migrationBuilder.DropTable(
                 name: "FieldQuery");
@@ -347,10 +358,10 @@ namespace Domain.Migrations
                 name: "OperatorFieldTypes");
 
             migrationBuilder.DropTable(
-                name: "Parameters");
+                name: "Criterion");
 
             migrationBuilder.DropTable(
-                name: "Criterion");
+                name: "Parameters");
 
             migrationBuilder.DropTable(
                 name: "Query");

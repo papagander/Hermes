@@ -12,13 +12,13 @@ public class Field : Named, IReferences<FieldSet>
     public override string ToString()
     {
 
-        if (FieldSet is not null) return $"{FieldSet.Name}.{Name} ({Type.ToString()})";
+        if (FieldSet is not null) return $"{FieldSet.Name}.{Name} ({DbType.ToString()})";
         else return Name;
     }
     [NotNull]
     public int FieldSetId { get; set; }
     [NotNull]
-    public SqlDbType Type { get; set; }
+    public SqlDbType DbType { get; set; }
     public FieldSet FieldSet { get; set; }
     internal List<Query> Queries { get; set; }
     int IReferences<FieldSet>.MyTRefId { get => FieldSetId;  /*set => Id = value;  */}
