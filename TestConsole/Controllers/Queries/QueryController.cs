@@ -1,4 +1,5 @@
-﻿using Domain.Models.FieldSets;
+﻿using Domain.Models.DataCore;
+using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 
 using System;
@@ -62,11 +63,14 @@ namespace TestConsole.Controllers.Queries
                 Console.WriteLine("Changed " + output + " rows.");
                 return;
             }
-            Console.WriteLine("First, you will create the criteria for the filters by choosing fields ands operations to perform. Next,");
+            Console.WriteLine("First, you will create the criteria for the filter by choosing fields ands operations to perform. Next,");
             Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
             do
             {
                 Console.WriteLine("Choose a field to filter on.");
+                Field field = SelectFromList(fs.Fields);
+                var ft = field.Type;
+                var ops = 
 
             } while (true);
         }
@@ -94,7 +98,7 @@ namespace TestConsole.Controllers.Queries
         {
             Console.WriteLine("Each query has a source table (or field set) which contains the data");
             Console.WriteLine("filtered by the query. A subset of the table's fields are selected,");
-            Console.WriteLine("And a combian");
+            Console.WriteLine("And a combination of conditions can be used to filter rows returned.");
         }
 
         public override void Show()

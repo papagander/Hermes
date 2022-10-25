@@ -2,6 +2,7 @@
 using DataAccess.EFCore.UnitOfWork;
 
 using Domain;
+using Domain.Models.DataCore;
 using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 
@@ -52,6 +53,11 @@ public class QueryService
     public IEnumerable<FieldSet> GetFieldSets()
     {
         return U.FieldSets.GetAll();
+    }
+
+    public List<Operator> GetOperators(SqlDbType dbType)
+    {
+        var allOps = U.Operators;
     }
 
     public Query? GetQuery(string name)
@@ -121,4 +127,6 @@ public class QueryService
                 throw new Exception($"Field {field.Name} is not on {query.Name}'s fieldset {query.FieldSet.Name}");
         return true;
     }
+    
+
 }

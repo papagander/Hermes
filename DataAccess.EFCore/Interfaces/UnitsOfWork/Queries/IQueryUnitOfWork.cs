@@ -15,6 +15,7 @@ namespace DataAccess.EFCore.Interfaces
         ICriterionRepository Criteria { get; }
         ICriterionValueRepository CriterionValues { get; }
         IReadRepository<FieldSet> FieldSets { get; }
+        IReadRepository<Operator> Operators { get; }
 
     }
 }
