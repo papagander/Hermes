@@ -1,4 +1,5 @@
 ﻿using DataAccess.EFCore.Interfaces;
+using DataAccess.EFCore.Interfaces.Repositories;
 using DataAccess.EFCore.UnitOfWork;
 
 using Domain;
@@ -57,7 +58,12 @@ public class QueryService
 
     public List<Operator> GetOperators(SqlDbType dbType)
     {
-        var allOps = U.Operators;
+        List<Operator> allOps = U.Operators.GetAll().ToList();
+        List<Operator> output = new List<Operator>();
+        foreach (Operator op in allOps)
+            if (op.DbTypes.Contains(dbType))
+                output.Add(op);
+        return output;
     }
 
     public Query? GetQuery(string name)

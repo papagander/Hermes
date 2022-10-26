@@ -30,13 +30,14 @@ public class Criterion
         output += " }";
         return output;
     }
-    public int FieldId { get; set; }
-    public int OperatorId { get; set; }
-    public int StatementId { get; set; }
 
     public Field Field { get; set; }
     public Operator Operator { get; set; }
     public Statement Statement { get; set; }
+
+    public int FieldId { get; set; }
+    public int OperatorId { get; set; }
+    public int StatementId { get; set; }
     public List<CriterionParameter> CriterionParameters { get; set; }
     int IReferences<Field>.MyTRefId { get => FieldId; /*set => Id = value; */}
     Field IReferences<Field>.MyTRef { get => Field; /*set => Field = value;*/ }

@@ -1,26 +1,48 @@
 ﻿using Domain.Interfaces.Models;
 
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Domain.Models.DataCore
+namespace Domain.Models.DataCore;
+public class Operator 
+    : Named
+    , IReferencedBy<Parameter>
+    , IReferencedBy<OperatorFieldType>
 {
-    public class Operator 
-        : Named
-        , IReferencedBy<Parameter>
-        , IReferencedBy<OperatorFieldType>
+    // equals, greather than, less than, contains, etc.
+    public List<OperatorFieldType> OperatorFieldTypes { get; set; }
+    public List<Parameter> Parameters { get; set; }
+    [NotNull]
+    public string ExecutionString { get; set; }
+
+    public string ToString()
     {
-        // equals, greather than, less than, contains, etc.
-        public List<OperatorFieldType> OperatorFieldTypes { get; set; }
-        public List<Parameter> Parameters { get; set; }
-        [NotNull]
-        public string ExecutionString { get; set; }
-        [NotMapped]
-        List<OperatorFieldType> IReferencedBy<OperatorFieldType>.MyTs { get => OperatorFieldTypes; set => OperatorFieldTypes = value; }
-        [NotMapped]
-        List<Parameter> IReferencedBy<Parameter>.MyTs { get => Parameters; set => Parameters = value; }
- 
+        string output = ExecutionString;
+        for (int i = 0; i < Parameters.Count; i++)
+        {
+            Parameter param = Parameters[i];
+            output.Replace("{" + (i + 1) + "}", param.Name);
+        }
+        output.Replace("{0}", "field");
+        return output;
     }
+    [NotMapped]
+    public List<SqlDbType> DbTypes
+    {
+        get
+        {
+            List<SqlDbType> output = new List<SqlDbType>();
+            foreach (var fto in OperatorFieldTypes) output.Add(fto.DbType);
+            return output;
+        }
+    }
+    [NotMapped]
+    List<OperatorFieldType> IReferencedBy<OperatorFieldType>.MyTs { get => OperatorFieldTypes; set => OperatorFieldTypes = value; }
+    [NotMapped]
+    List<Parameter> IReferencedBy<Parameter>.MyTs { get => Parameters; set => Parameters = value; }
+
 
 }
+
 

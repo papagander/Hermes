@@ -29,6 +29,8 @@ namespace TestConsole.Controllers.Queries
             string name;
             FieldSet fs;
             List<Field> fields;
+
+            // Name query
             Console.WriteLine("Provide a name for this query.");
             name = NamePrompt(EntityType);
             if (name == null)
@@ -37,9 +39,9 @@ namespace TestConsole.Controllers.Queries
                 return;
             }
             fs = SelectFieldSet();
-            var _fields = fs.Fields;
+            var allFields = fs.Fields;
             Console.WriteLine("Select fields to be included on this query.");
-            fields = SelectListFromList(_fields);
+            fields = SelectListFromList(allFields);
             if (fields is null || fields.Count == 0)
             {
                 Console.WriteLine("Cancelling");
@@ -63,16 +65,34 @@ namespace TestConsole.Controllers.Queries
                 Console.WriteLine("Changed " + output + " rows.");
                 return;
             }
-            Console.WriteLine("First, you will create the criteria for the filter by choosing fields ands operations to perform. Next,");
+            Console.WriteLine("First, you will create the base operations for the filter by choosing fields ands operations to perform. Next,");
             Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
+            Field? field;
             do
             {
                 Console.WriteLine("Choose a field to filter on.");
-                Field field = SelectFromList(fs.Fields);
-                var ft = field.Type;
-                var ops = 
-
-            } while (true);
+                field = SelectFromList(fs.Fields);
+            } while (field is null);
+            var dbType = field.DbType;
+            var ops = S.GetOperators(dbType);
+            Operator? op;
+            do
+            {
+                Console.WriteLine("Select an operation to perform");
+                op = SelectFromList(ops);
+            } while (op is null);
+            List<Parameter> parameters = op.Parameters;
+            List<CriterionParameter> cParams = new List<CriterionParameter>();
+            foreach (Parameter param in parameters)
+            {
+                Console.WriteLine($"Input value for {op.Name} {param.Name}");
+                string val = Console.ReadLine();
+                cParams.Add(new CriterionParameter() { Parameter = param, Value = val });
+            }
+            Criterion criterion = new Criterion() {
+            Field = field, CriterionParameters = cParams, Operator = op 
+            };
+            Console.WriteLine($"Created criterion: {criterion.ToString()}");
         }
         FieldSet SelectFieldSet()
         {
