@@ -51,6 +51,9 @@ public class QueryService
 
     }
 
+    public List<Conjoiner> GetConjoiners() => U.Conjoiners.GetAll().ToList();
+    
+
     public IEnumerable<FieldSet> GetFieldSets()
     {
         return U.FieldSets.GetAll();
@@ -115,6 +118,13 @@ public class QueryService
         }
 
     }
+
+    public int SetFilter(Query query, Statement statement)
+    {
+        U.Queries.SetStatement(query, statement);
+        return Complete;
+    }
+
     protected bool Verify(Query query)
     {
         if (query is null)

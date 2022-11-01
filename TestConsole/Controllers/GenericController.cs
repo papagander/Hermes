@@ -124,14 +124,14 @@ public abstract class GenericController :
     protected static List<T> SelectListFromList<T>(IEnumerable<T> source)
         where T : class
     {
-        List<T> list = source.ToList();
+        List<T> sourceTs = source.ToList();
         List<T> output = new();
-        var op = SelectFromList(source);
-        while (op is not null)
+        var t = SelectFromList(source);
+        while (t is not null & sourceTs.Count != 1)
         {
-            list.Remove(op);
-            output.Add(op);
-            op = SelectFromList(list);
+            sourceTs.Remove(t);
+            output.Add(t);
+            t = SelectFromList(sourceTs);
         }
         return output;
     }

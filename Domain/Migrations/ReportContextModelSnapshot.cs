@@ -326,7 +326,7 @@ namespace Domain.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Queries.Statement", "Statement")
-                        .WithMany("Criterions")
+                        .WithMany("Criteria")
                         .HasForeignKey("StatementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -426,7 +426,7 @@ namespace Domain.Migrations
                 {
                     b.Navigation("Conjunctions");
 
-                    b.Navigation("Criterions");
+                    b.Navigation("Criteria");
                 });
 #pragma warning restore 612, 618
         }

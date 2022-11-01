@@ -18,7 +18,7 @@ namespace DataAccess.EFCore.Repository
         public UniquelyNamedRepository(ReportContext _context) : base(_context) { }
         public T? Get(string name)
         {
-            var output = (from myT in context.Set<T>() where myT.Name == name select myT);
+            var output = (from myT in hContext.Set<T>() where myT.Name == name select myT);
             if (output == null | output.Count() == 0) return null;
             else if (output.Count() > 1) throw new InvalidDataException($"{output.Count()} entities w name {name}");
             else return output.First();
@@ -42,13 +42,13 @@ namespace DataAccess.EFCore.Repository
         public void Remove(string Name)
         {
             T MyT = Get(Name);
-            context.Set<T>().Remove(MyT);
+            hContext.Set<T>().Remove(MyT);
         }
 
         public void RemoveRange(IEnumerable<string> Names)
         {
             IEnumerable<T> Ts = GetRange(Names);
-            context.Set<T>().RemoveRange(Ts);
+            hContext.Set<T>().RemoveRange(Ts);
         }
         public bool NameIsAvailable(string name)
         {
@@ -57,7 +57,7 @@ namespace DataAccess.EFCore.Repository
         protected void AddNameOnly(string name)
         {
             if (NameIsAvailable(name))
-                context.Set<T>().Add(new T { Name = name });
+                hContext.Set<T>().Add(new T { Name = name });
         }
     }
 }

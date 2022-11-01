@@ -73,7 +73,7 @@ public class ReportContext : DbContext
             .WithMany(s => s.Conjunctions);
         m.Entity<Criterion>()
             .HasOne(crt => crt.Statement)
-            .WithMany(s => s.Criterions);
+            .WithMany(s => s.Criteria);
 
 // Navigations
     //  Data Core

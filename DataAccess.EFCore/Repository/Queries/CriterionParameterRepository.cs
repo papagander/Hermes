@@ -18,8 +18,8 @@ namespace DataAccess.EFCore.Repository.Queries
         ReferencesRepository<CriterionParameter, Parameter> P;
         public CriterionParameterRepository(ReportContext reportContext) : base(reportContext)
         {
-            RefCr = new ReferencesRepository<CriterionParameter, Criterion>(context);
-            P = new ReferencesRepository<CriterionParameter, Parameter>(context);
+            RefCr = new ReferencesRepository<CriterionParameter, Criterion>(hContext);
+            P = new ReferencesRepository<CriterionParameter, Parameter>(hContext);
         }
 
         public IEnumerable<CriterionParameter> GetRange(Criterion MyTRef) => RefCr.GetRange(MyTRef);

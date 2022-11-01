@@ -18,7 +18,7 @@ public interface IQueryService
     int RemoveQuery(int id);
     int RemoveQuery(string name);
     int RemoveQuery(Query query);
-
+    int SetFilter(Query query, Statement statement);
     int SetFields(Query query, IEnumerable<Field> fields);
     int AddFields(Query query, IEnumerable<Field> fields);
     List<Operator> GetOperators(SqlDbType dbType);

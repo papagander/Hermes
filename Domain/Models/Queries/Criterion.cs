@@ -13,28 +13,24 @@ public class Criterion
     , ISubTypeOf<Statement>
 {
     // e.g. Serial number equals, DateReceived greater than, Model Number contains.
-    // Criterions are pointed to by CriterionParameter to support n values per criterion.
+    // Criteria are pointed to by CriterionParameter to support n values per criterion.
     public override string ToString()
     {
         string output = "";
         output += $"{Field.Name} {Operator.Name} ";
-        output += "{";
         for (int i = 0; i < CriterionParameters.Count; i++)
         {
-            CriterionParameter? criterionParameter = CriterionParameters[i];
-            output += " ";
-            output += criterionParameter.Value;
-            output += ",";
+            string nm = CriterionParameters[i].Parameter.Name;
+            string val = CriterionParameters[i].Value;
+            output += $"{nm}: {val} ";
         }
         output.Remove(output.Length - 1);
-        output += " }";
         return output;
     }
 
     public Field Field { get; set; }
     public Operator Operator { get; set; }
     public Statement Statement { get; set; }
-
     public int FieldId { get; set; }
     public int OperatorId { get; set; }
     public int StatementId { get; set; }

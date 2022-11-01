@@ -19,8 +19,8 @@ namespace DataAccess.EFCore.Repository.DataCore
         protected ReferencedByRepository<Operator, Parameter> p;
         public OperatorRepository(ReportContext _context) : base(_context)
         {
-            ft = new(context);
-            p = new(context);
+            ft = new(hContext);
+            p = new(hContext);
         }
 
         void IOperatorRepository.Add(string name, string executionString, IEnumerable<SqlDbType> dbTypes, IEnumerable<Parameter> parameters)

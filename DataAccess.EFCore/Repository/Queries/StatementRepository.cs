@@ -12,9 +12,9 @@ namespace DataAccess.EFCore.Repository.Queries
         ReferencesRepository<Statement, Conjunction> RefCj;
         public StatementRepository(ReportContext reportContext) : base(reportContext)
         {
-            SupCr = new SuperTypeRepository<Statement, Criterion>(context);
-            SupCj = new SuperTypeRepository<Statement, Conjunction>(context);
-            RefCj = new ReferencesRepository<Statement, Conjunction>(context);
+            SupCr = new SuperTypeRepository<Statement, Criterion>(hContext);
+            SupCj = new SuperTypeRepository<Statement, Conjunction>(hContext);
+            RefCj = new ReferencesRepository<Statement, Conjunction>(hContext);
         }
 
         public ISubTypeOf<Statement> GetChild(Statement MyT)
@@ -32,7 +32,7 @@ namespace DataAccess.EFCore.Repository.Queries
         /*
 public IEnumerable<Statement> GetRangeByConjunctionId(int conjunctionId)
 {
-   return (from statement in context.Statement where statement.Id == conjunctionId select statement);
+   return (from statement in hContext.Statement where statement.Id == conjunctionId select statement);
 }
 */
     }

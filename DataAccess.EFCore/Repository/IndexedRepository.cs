@@ -12,21 +12,21 @@ namespace DataAccess.EFCore.Repository
 
         public virtual void Add(T entity)
         {
-            context.Set<T>().Add(entity);
+            hContext.Set<T>().Add(entity);
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
-            context.Set<T>().AddRange(entities);
+            hContext.Set<T>().AddRange(entities);
         }
         public IEnumerable<T> GetAll()
         {
-            return context.Set<T>().ToList();
+            return hContext.Set<T>().ToList();
         }
         
         public T? Get(int id)
         {
-            return context.Set<T>().Find(id);
+            return hContext.Set<T>().Find(id);
         }
         public IEnumerable<T> GetRange(IEnumerable< int> ids)
         {
@@ -35,12 +35,12 @@ namespace DataAccess.EFCore.Repository
 
         public void Remove(T entity)
         {
-            context.Set<T>().Remove(entity);
+            hContext.Set<T>().Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
-            context.Set<T>().RemoveRange(entities);
+            hContext.Set<T>().RemoveRange(entities);
         }
 
     }

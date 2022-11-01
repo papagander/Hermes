@@ -22,7 +22,7 @@ namespace TestConsole.DataCore.Entities
 
         protected override string EntityType { get => "Operator"; }
 
-        public override void Show()
+        public override void ShowAll()
         {
             var ops = S.GetAllOperators();
             foreach (var op in ops)

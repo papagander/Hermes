@@ -10,28 +10,30 @@ using DataAccess.EFCore.Repository.Queries;
 using Domain.Models.DataCore;
 using Domain.Models.FieldSets;
 
-namespace DataAccess.EFCore.UnitOfWork
+namespace DataAccess.EFCore.UnitOfWork;
+
+public class QueryUnitOfWork 
+    : GenericUnitOfWork
+    , IQueryUnitOfWork
 {
-    public class QueryUnitOfWork : GenericUnitOfWork, IQueryUnitOfWork
+    public IQueryRepository Queries { get; private set; }
+    public IStatementRepository Statements { get; private set; }
+    public IConjunctionRepository Conjunctions { get; private set; }
+    public ICriterionRepository Criteria { get; private set; }
+    public ICriterionParameterRepository CriterionParameters { get; private set; }
+    public IReadRepository<FieldSet> FieldSets { get; private set; }
+    public IReadRepository<Operator> Operators { get; private set; }
+    public IReadRepository<Conjoiner> Conjoiners { get; private set; }
+    public QueryUnitOfWork(ReportContext reportContext) : base(reportContext)
     {
-        public IQueryRepository Queries { get; private set; }
-        public IStatementRepository Statements { get; private set; }
-        public IConjunctionRepository Conjunctions { get; private set; }
-        public ICriterionRepository Criteria { get; private set; }
-        public ICriterionParameterRepository CriterionParameters { get; private set; }
-        public IReadRepository<FieldSet> FieldSets { get; private set; }
-        public IReadRepository<Operator> Operators { get; private set; }
 
-        public QueryUnitOfWork(ReportContext reportContext) : base(reportContext)
-        {
-
-            Queries = new QueryRepository(_context);
-            Statements = new StatementRepository(_context);
-            Conjunctions = new ConjunctionRepository(_context);
-            Criteria = new CriterionRepository(_context);
-            CriterionParameters = new CriterionParameterRepository(_context);
-            FieldSets = new ReadRepository<FieldSet>(_context);
-            Operators = new ReadRepository<Operator>(_context);
-        }
+        Queries = new QueryRepository(_context);
+        Statements = new StatementRepository(_context);
+        Conjunctions = new ConjunctionRepository(_context);
+        Criteria = new CriterionRepository(_context);
+        CriterionParameters = new CriterionParameterRepository(_context);
+        FieldSets = new ReadRepository<FieldSet>(_context);
+        Operators = new ReadRepository<Operator>(_context);
+        Conjoiners = new ReadRepository<Conjoiner>(_context);
     }
 }

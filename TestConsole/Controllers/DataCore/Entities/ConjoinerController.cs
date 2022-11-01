@@ -23,7 +23,7 @@ namespace TestConsole.DataCore.Entities
         {
         }
 
-        public override void Show()
+        public override void ShowAll()
         {
             List<Conjoiner> Conjoiners = new List<Conjoiner>();
             Conjoiners.AddRange(S.GetAllConjoiners());

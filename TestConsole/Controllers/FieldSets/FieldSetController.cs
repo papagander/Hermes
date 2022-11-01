@@ -105,7 +105,7 @@ namespace TestConsole.Controllers.FieldSets
             "for stakeholders to build queries against.");
 
 
-        public override void Show()
+        public override void ShowAll()
         {
             var fsz = S.GetFieldSets();
             Console.WriteLine(String.Format("{0,-16}|{1,16}|{2,16}", "Field Set", "Field", "Field DbType"));

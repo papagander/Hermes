@@ -102,6 +102,8 @@ public class DataCoreSeeder
             SqlDbType? paramType;
             List<Parameter> parameters;
             Parameter _1;
+
+
             name = "equals";
             executionString = "{0} = {1}";
             paramName = "value";
@@ -111,6 +113,8 @@ public class DataCoreSeeder
             parameters.Add(_1);
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
+
+
             name = "not equal";
             executionString = "{0} <> {1}";
             paramName = "value";
@@ -120,6 +124,8 @@ public class DataCoreSeeder
             parameters.Add(_1);
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
+
+
             name = "less than";
             executionString = "{0} < {1}";
             paramName = "value";
@@ -129,6 +135,8 @@ public class DataCoreSeeder
             parameters.Add(_1);
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
+
+
             name = "greater than";
             executionString = "{0} > {1}";
             paramName = "1";
@@ -138,6 +146,8 @@ public class DataCoreSeeder
             parameters.Add(_1);
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
+
+
             name = "less than or equal";
             executionString = "{0} <= {1}";
             paramName = "value";
@@ -147,6 +157,8 @@ public class DataCoreSeeder
             parameters.Add(_1);
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
+
+
             name = "greater than or equal";
             executionString = "{0} >= {1}";
             paramName = "value";
@@ -156,6 +168,18 @@ public class DataCoreSeeder
             parameters.Add(_1);
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
+
+
+            name = "weeks ago";
+            executionString = "{0} >= DATEPART(UTCNOW(), date) - {1}";
+            paramName = "weeksBack";
+            paramType = SqlDbType.Int;
+            _1 = new Parameter() { Name = paramName, DbType = paramType };
+            parameters = new List<Parameter>();
+            parameters.Add(_1);
+            op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
+            output.Add(op);
+
 
             return output;
         }

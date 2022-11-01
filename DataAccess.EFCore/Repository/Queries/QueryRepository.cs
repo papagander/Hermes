@@ -29,6 +29,11 @@ namespace DataAccess.EFCore.Repository.Queries
 
         public void RemoveChildren(Query tRef, IEnumerable<Field> Children) => f.RemoveChildren(tRef, Children);
 
+        public void SetStatement(Query query, Statement statement)
+        {
+            throw new NotImplementedException();
+        }
+
         void IReferencedByRepository<Query, Field>.SetChildren(Query tRef, IEnumerable<Field> Children) => f.RemoveChildren(tRef, Children);
     }
 }

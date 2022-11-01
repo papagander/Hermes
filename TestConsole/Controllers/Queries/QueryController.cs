@@ -2,6 +2,8 @@
 using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 
+using Microsoft.Data.SqlClient.DataClassification;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,6 +25,19 @@ namespace TestConsole.Controllers.Queries
 
         protected override string EntityType { get => "Query"; }
 
+        List<Field>? SelectFields(FieldSet fs)
+        {
+            var fields = new List<Field>();
+            var allFields = fs.Fields;
+            Console.WriteLine("Select fields to be included on this query.");
+            fields = SelectListFromList(allFields);
+            if (fields is null || fields.Count == 0)
+            {
+                Console.WriteLine("Cancelling");
+                return null;
+            }
+            return fields;
+        }
         public override void Add()
         {
             Query q;
@@ -31,69 +46,164 @@ namespace TestConsole.Controllers.Queries
             List<Field> fields;
 
             // Name query
-            Console.WriteLine("Provide a name for this query.");
             name = NamePrompt(EntityType);
-            if (name == null)
-            {
-                Console.WriteLine("Cancelling");
-                return;
-            }
             fs = SelectFieldSet();
-            var allFields = fs.Fields;
-            Console.WriteLine("Select fields to be included on this query.");
-            fields = SelectListFromList(allFields);
-            if (fields is null || fields.Count == 0)
-            {
-                Console.WriteLine("Cancelling");
-                return;
-            }
+            fields = SelectFields(fs);
             var query = new Query { Name = name, FieldSet = fs, Fields = fields };
-            int selectionId;
             bool isValid;
+            ConsoleKey input;
             do
             {
-                Console.WriteLine("Would you like to add a filter to this query?");
-                Console.WriteLine("1. yes");
-                Console.WriteLine("2. no");
-                isValid = int.TryParse(Console.ReadLine(), out selectionId);
-                isValid = isValid && (selectionId == 1 || selectionId == 2);
+                Console.WriteLine("Would you like to add a filter to this query? (y / n)");
+                input = Console.ReadKey().Key;
+                isValid = input == ConsoleKey.Y || input == ConsoleKey.N;
             } while (!isValid);
-            if (selectionId == 2)
+            Console.WriteLine();
+            if (input == ConsoleKey.N)
             //create query with no filter
             {
                 int output = S.AddQuery(name, fs, fields);
                 Console.WriteLine("Changed " + output + " rows.");
                 return;
             }
+            List<Criterion> critera = CreateCriteria(fs);
+            List<Statement> statements = new List<Statement>();
+            foreach (var criterion in critera)
+            {
+                var criteria = new List<Criterion>();
+                criteria.Add(criterion);
+                statements.Add(new Statement() { Criteria = criteria });
+            }
+            Statement statement = CreateTopLevelStatement(statements);
+
+        }
+
+        private Statement CreateTopLevelStatement(List<Statement> statements)
+        {
+            Statement output;
+            Console.WriteLine("Now, combine those criteria into a single statement using conjunctions. ");
+            Console.WriteLine("Start with the inner-most conjunctions and then create the higher level ones.");
+            Console.WriteLine("Ex. ((Customer = Hurom AND Model = 1234) OR (Customer = Galanz AND Model = 5678)) AND [Date Received] WEEKSAGO(1)");
+            Console.WriteLine("\n***\n");
+            do
+            {
+                output = CreateConjunction(statements);
+            } while (statements.Count > 0);
+            return output;
+        }
+
+        private Statement CreateConjunction(List<Statement> statements)
+        {
+            Statement output;
+            Conjunction conj;
+
+            Console.WriteLine("First, select a conjoiner.");
+            List<Conjoiner> conjoiners = S.GetConjoiners();
+            Conjoiner cjr = SelectConjoiner();
+
+            Console.WriteLine("Now, select criteria to add to this conjunction.");
+            List<Statement> selection = SelectListFromList(statements);
+            conj = new Conjunction() { Statements = selection };
+            output = new Statement() { Conjunction = conj };
+            foreach (var statement in selection) statements.Remove(statement);
+
+
+
+
+            if (statements.Count != 0)
+            {
+                Console.WriteLine("Some criteria are not contained yet. Another conjunction will be needed.");
+                statements.Add(output);
+                return CreateConjunction(statements);
+            }
+            return output;
+
+            // Funcs
+            Conjoiner SelectConjoiner()
+            {
+                Conjoiner? output;
+                do
+                {
+                    output = SelectFromList(conjoiners);
+                } while (output is null);
+                return output;
+            }
+        }
+
+        private List<Criterion> CreateCriteria(FieldSet fs)
+        {
+            List<Criterion> output = new List<Criterion>();
             Console.WriteLine("First, you will create the base operations for the filter by choosing fields ands operations to perform. Next,");
             Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
-            Field? field;
             do
             {
-                Console.WriteLine("Choose a field to filter on.");
-                field = SelectFromList(fs.Fields);
-            } while (field is null);
-            var dbType = field.DbType;
-            var ops = S.GetOperators(dbType);
-            Operator? op;
-            do
+                Criterion criterion = CreateCriterion(fs);
+                Console.WriteLine($"Created criterion: {criterion.ToString()}");
+                Console.WriteLine("Current criteria:");
+                for (int i = 0; i < output.Count; i++)
+                {
+                    Criterion? crit = output[i];
+                    Console.WriteLine($"{i}.{crit.ToString()}");
+                }
+                Console.WriteLine();
+                Console.WriteLine("Create more? (y/n)");
+                var input = Console.ReadKey().Key;
+                if (input == ConsoleKey.N) return output;
+            } while (true);
+
+            
+            Criterion CreateCriterion(FieldSet fs)
             {
-                Console.WriteLine("Select an operation to perform");
-                op = SelectFromList(ops);
-            } while (op is null);
-            List<Parameter> parameters = op.Parameters;
-            List<CriterionParameter> cParams = new List<CriterionParameter>();
-            foreach (Parameter param in parameters)
-            {
-                Console.WriteLine($"Input value for {op.Name} {param.Name}");
-                string val = Console.ReadLine();
-                cParams.Add(new CriterionParameter() { Parameter = param, Value = val });
+                Field? field;
+                SqlDbType dbType;
+                field = SelectField(fs);
+                dbType = field.DbType;
+                Operator? op = SelectOperator(dbType);
+                List<Parameter> parameters = op.Parameters;
+                List<CriterionParameter> cParams = CreateCritParameters(op, parameters);
+                return new Criterion()
+                {
+                    Field = field,
+                    CriterionParameters = cParams,
+                    Operator = op
+                };
             }
-            Criterion criterion = new Criterion() {
-            Field = field, CriterionParameters = cParams, Operator = op 
-            };
-            Console.WriteLine($"Created criterion: {criterion.ToString()}");
+            static Field SelectField(FieldSet fs)
+            {
+                Field? field;
+                do
+                {
+                    Console.WriteLine("Choose a field to filter on.");
+                    field = SelectFromList(fs.Fields);
+                } while (field is null);
+                return field;
+            }
+            Operator SelectOperator(SqlDbType dbType)
+            {
+                List<Operator> ops = S.GetOperators(dbType);
+                Operator? op;
+                do
+                {
+                    Console.WriteLine("Select an operation to perform");
+                    op = SelectFromList(ops);
+                } while (op is null);
+                return op;
+            }
+            static List<CriterionParameter> CreateCritParameters(Operator op, List<Parameter> parameters)
+            {
+                List<CriterionParameter> cParams = new List<CriterionParameter>();
+                foreach (Parameter param in parameters)
+                {
+                    Console.WriteLine($"Input value for {op.Name} {param.Name}");
+                    string val = Console.ReadLine();
+                    cParams.Add(new CriterionParameter() { Parameter = param, Value = val });
+                }
+
+                return cParams;
+            }
         }
+
+
         FieldSet SelectFieldSet()
         {
 
@@ -121,7 +231,7 @@ namespace TestConsole.Controllers.Queries
             Console.WriteLine("And a combination of conditions can be used to filter rows returned.");
         }
 
-        public override void Show()
+        public override void ShowAll()
         {
             throw new NotImplementedException();
         }
