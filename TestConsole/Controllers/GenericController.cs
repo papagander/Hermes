@@ -20,13 +20,13 @@ public abstract class GenericController :
     , IDisposable
 {
     //public abstract string ControllerName { get;}
-    protected List<Function> Acts = new List<Function>();
+    protected List<Function> Actions = new List<Function>();
     private bool disposedValue;
     protected readonly ReportContext context;
     public GenericController(ReportContext context)
     {
         this.context = context;
-        Acts.Add(new Function("help", Help));
+        Actions.Add(new Function("help", Help));
     }
     public void Pause(int seconds)
     {
@@ -43,22 +43,42 @@ public abstract class GenericController :
         while (true)
         {
             MenuPrompt();
-            string? input = Console.ReadLine();
-            if (input is null)
+            for (int i = 0; i < Actions.Count; i++)
             {
-                Console.WriteLine("No command provided.");
-                continue;
+                Function? action = Actions[i];
+                Console.WriteLine(String.Format("{0,2}. {1,0}", i, action.Name));
             }
-            input = input.ToLower().Trim();
-            foreach (var function in Acts)
+            int secondDigitOfLast = Actions.Count / 10;
+            while (true)
             {
-                if (function.Name == input)
+                ConsoleKey input = Console.ReadKey().Key;
+                int intput0;
+                try
                 {
-                    function.Action();
+                    intput0 = (int)input;
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+                if (intput0 > secondDigitOfLast)
+                {
+                    Actions[intput0].Action();
                     break;
                 }
+                input = Console.ReadKey().Key;
+                int intput1 = (int)input;
+                try
+                {
+                    intput1 = (int)input;
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+
             }
-            if (input == "quit") break;
+
         }
     }
 
@@ -69,7 +89,7 @@ public abstract class GenericController :
         HelpPrompt();
         Console.WriteLine();
         Console.WriteLine("Available commands:");
-        foreach (var function in Acts)
+        foreach (var function in Actions)
             Console.WriteLine(function.Name);
         Console.WriteLine("quit");
         Console.WriteLine();
@@ -78,10 +98,12 @@ public abstract class GenericController :
     internal static T? SelectFromList<T>(IEnumerable<T> items) where T : class
     {
         var _ = items.ToList();
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.WriteLine("Enter a number to select an item. Press enter to terminate selection.");
         for (int i = 0; i < _.Count; i++)
         {
             T item = _[i];
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"{i}. {item.ToString()}");
         }
         string? input = Console.ReadLine();

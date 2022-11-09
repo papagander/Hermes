@@ -17,18 +17,20 @@ namespace TestConsole.Controllers
     {
         public MainMenu(ReportContext context) : base(context)
         {
-            Acts.Add(new("dc", DataCoreMenu));
-            Acts.Add(new("fs", FieldSetsMenu));
-            Acts.Add(new("q", QueriesMenu));
+            Actions.Add(new("dc", DataCoreMenu));
+            Actions.Add(new("fs", FieldSetsMenu));
+            Actions.Add(new("q", QueriesMenu));
         }
 
         public override void HelpPrompt()
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Hermes main menu: select a module to access.");
         }
 
         protected override void MenuPrompt()
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Select a module to access.");
         }
         protected void DataCoreMenu()

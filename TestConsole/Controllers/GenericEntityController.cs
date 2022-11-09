@@ -23,8 +23,8 @@ namespace TestConsole.Controllers
     {
         protected GenericEntityController(ReportContext context) : base(context)
         {
-            Acts.Add(new Function("add", Add));
-            Acts.Add(new Function("show", ShowAll));
+            Actions.Add(new Function("add", Add));
+            Actions.Add(new Function("show", ShowAll));
         }
 
         protected abstract string EntityType { get; }

@@ -18,9 +18,9 @@ namespace TestConsole.DataCore
     {
         public DataCoreController(ReportContext context) : base(context)
         {
-            Acts.Add(new("cjr", ConjoinerMenu));
-            Acts.Add(new("op", OperatorMenu));
-            Acts.Add(new("about", About));
+            Actions.Add(new("cjr", ConjoinerMenu));
+            Actions.Add(new("op", OperatorMenu));
+            Actions.Add(new("about", About));
             Console.Clear();
             Console.WriteLine("Welcome to Hermes DataCore interface!");
             Pause(1);

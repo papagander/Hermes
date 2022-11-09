@@ -25,7 +25,7 @@ namespace TestConsole.Controllers.FieldSets
 
             string nm; Action a;
             nm = "AddF"; a = AddFields;
-            Acts.Add(new(nm, a));
+            Actions.Add(new(nm, a));
         }
 
         protected override string EntityType { get => "Field Set"; }

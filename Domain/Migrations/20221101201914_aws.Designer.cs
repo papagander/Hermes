@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    [Migration("20221021184655_asdf")]
-    partial class asdf
+    [Migration("20221101201914_aws")]
+    partial class aws
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -218,7 +218,7 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("StatementId")
+                    b.Property<int?>("StatementId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -369,9 +369,7 @@ namespace Domain.Migrations
 
                     b.HasOne("Domain.Models.Queries.Statement", "Statement")
                         .WithMany()
-                        .HasForeignKey("StatementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StatementId");
 
                     b.Navigation("FieldSet");
 

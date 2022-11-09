@@ -14,9 +14,9 @@ public class Statement :
     // are included in the report.
     public override string ToString()
     {
-        if (Conjunctions.Count == 1) return Conjunctions[1].ToString();
-        else if (Criteria.Count == 1) return Criteria[0].ToString();
-        return $"Unreferenced statement {Id}";
+        if (Conjunctions is not null && Conjunctions.Count > 0) return Conjunctions[0].ToString();
+        else if (Criteria is not null &&  Criteria.Count > 0) return Criteria[0].ToString();
+        else return $"Unreferenced statement {Id}";
     }
     public int? ConjunctionId { get; set; }
     public Conjunction? Conjunction { get; set; }
@@ -44,8 +44,3 @@ public class Statement :
     int IReferences<Conjunction>.MyTRefId { get { if (ConjunctionId is null) return -1; else return (int)ConjunctionId; } }
     Conjunction IReferences<Conjunction>.MyTRef { get => (Conjunction)Conjunction; }
 }
-
-
-
-
-

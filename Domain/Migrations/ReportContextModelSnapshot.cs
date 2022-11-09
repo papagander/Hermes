@@ -216,7 +216,7 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("StatementId")
+                    b.Property<int?>("StatementId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -367,9 +367,7 @@ namespace Domain.Migrations
 
                     b.HasOne("Domain.Models.Queries.Statement", "Statement")
                         .WithMany()
-                        .HasForeignKey("StatementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StatementId");
 
                     b.Navigation("FieldSet");
 

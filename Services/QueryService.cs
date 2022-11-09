@@ -51,6 +51,14 @@ public class QueryService
 
     }
 
+    public int AddQuery(string name, FieldSet fieldSet, IEnumerable<Field> fields, Statement topLevelStatement)
+    {
+        foreach (Field field in fields) if (field.FieldSet != fieldSet) return 0;
+        var Query = new Query { Name = name, FieldSet = fieldSet, Fields = fields.ToList(), Statement = topLevelStatement };
+        U.Queries.Add(Query);
+        return Complete;
+
+    }
     public List<Conjoiner> GetConjoiners() => U.Conjoiners.GetAll().ToList();
     
 

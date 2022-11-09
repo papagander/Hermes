@@ -4,7 +4,7 @@
 
 namespace Domain.Migrations
 {
-    public partial class asdf : Migration
+    public partial class aws : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -188,7 +188,7 @@ namespace Domain.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FieldSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    StatementId = table.Column<int>(type: "INTEGER", nullable: false),
+                    StatementId = table.Column<int>(type: "INTEGER", nullable: true),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -204,8 +204,7 @@ namespace Domain.Migrations
                         name: "FK_Query_Statement_StatementId",
                         column: x => x.StatementId,
                         principalTable: "Statement",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

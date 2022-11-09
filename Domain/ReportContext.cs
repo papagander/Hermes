@@ -63,6 +63,8 @@ public class ReportContext : DbContext
         m.Entity<Query>()
             .HasMany(e => e.Fields)
             .WithMany(e => e.Queries);
+        m.Entity<Query>()
+            .HasOne(e => e.FieldSet);
 
     //  Conjunctions
         m.Entity<Statement>()
