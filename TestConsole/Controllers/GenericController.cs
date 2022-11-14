@@ -42,46 +42,58 @@ public abstract class GenericController :
         Console.Clear();
         while (true)
         {
+            Console.WriteLine();
             MenuPrompt();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.White;
             for (int i = 0; i < Actions.Count; i++)
             {
                 Function? action = Actions[i];
                 Console.WriteLine(String.Format("{0,2}. {1,0}", i, action.Name));
             }
-            int secondDigitOfLast = Actions.Count / 10;
-            while (true)
-            {
-                ConsoleKey input = Console.ReadKey().Key;
-                int intput0;
-                try
-                {
-                    intput0 = (int)input;
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
-                if (intput0 > secondDigitOfLast)
-                {
-                    Actions[intput0].Action();
-                    break;
-                }
-                input = Console.ReadKey().Key;
-                int intput1 = (int)input;
-                try
-                {
-                    intput1 = (int)input;
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
+            Actions[GetSelection(Actions.Count)].Action();
+        }
+    }
+    public int GetSelection(int max)
+    {
+        int secondDigitOfLast = Actions.Count / 10;
 
-            }
+        while (true)
+        {
+            ConsoleKey input = Console.ReadKey().Key;
+            string _;
+
+            
+            int intput0;
+            do intput0 = ParseIntegerInput(input); 
+            while (intput0 == -1);
+            if (intput0 > secondDigitOfLast) return intput0;
+            input = Console.ReadKey().Key;
+            int intput1;
+            do intput1 = ParseIntegerInput(input);
+            while (intput1 == -1);
+            int intput = intput0 * 10 + intput1;
+            Actions[intput].Action();
 
         }
     }
+    protected int ParseIntegerInput(ConsoleKey input)
+    {
+        int output;
+        try
+        {
+            string _ = input.ToString();
+            _ = _[1].ToString();
+            output = int.Parse(_);
 
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+        return output;
+
+    }
     protected abstract void MenuPrompt();
     public void Help()
     {

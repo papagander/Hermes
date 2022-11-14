@@ -17,9 +17,29 @@ namespace TestConsole.Controllers
     {
         public MainMenu(ReportContext context) : base(context)
         {
-            Actions.Add(new("dc", DataCoreMenu));
-            Actions.Add(new("fs", FieldSetsMenu));
-            Actions.Add(new("q", QueriesMenu));
+            Actions.Add(new("DataCore", DataCoreMenu));
+            Actions.Add(new("FieldSet", FieldSetsMenu));
+            Actions.Add(new("Query", QueriesMenu));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
+            Actions.Add(new("Dummy", HelpPrompt));
         }
 
         public override void HelpPrompt()
