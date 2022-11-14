@@ -7,7 +7,7 @@
 
         public Function(string name, Action action)
         {
-            Name = name.ToLower();
+            Name = name;
             Action = action;
         }
     }

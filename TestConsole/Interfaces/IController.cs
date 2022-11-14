@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestConsole.Interfaces
+namespace TestConsole.Interfaces;
+internal interface IController
 {
-    internal interface IController
-    {
-        //string ControllerName { get; }
-        void Help();
-        void Pause(int seconds);
-        void Run();
-    }
+    void Pause(int seconds);
+    void Run();
 }

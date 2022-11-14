@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestConsole.Interfaces
+namespace TestConsole.Interfaces;
+
+internal interface IEntityController<T> 
+    where T 
+    : class
+    , IIndexed
 {
-    internal interface IEntityController<T> where T : class, IIndexed
-    {
-        internal void Run();
-        internal void Add();
-        internal void ShowAll();
-        internal void Help();
-    }
+    internal void Run();
+    internal void Add();
+    internal void ShowAll();
 }

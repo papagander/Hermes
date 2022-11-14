@@ -20,7 +20,9 @@ namespace TestConsole.DataCore.Entities
         {
         }
 
+        protected override string MenuName { get => "Operator"; }
         protected override string EntityType { get => "Operator"; }
+        protected override string AboutBody => "Operator, such as '=', 'contains', or '<' are used to build query logic and define the filters which can be used on a field type.";
 
         public override void ShowAll()
         {
@@ -54,16 +56,12 @@ namespace TestConsole.DataCore.Entities
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
-
-        public override void HelpPrompt()
-        {
-            Console.WriteLine("Operator, such as '=', 'contains', or '<' are used to build query logic ");
-            Console.WriteLine("and define the filters which can be used on a field type.");
-        }
-
         public override void Add()
         {
-            throw new NotImplementedException();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Operators cannot be added through this menu at this time.");
+            Pause(2);
+            Console.Clear();
         }
     }
 }

@@ -22,6 +22,7 @@ public class QueryController
         S = new(context);
     }
 
+    protected override string MenuName { get => "Query"; }
     protected override string EntityType { get => "Query"; }
 
     List<Field>? SelectFields(FieldSet fs)
@@ -266,13 +267,6 @@ public class QueryController
         } while (!selectionIsValid);
         return _fsz[selectionId];
     }
-    public override void HelpPrompt()
-    {
-        Console.WriteLine("Each query has a source table (or field set) which contains the data");
-        Console.WriteLine("filtered by the query. A subset of the table's fields are selected,");
-        Console.WriteLine("And a combination of conditions can be used to filter rows returned.");
-    }
-
     public override void ShowAll()
     {
         throw new NotImplementedException();

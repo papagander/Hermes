@@ -29,6 +29,8 @@ namespace TestConsole.Controllers.FieldSets
         }
 
         protected override string EntityType { get => "Field Set"; }
+        protected override string MenuName { get => "Field Set"; }
+        protected override string AboutBody => "This menu is used to create tables for stakeholders to build queries against.";
 
         public override void Add()
         {
@@ -101,8 +103,6 @@ namespace TestConsole.Controllers.FieldSets
             S.AddFields(fs, fields);
         }
 
-        public override void HelpPrompt() => Console.WriteLine("This menu is used to create field sets \n" +
-            "for stakeholders to build queries against.");
 
 
         public override void ShowAll()

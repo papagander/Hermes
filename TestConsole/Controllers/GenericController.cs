@@ -7,6 +7,7 @@ using Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,27 +16,21 @@ using TestConsole.Interfaces;
 
 namespace TestConsole.Controllers;
 
-public abstract class GenericController :
-    IController
+public abstract class GenericController
+    : IController
     , IDisposable
 {
-    //public abstract string ControllerName { get;}
+    protected abstract string MenuName { get; }
+    protected virtual string AboutBody { get => "Blah Blah Blah"; }
     protected List<Function> Actions = new List<Function>();
     private bool disposedValue;
     protected readonly ReportContext context;
     public GenericController(ReportContext context)
     {
         this.context = context;
-        Actions.Add(new Function("help", Help));
-    }
-    public void Pause(int seconds)
-    {
-        Console.Write(".  ");
-        Thread.Sleep(333 * seconds);
-        Console.Write(".  ");
-        Thread.Sleep(333 * seconds);
-        Console.WriteLine(".  ");
-        Thread.Sleep(334 * seconds);
+
+        // Add an empty option to offset the others
+        Actions.Add(new Function("", Run));
     }
     public void Run()
     {
@@ -43,16 +38,37 @@ public abstract class GenericController :
         while (true)
         {
             Console.WriteLine();
-            MenuPrompt();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{MenuName} Interface:");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.White;
-            for (int i = 0; i < Actions.Count; i++)
+            int FinalActionDex = Actions.Count - 1;
+            string numFormat;
+            if (FinalActionDex > 9) numFormat = "00";
+            else numFormat = "0";
+            // Start w one bcuz 0 is an empty and reserved for quit
+            for (int i = 1; i < Actions.Count; i++)
             {
                 Function? action = Actions[i];
-                Console.WriteLine(String.Format("{0,2}. {1,0}", i, action.Name));
+                Console.WriteLine(String.Format("{0,2}. {1,0}", i.ToString(numFormat), action.Name));
             }
-            Actions[GetSelection(Actions.Count)].Action();
+            Console.WriteLine(String.Format("{0,2}. {1,0}", numFormat, "Quit"));
+            int selection = GetSelection(FinalActionDex);
+            Console.WriteLine("\n");
+            if (selection == -1) continue;
+            if (selection == 0) break;
+            Actions[selection].Action();
         }
+    }
+    protected void About()
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"About {MenuName} Interface:");
+        Console.WriteLine("\n");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine(AboutBody);
+        Console.WriteLine("______________________________________________________________________________________________________________________");
+
     }
     public int GetSelection(int max)
     {
@@ -61,18 +77,16 @@ public abstract class GenericController :
         while (true)
         {
             ConsoleKey input = Console.ReadKey().Key;
-            string _;
-
-            
             int intput0;
-            do intput0 = ParseIntegerInput(input); 
+            do intput0 = ParseIntegerInput(input);
             while (intput0 == -1);
-            if (intput0 > secondDigitOfLast) return intput0;
+            if (secondDigitOfLast == 0 || intput0 > secondDigitOfLast) return intput0;
             input = Console.ReadKey().Key;
             int intput1;
             do intput1 = ParseIntegerInput(input);
             while (intput1 == -1);
             int intput = intput0 * 10 + intput1;
+            if (intput > max) return -1;
             Actions[intput].Action();
 
         }
@@ -94,19 +108,6 @@ public abstract class GenericController :
         return output;
 
     }
-    protected abstract void MenuPrompt();
-    public void Help()
-    {
-        Console.Clear();
-        HelpPrompt();
-        Console.WriteLine();
-        Console.WriteLine("Available commands:");
-        foreach (var function in Actions)
-            Console.WriteLine(function.Name);
-        Console.WriteLine("quit");
-        Console.WriteLine();
-    }
-    public abstract void HelpPrompt();
     internal static T? SelectFromList<T>(IEnumerable<T> items) where T : class
     {
         var _ = items.ToList();
@@ -183,6 +184,16 @@ public abstract class GenericController :
                     Console.WriteLine(string.Format("{0,10} {1,12}", tRef.ToString(), t.ToString()));
             else Console.WriteLine(String.Format("{0,10} {1,12}", tRef.ToString(), "none"));
     }
+    public void Pause(int seconds)
+    {
+        Console.Write(".  ");
+        Thread.Sleep(333 * seconds);
+        Console.Write(".  ");
+        Thread.Sleep(333 * seconds);
+        Console.WriteLine(".  ");
+        Thread.Sleep(334 * seconds);
+    }
+
 
     protected virtual void Dispose(bool disposing)
     {

@@ -17,9 +17,12 @@ using TestConsole.Interfaces;
 
 namespace TestConsole.Controllers
 {
-    public abstract class GenericEntityController<T> :
-        GenericController
-        , IEntityController<T> where T : class, IIndexed
+    public abstract class GenericEntityController<T>
+        : GenericController
+        , IEntityController<T>
+        where T
+        : class
+        , IIndexed
     {
         protected GenericEntityController(ReportContext context) : base(context)
         {
@@ -28,10 +31,6 @@ namespace TestConsole.Controllers
         }
 
         protected abstract string EntityType { get; }
-        protected override void MenuPrompt()
-        {
-            Console.Write($"{EntityType}.");
-        }
         public abstract void Add();
         public abstract void ShowAll();
         protected string NamePrompt(string entityType)
