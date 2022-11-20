@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EFCore.Repository.DataCore
 {
-    public class OperatorRepository : UniquelyNamedRepository<Operator>, IOperatorRepository
+    public class OperatorRepository : IndexedRepository<Operator>, IOperatorRepository
     {
         protected ReferencedByRepository<Operator, OperatorFieldType> ft;
         protected ReferencedByRepository<Operator, Parameter> p;
@@ -25,7 +25,6 @@ namespace DataAccess.EFCore.Repository.DataCore
 
         void IOperatorRepository.Add(string name, string executionString, IEnumerable<SqlDbType> dbTypes, IEnumerable<Parameter> parameters)
         {
-            if (!NameIsAvailable(name)) throw new InvalidOperationException("Name is not unique");
             var types = new List<OperatorFieldType>();
             foreach (var dbType  in dbTypes)
             {

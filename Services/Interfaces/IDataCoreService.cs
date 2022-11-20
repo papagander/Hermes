@@ -15,7 +15,6 @@ namespace Services.Interfaces
         int AddOperator(string name, string executionString, IEnumerable<SqlDbType> dbTypes, IEnumerable<Parameter> parameters);
         Operator? GetOperator(int id);
         IEnumerable<Operator> GetAllOperators();
-        int RemoveOperator(string name);
         int RemoveOperator(int id);
         IEnumerable<Operator> GetOperators(SqlDbType dbType);
         int AddFieldTypes(int operatorId, IEnumerable<SqlDbType> dbTypes);

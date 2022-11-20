@@ -41,52 +41,96 @@ public class DataCoreSeeder
         int i = 0;
         Operator op;
         List<SqlDbType> dbTypes;
-        // Equals
+
+        // Equals - Numeric
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Numeric);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+        i++;
+
+        // Equals - Textual
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);
         dbTypes.AddRange(Textual);
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
-
         i++;
-        // Not Equals
+
+        // Not Equals - Numeric
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Numeric);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+        i++;
+
+        // Not Equals - Textual
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);
         dbTypes.AddRange(Textual);
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
-
         i++;
-        // Less Than
+
+        // Less Than - Numeric
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Numeric);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+        i++;
+
+        // Less Than - Textual
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
-
         i++;
-        // Greater Than
+
+        // Greater Than - Numeric
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Numeric);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+        i++;
+
+        // Greater Than - Textual
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
-
         i++;
-        // Less Than or equal
+
+        // Less Than Or Equal - Numeric
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Numeric);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+        i++;
+
+        // Less Than Or Equal - Textual
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
-
         i++;
-        // Greater Than or equal
+
+        // Greater Than Or Equal - Numeric
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Numeric);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+        i++;
+
+        // Greater Than Or Equal - Textual
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
+        dbTypes.AddRange(Temporal);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+        i++;
+
+        // Weeks Ago
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
     }
@@ -115,7 +159,7 @@ public class DataCoreSeeder
             output.Add(op);
 
 
-            name = "equals";
+            name = "is";
             executionString = "{ASDF} = '{0}'";
             paramName = "value";
             paramType = SqlDbType.VarChar;
@@ -137,7 +181,7 @@ public class DataCoreSeeder
             output.Add(op);
 
 
-            name = "not equals";
+            name = "is not";
             executionString = "{ASDF} <> '{0}'";
             paramName = "value";
             paramType = SqlDbType.VarChar;
@@ -302,7 +346,7 @@ public class DataCoreSeeder
         {
             if (disposing)
             {
-                // TODO: dispose managed state (managed objects)
+                Context.Dispose();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer

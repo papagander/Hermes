@@ -33,12 +33,6 @@ namespace Services
 
         public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
 
-        public int RemoveOperator(string name)
-        {
-            var op = U.Operators.Get(name);
-            if (op is not null) U.Operators.Remove(op);
-            return Complete;
-        }
         public int RemoveOperator(int id)
         {
             var op = U.Operators.Get(id);
