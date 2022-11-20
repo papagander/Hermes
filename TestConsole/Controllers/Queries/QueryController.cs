@@ -99,7 +99,7 @@ public class QueryController
         output = CreateConjunction(statements);
 
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"Created Conjunction: {output.ToString()}");
+        Console.WriteLine($"Created ParentConjunction: {output.ToString()}");
         Console.WriteLine();
 
         return output;
@@ -142,7 +142,7 @@ public class QueryController
             if (input == ConsoleKey.N) break;
         } while (true);
 
-        // Declare Conjunction
+        // Declare ParentConjunction
         conj = new Conjunction() { Conjoiner = cjr, Statements = selection };
 
         Console.ForegroundColor = ConsoleColor.Gray;

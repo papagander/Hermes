@@ -1,6 +1,8 @@
 ﻿
 using Domain.Interfaces.Models;
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Domain.Models.Queries;
 
 public class Statement
@@ -14,33 +16,55 @@ public class Statement
     // are included in the report.
     public override string ToString()
     {
-        if (Conjunctions is not null && Conjunctions.Count > 0) return Conjunctions[0].ToString();
-        else if (Operations is not null && Operations.Count > 0) return Operations[0].ToString();
+        if (Conjunction is not null) return Conjunction.ToString();
+        else if (Operation is not null) return Operation.ToString();
         else return $"Unreferenced statement {Id}";
     }
-    public int? ConjunctionId { get; set; }
-    public Conjunction? Conjunction { get; set; }
-    public List<Conjunction> Conjunctions
+    [NotMapped]
+    public Operation? Operation 
+    { 
+        get 
+        { 
+            if (operations is null)
+                return null; 
+            return operations[0]; 
+        }
+        set 
+        {
+            if (Conjunction is null)
+            {
+                operations= new();
+                operations.Add(value);
+            }
+            else throw new Exception("Statement cannot reference both an operation and a conjunction.");
+        } 
+    }
+    [NotMapped]
+    public Conjunction? Conjunction
     {
-        get => conjunctions;
+        get 
+        {
+            if (conjunctions is null) 
+                return null; 
+            return conjunctions[0]; 
+        }
         set
         {
-            if (value.Count < 2 && (Operations is null || Operations.Count == 0)) conjunctions = value;
+            if (Operation is null)
+            {
+                conjunctions = new();
+                conjunctions.Add(value);
+            }
+            else throw new Exception("Statement cannot reference both an operation and a conjunction.");
         }
     }
-    public List<Operation> Operations
-    {
-        get => operations;
-        set
-        {
-            if (value.Count < 2 & (Conjunctions is null || Conjunctions.Count == 0)) operations = value;
-        }
-    }
+    public int? ParentConjunctionId { get; set; }
+    public Conjunction? ParentConjunction { get; set; }
     List<Operation> operations;
-    private List<Conjunction> conjunctions;
+    List<Conjunction> conjunctions;
 
-    Operation? ISuperTypeOf<Operation>.MySub { get => Operations[0]; }
-    Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunctions[0]; }
-    int IReferences<Conjunction>.MyTRefId { get { if (ConjunctionId is null) return -1; else return (int)ConjunctionId; } }
-    Conjunction IReferences<Conjunction>.MyTRef { get => (Conjunction)Conjunction; }
+    Operation? ISuperTypeOf<Operation>.MySub { get => Operation; }
+    Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunction; }
+    int IReferences<Conjunction>.MyTRefId { get { if (ParentConjunctionId is null) return -1; else return (int)ParentConjunctionId; } }
+    Conjunction IReferences<Conjunction>.MyTRef { get => (Conjunction)ParentConjunction; }
 }

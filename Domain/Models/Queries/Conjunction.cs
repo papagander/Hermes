@@ -8,7 +8,7 @@ namespace Domain.Models.Queries;
 
 public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner>, IReferencedBy<Statement>
 {
-    // A Conjunction is pointed to by n statements (conjugants).
+    // A ParentConjunction is pointed to by n statements (conjugants).
     // These statements are joined by the conjoiner
     // To form a higher statement, pointed to by the 
     // statement Id.

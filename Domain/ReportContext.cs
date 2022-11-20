@@ -68,7 +68,7 @@ public class ReportContext : DbContext
 
     //  Conjunctions
         m.Entity<Statement>()
-            .HasOne(st => st.Conjunction)
+            .HasOne(st => st.ParentConjunction)
             .WithMany(s => s.Statements);
         m.Entity<Conjunction>()
             .HasOne(cjn => cjn.Statement)
