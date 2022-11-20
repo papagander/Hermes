@@ -69,13 +69,13 @@ public class QueryController
             Console.WriteLine("Changed " + output + " rows.");
             return;
         }
-        List<Criterion> critera = CreateCriteria(fs);
+        List<Operation> critera = CreateCriteria(fs);
         List<Statement> statements = new List<Statement>();
         foreach (var criterion in critera)
         {
-            var criteria = new List<Criterion>();
+            var criteria = new List<Operation>();
             criteria.Add(criterion);
-            statements.Add(new Statement() { Criteria = criteria });
+            statements.Add(new Statement() { Operations = criteria });
         }
         Statement statement = CreateTopLevelStatement(statements);
 
@@ -176,9 +176,9 @@ public class QueryController
         }
     }
 
-    private List<Criterion> CreateCriteria(FieldSet fs)
+    private List<Operation> CreateCriteria(FieldSet fs)
     {
-        List<Criterion> output = new List<Criterion>();
+        List<Operation> output = new List<Operation>();
         Console.WriteLine("First, you will create the base operations for the filter by choosing fields ands operations to perform. Next,");
         Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
         do
@@ -188,7 +188,7 @@ public class QueryController
             Console.WriteLine("Current criteria:");
             for (int i = 0; i < output.Count; i++)
             {
-                Criterion? crit = output[i];
+                Operation? crit = output[i];
                 Console.WriteLine($"{i}.{crit.ToString()}");
             }
             Console.WriteLine();
@@ -200,7 +200,7 @@ public class QueryController
         } while (true);
 
 
-        Criterion CreateCriterion(FieldSet fs)
+        Operation CreateCriterion(FieldSet fs)
         {
             Field? field;
             SqlDbType dbType;
@@ -208,11 +208,11 @@ public class QueryController
             dbType = field.DbType;
             Operator? op = SelectOperator(dbType);
             List<Parameter> parameters = op.Parameters;
-            List<CriterionParameter> cParams = CreateCritParameters(op, parameters);
-            return new Criterion()
+            List<OperationParameter> cParams = CreateCritParameters(op, parameters);
+            return new Operation()
             {
                 Field = field,
-                CriterionParameters = cParams,
+                OperationParameters = cParams,
                 Operator = op
             };
         }
@@ -239,15 +239,15 @@ public class QueryController
             } while (op is null);
             return op;
         }
-        static List<CriterionParameter> CreateCritParameters(Operator op, List<Parameter> parameters)
+        static List<OperationParameter> CreateCritParameters(Operator op, List<Parameter> parameters)
         {
-            List<CriterionParameter> cParams = new List<CriterionParameter>();
+            List<OperationParameter> cParams = new List<OperationParameter>();
             foreach (Parameter param in parameters)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"Input value for {op.Name} {param.Name}");
                 string val = Console.ReadLine();
-                cParams.Add(new CriterionParameter() { Parameter = param, Value = val });
+                cParams.Add(new OperationParameter() { Parameter = param, Value = val });
             }
 
             return cParams;

@@ -12,8 +12,8 @@ namespace DataAccess.EFCore.Interfaces
         IQueryRepository Queries { get; }
         IStatementRepository Statements { get; }
         IConjunctionRepository Conjunctions { get; }
-        ICriterionRepository Criteria { get; }
-        ICriterionParameterRepository CriterionParameters { get; }
+        IOperationRepository Operations { get; }
+        IOperationParameterRepository OperationParameters { get; }
         IReadRepository<Operator> Operators { get; }
         IReadRepository<FieldSet> FieldSets { get; }
         IReadRepository<Conjoiner> Conjoiners { get; }

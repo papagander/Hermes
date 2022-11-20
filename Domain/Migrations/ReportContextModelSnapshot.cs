@@ -152,7 +152,7 @@ namespace Domain.Migrations
                     b.ToTable("Conjunction");
                 });
 
-            modelBuilder.Entity("Domain.Models.Queries.Criterion", b =>
+            modelBuilder.Entity("Domain.Models.Queries.Operation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,7 +175,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("StatementId");
 
-                    b.ToTable("Criterion");
+                    b.ToTable("Operation");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.CriterionParameter", b =>
@@ -184,7 +184,7 @@ namespace Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CriterionId")
+                    b.Property<int>("OperationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ParameterId")
@@ -196,7 +196,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CriterionId");
+                    b.HasIndex("OperationId");
 
                     b.HasIndex("ParameterId");
 
@@ -311,7 +311,7 @@ namespace Domain.Migrations
                     b.Navigation("Statement");
                 });
 
-            modelBuilder.Entity("Domain.Models.Queries.Criterion", b =>
+            modelBuilder.Entity("Domain.Models.Queries.Operation", b =>
                 {
                     b.HasOne("Domain.Models.FieldSets.Field", "Field")
                         .WithMany()
@@ -326,7 +326,7 @@ namespace Domain.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Queries.Statement", "Statement")
-                        .WithMany("Criteria")
+                        .WithMany("Operations")
                         .HasForeignKey("StatementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -340,9 +340,9 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Models.Queries.CriterionParameter", b =>
                 {
-                    b.HasOne("Domain.Models.Queries.Criterion", "Criterion")
-                        .WithMany("CriterionParameters")
-                        .HasForeignKey("CriterionId")
+                    b.HasOne("Domain.Models.Queries.Operation", "Operation")
+                        .WithMany("OperationParameters")
+                        .HasForeignKey("OperationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -352,7 +352,7 @@ namespace Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Criterion");
+                    b.Navigation("Operation");
 
                     b.Navigation("Parameter");
                 });
@@ -415,16 +415,16 @@ namespace Domain.Migrations
                     b.Navigation("Statements");
                 });
 
-            modelBuilder.Entity("Domain.Models.Queries.Criterion", b =>
+            modelBuilder.Entity("Domain.Models.Queries.Operation", b =>
                 {
-                    b.Navigation("CriterionParameters");
+                    b.Navigation("OperationParameters");
                 });
 
             modelBuilder.Entity("Domain.Models.Queries.Statement", b =>
                 {
                     b.Navigation("Conjunctions");
 
-                    b.Navigation("Criteria");
+                    b.Navigation("Operations");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class FieldSetService : 
-        GenericService
+    public class FieldSetService
+        : GenericService
         , IFieldSetService
     {
         private IFieldSetUnitOfWork U;
@@ -27,7 +27,7 @@ namespace Services
         }
         public int CreateFieldSet(string name, IEnumerable<Field> fields)
         {
-            var fs = new FieldSet { Name = name};
+            var fs = new FieldSet { Name = name };
             U.FieldSets.Add(fs);
             var fds = fields.ToList();
             for (int i = 0; i < fds.Count; i++) fds[i].FieldSet = fs;
@@ -58,7 +58,7 @@ namespace Services
         public int AddFields(FieldSet fieldSet, IEnumerable<Field> fields)
         {
             if (U.FieldSets.Get(fieldSet.Id) is null) return -1;
-            foreach (var field in fields)                field.FieldSet = fieldSet;
+            foreach (var field in fields) field.FieldSet = fieldSet;
             U.Fields.AddRange(fields);
             return Complete;
         }

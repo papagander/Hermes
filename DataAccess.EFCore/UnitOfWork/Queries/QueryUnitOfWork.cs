@@ -19,8 +19,8 @@ public class QueryUnitOfWork
     public IQueryRepository Queries { get; private set; }
     public IStatementRepository Statements { get; private set; }
     public IConjunctionRepository Conjunctions { get; private set; }
-    public ICriterionRepository Criteria { get; private set; }
-    public ICriterionParameterRepository CriterionParameters { get; private set; }
+    public IOperationRepository Operations { get; private set; }
+    public IOperationParameterRepository OperationParameters { get; private set; }
     public IReadRepository<FieldSet> FieldSets { get; private set; }
     public IReadRepository<Operator> Operators { get; private set; }
     public IReadRepository<Conjoiner> Conjoiners { get; private set; }
@@ -30,8 +30,8 @@ public class QueryUnitOfWork
         Queries = new QueryRepository(_context);
         Statements = new StatementRepository(_context);
         Conjunctions = new ConjunctionRepository(_context);
-        Criteria = new CriterionRepository(_context);
-        CriterionParameters = new CriterionParameterRepository(_context);
+        Operations = new OperationRepository(_context);
+        OperationParameters = new OperationParameterRepository(_context);
         FieldSets = new ReadRepository<FieldSet>(_context);
         Operators = new ReadRepository<Operator>(_context);
         Conjoiners = new ReadRepository<Conjoiner>(_context);

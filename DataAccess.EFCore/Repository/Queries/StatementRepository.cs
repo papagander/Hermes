@@ -7,12 +7,12 @@ namespace DataAccess.EFCore.Repository.Queries
 {
     public class StatementRepository : IndexedRepository<Statement>, IStatementRepository
     {
-        SuperTypeRepository<Statement, Criterion> SupCr;
+        SuperTypeRepository<Statement, Operation> SupCr;
         SuperTypeRepository<Statement, Conjunction> SupCj;
         ReferencesRepository<Statement, Conjunction> RefCj;
         public StatementRepository(ReportContext reportContext) : base(reportContext)
         {
-            SupCr = new SuperTypeRepository<Statement, Criterion>(hContext);
+            SupCr = new SuperTypeRepository<Statement, Operation>(hContext);
             SupCj = new SuperTypeRepository<Statement, Conjunction>(hContext);
             RefCj = new ReferencesRepository<Statement, Conjunction>(hContext);
         }

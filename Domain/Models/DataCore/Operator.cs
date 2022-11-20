@@ -16,17 +16,6 @@ public class Operator
     [NotNull]
     public string ExecutionString { get; set; }
 
-    public string ToString()
-    {
-        string output = ExecutionString;
-        for (int i = 0; i < Parameters.Count; i++)
-        {
-            Parameter param = Parameters[i];
-            output.Replace("{" + (i + 1) + "}", param.Name);
-        }
-        output.Replace("{0}", "field");
-        return output;
-    }
     [NotMapped]
     public List<SqlDbType> DbTypes
     {

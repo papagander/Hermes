@@ -149,7 +149,7 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Criterion",
+                name: "Operation",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -223,7 +223,7 @@ namespace Domain.Migrations
                     table.ForeignKey(
                         name: "FK_CriterionValue_Criterion_CriterionId",
                         column: x => x.CriterionId,
-                        principalTable: "Criterion",
+                        principalTable: "Operation",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -270,23 +270,23 @@ namespace Domain.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Criterion_FieldId",
-                table: "Criterion",
+                table: "Operation",
                 column: "FieldId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Criterion_OperatorId",
-                table: "Criterion",
+                table: "Operation",
                 column: "OperatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Criterion_StatementId",
-                table: "Criterion",
+                table: "Operation",
                 column: "StatementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CriterionValue_CriterionId",
                 table: "CriterionValue",
-                column: "CriterionId");
+                column: "OperationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CriterionValue_ParameterId",
@@ -357,7 +357,7 @@ namespace Domain.Migrations
                 name: "OperatorFieldTypes");
 
             migrationBuilder.DropTable(
-                name: "Criterion");
+                name: "Operation");
 
             migrationBuilder.DropTable(
                 name: "Parameters");

@@ -38,8 +38,8 @@ public class ReportContext : DbContext
     // Query
     public DbSet<Query> Query { get; set; }
     public DbSet<Conjunction> Conjunction { get; set; }
-    public DbSet<Criterion> Criterion { get; set; }
-    public DbSet<CriterionParameter> CriterionValue { get; set; }
+    public DbSet<Operation> Criterion { get; set; }
+    public DbSet<OperationParameter> CriterionValue { get; set; }
     public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder m)
     {
@@ -73,9 +73,9 @@ public class ReportContext : DbContext
         m.Entity<Conjunction>()
             .HasOne(cjn => cjn.Statement)
             .WithMany(s => s.Conjunctions);
-        m.Entity<Criterion>()
+        m.Entity<Operation>()
             .HasOne(crt => crt.Statement)
-            .WithMany(s => s.Criteria);
+            .WithMany(s => s.Operations);
 
 // Navigations
     //  Data Core
