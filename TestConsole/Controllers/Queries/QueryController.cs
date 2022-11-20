@@ -29,6 +29,7 @@ public class QueryController
     {
         var fields = new List<Field>();
         var allFields = fs.Fields;
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("Select fields to be included on this query.");
         fields = SelectListFromList(allFields);
         if (fields is null || fields.Count == 0)
@@ -94,7 +95,7 @@ public class QueryController
         Console.WriteLine("Ex. ((Customer = Hurom AND Model = 1234) OR (Customer = Galanz AND Model = 5678)) AND [Date Received] WEEKSAGO(1)");
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("\n***\n");
-            
+
         output = CreateConjunction(statements);
 
         Console.ForegroundColor = ConsoleColor.Green;
@@ -138,7 +139,7 @@ public class QueryController
                 Console.WriteLine();
 
             } while (input != ConsoleKey.Y && input != ConsoleKey.N);
-            if (input == ConsoleKey.N) break; 
+            if (input == ConsoleKey.N) break;
         } while (true);
 
         // Declare Conjunction
@@ -154,7 +155,9 @@ public class QueryController
         // Loop recursively until no "loose" criteria exist
         if (statements.Count != 0)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Some criteria are not contained yet. Another conjunction will be needed.");
+            Console.ForegroundColor = ConsoleColor.White;
             statements.Add(output);
             return CreateConjunction(statements);
         }
@@ -191,6 +194,7 @@ public class QueryController
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Create more? (y/n)");
+            Console.ForegroundColor = ConsoleColor.White;
             var input = Console.ReadKey().Key;
             if (input == ConsoleKey.N) return output;
         } while (true);
@@ -217,6 +221,7 @@ public class QueryController
             Field? field;
             do
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Choose a field to filter on.");
                 field = SelectFromList(fs.Fields);
             } while (field is null);
@@ -228,6 +233,7 @@ public class QueryController
             Operator? op;
             do
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Select an operation to perform");
                 op = SelectFromList(ops);
             } while (op is null);
@@ -238,6 +244,7 @@ public class QueryController
             List<CriterionParameter> cParams = new List<CriterionParameter>();
             foreach (Parameter param in parameters)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"Input value for {op.Name} {param.Name}");
                 string val = Console.ReadLine();
                 cParams.Add(new CriterionParameter() { Parameter = param, Value = val });

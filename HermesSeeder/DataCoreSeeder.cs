@@ -105,7 +105,7 @@ public class DataCoreSeeder
 
 
             name = "equals";
-            executionString = "{0} = {1}";
+            executionString = "{ASDF} = {0}";
             paramName = "value";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -115,8 +115,41 @@ public class DataCoreSeeder
             output.Add(op);
 
 
-            name = "not equal";
-            executionString = "{0} <> {1}";
+            name = "equals";
+            executionString = "{ASDF} = '{0}'";
+            paramName = "value";
+            paramType = SqlDbType.VarChar;
+            _1 = new Parameter() { Name = paramName, DbType = paramType };
+            parameters = new List<Parameter>();
+            parameters.Add(_1);
+            op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
+            output.Add(op);
+
+
+            name = "not equals";
+            executionString = "{ASDF} <> {0}";
+            paramName = "value";
+            paramType = null;
+            _1 = new Parameter() { Name = paramName, DbType = paramType };
+            parameters = new List<Parameter>();
+            parameters.Add(_1);
+            op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
+            output.Add(op);
+
+
+            name = "not equals";
+            executionString = "{ASDF} <> '{0}'";
+            paramName = "value";
+            paramType = SqlDbType.VarChar;
+            _1 = new Parameter() { Name = paramName, DbType = paramType };
+            parameters = new List<Parameter>();
+            parameters.Add(_1);
+            op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
+            output.Add(op);
+
+
+            name = "less than";
+            executionString = "{ASDF} < {0}";
             paramName = "value";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -127,8 +160,18 @@ public class DataCoreSeeder
 
 
             name = "less than";
-            executionString = "{0} < {1}";
+            executionString = "{ASDF} < '{0}'";
             paramName = "value";
+            paramType = SqlDbType.VarChar;
+            _1 = new Parameter() { Name = paramName, DbType = paramType };
+            parameters = new List<Parameter>();
+            parameters.Add(_1);
+            op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
+            output.Add(op);
+
+            name = "greater than";
+            executionString = "{ASDF} > {0}";
+            paramName = "0";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
             parameters = new List<Parameter>();
@@ -138,18 +181,19 @@ public class DataCoreSeeder
 
 
             name = "greater than";
-            executionString = "{0} > {1}";
-            paramName = "1";
-            paramType = null;
+            executionString = "{ASDF} > '{0}'";
+            paramName = "0";
+            paramType = SqlDbType.VarChar;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
             parameters = new List<Parameter>();
             parameters.Add(_1);
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
+
 
 
             name = "less than or equal";
-            executionString = "{0} <= {1}";
+            executionString = "{ASDF} <= {0}";
             paramName = "value";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -158,11 +202,32 @@ public class DataCoreSeeder
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
 
+            name = "less than or equal";
+            executionString = "{ASDF} <= '{0}'";
+            paramName = "value";
+            paramType = SqlDbType.VarChar;
+            _1 = new Parameter() { Name = paramName, DbType = paramType };
+            parameters = new List<Parameter>();
+            parameters.Add(_1);
+            op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
+            output.Add(op);
+
+
 
             name = "greater than or equal";
-            executionString = "{0} >= {1}";
+            executionString = "{ASDF} >= {0}";
             paramName = "value";
             paramType = null;
+            _1 = new Parameter() { Name = paramName, DbType = paramType };
+            parameters = new List<Parameter>();
+            parameters.Add(_1);
+            op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
+            output.Add(op);
+
+            name = "greater than or equal";
+            executionString = "{ASDF} >= '{0}'";
+            paramName = "value";
+            paramType = SqlDbType.VarChar;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
             parameters = new List<Parameter>();
             parameters.Add(_1);
@@ -171,7 +236,7 @@ public class DataCoreSeeder
 
 
             name = "weeks ago";
-            executionString = "{0} >= DATEPART(UTCNOW(), date) - {1}";
+            executionString = "SELECT DATEPART(WEEKDAY, GETDATE())";
             paramName = "weeksBack";
             paramType = SqlDbType.Int;
             _1 = new Parameter() { Name = paramName, DbType = paramType };

@@ -108,7 +108,9 @@ namespace TestConsole.Controllers.FieldSets
         public override void ShowAll()
         {
             var fsz = S.GetFieldSets();
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(String.Format("{0,-16}|{1,16}|{2,16}", "Field Set", "Field", "Field DbType"));
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("**************************************************");
             foreach (var fs in fsz)
             {
