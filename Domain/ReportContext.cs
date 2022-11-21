@@ -72,10 +72,10 @@ public class ReportContext : DbContext
             .WithMany(s => s.Statements);
         m.Entity<Conjunction>()
             .HasOne(cjn => cjn.Statement)
-            .WithMany(s => s.Conjunctions);
+            .WithMany(s => s.conjunctions);
         m.Entity<Operation>()
             .HasOne(crt => crt.Statement)
-            .WithMany(s => s.Operations);
+            .WithMany(s => s.operations);
 
 // Navigations
     //  Data Core

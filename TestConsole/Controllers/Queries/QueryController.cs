@@ -147,10 +147,7 @@ public class QueryController
 
         Console.ForegroundColor = ConsoleColor.Gray;
         Console.WriteLine($"Created conjunction: {conj.ToString()}");
-
-        var conjs = new List<Conjunction>();
-        conjs.Add(conj);
-        output = new Statement() { Conjunctions = conjs };
+        output = new Statement() { Conjunction = conj };
 
         // Loop recursively until no "loose" criteria exist
         if (statements.Count != 0)

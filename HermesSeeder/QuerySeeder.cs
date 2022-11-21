@@ -49,7 +49,7 @@ public class QuerySeeder
         Statement categoryStatement;
         Statement customerStatement;
         Conjunction and;
-        List<Statement> andStatements;
+        List<Statement> andStatements = new();
         Statement output;
 
 
@@ -68,14 +68,14 @@ public class QuerySeeder
         categoryParameters.Add(categoryParameter);
         customerOpn = new Operation() { Field = customerField, Operator = opr, OperationParameters = customerParameters};
         categoryOpn = new Operation() { Field = categoryField, Operator = opr, OperationParameters = categoryParameters};
-        customerStatement = new Statement() { Operations = new List<Operation>() { } };
-        and = new Conjunction() { };
-        var _ = new List<Conjunction>();
-        _.Add(and);
-
+        customerStatement = new Statement() { Operation = customerOpn };
+        categoryStatement = new Statement() { Operation = categoryOpn };
+        andStatements.Add(customerStatement);
+        andStatements.Add(categoryStatement);
+        and = new Conjunction() {Statements = andStatements };
         output = new Statement()
         {
-            Conjunctions = _
+            Conjunction = and
         };
         return output;
 
@@ -83,17 +83,6 @@ public class QuerySeeder
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning restore CS8601 // Possible null reference assignment.
     }
-
-
-
-
-
-
-
-
-
-
-
 
     protected virtual void Dispose(bool disposing)
     {

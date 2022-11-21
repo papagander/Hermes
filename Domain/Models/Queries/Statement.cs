@@ -60,8 +60,8 @@ public class Statement
     }
     public int? ParentConjunctionId { get; set; }
     public Conjunction? ParentConjunction { get; set; }
-    List<Operation> operations;
-    List<Conjunction> conjunctions;
+    internal List<Operation> operations;
+    internal List<Conjunction> conjunctions;
 
     Operation? ISuperTypeOf<Operation>.MySub { get => Operation; }
     Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunction; }
