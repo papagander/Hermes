@@ -7,6 +7,21 @@ namespace Domain.Models.Queries;
 public class Query : Named, IReferences<FieldSets.FieldSet>, IReferencedBy<Field>
 {
     public override string ToString() => $"{FieldSet.Name}.{Name}";
+    public string ExecutionString()
+    {
+        string output = "";
+        // Add fields (SELECT SerialNumber, ModelNumber, DateReceived)
+        output += $"SELECT {Fields[0].Name}";
+        for (int i = 1; i < Fields.Count; i++)
+            output += $", {Fields[i]}";
+
+        // Add FieldSet( FROM Receiving)
+        output += $"FROM {FieldSet.Name}";
+        // Add top statement:
+        // WHERE ( ( Customer = 'Galanz' AND Category = 'Microwaves' ) OR ( Customer = 'Capital Brands' AND Category = 'Vaccuums') ) AND WeeksAgo(1)
+        output += $"WHERE {Statement}";
+        return output;
+    }
     public int FieldSetId { get; set; }
     public int? StatementId { get; set; }
     public FieldSet FieldSet { get; set; }
