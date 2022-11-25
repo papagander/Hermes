@@ -276,7 +276,7 @@ public class QuerySeeder
         {
             if (disposing)
             {
-                Context.Dispose();
+                //Context.Dispose();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer

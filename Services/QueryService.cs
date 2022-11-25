@@ -59,6 +59,11 @@ public class QueryService
         return Complete;
 
     }
+    public int AddQuery(Query query)
+    {
+        U.Queries.Add(query);
+        return Complete;
+    }
     public List<Conjoiner> GetConjoiners() => U.Conjoiners.GetAll().ToList();
     
 
@@ -145,6 +150,4 @@ public class QueryService
                 throw new Exception($"Field {field.Name} is not on {query.Name}'s fieldset {query.FieldSet.Name}");
         return true;
     }
-    
-
 }
