@@ -12,6 +12,10 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
     // These statements are joined by the conjoiner
     // To form a higher statement, pointed to by the 
     // statement Id.
+    public Statement ToStatement()
+    {
+        return new Statement() { Conjunction = this };
+    }
     public override string ToString()
     {
         string output = "";

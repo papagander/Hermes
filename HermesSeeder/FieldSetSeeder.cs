@@ -111,7 +111,7 @@ public class FieldSetSeeder
         {
             if (disposing)
             {
-                // TODO: dispose managed state (managed objects)
+                //Context.Dispose();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer

@@ -69,13 +69,11 @@ public class QueryController
             Console.WriteLine("Changed " + output + " rows.");
             return;
         }
-        List<Operation> critera = CreateCriteria(fs);
+        List<Operation> operations = CreateOperations(fs);
         List<Statement> statements = new List<Statement>();
-        foreach (var criterion in critera)
+        foreach (var operation in operations)
         {
-            var criteria = new List<Operation>();
-            criteria.Add(criterion);
-            statements.Add(new Statement() { Operations = criteria });
+            statements.Add(new Statement() { Operation = operation });
         }
         Statement statement = CreateTopLevelStatement(statements);
 
@@ -173,7 +171,7 @@ public class QueryController
         }
     }
 
-    private List<Operation> CreateCriteria(FieldSet fs)
+    private List<Operation> CreateOperations(FieldSet fs)
     {
         List<Operation> output = new List<Operation>();
         Console.WriteLine("First, you will create the base operations for the filter by choosing fields ands operations to perform. Next,");
@@ -181,7 +179,7 @@ public class QueryController
         do
         {
             output.Add(CreateCriterion(fs));
-            Console.WriteLine($"Created criterion: {output.Last().ToString()}");
+            Console.WriteLine($"Created operation: {output.Last().ToString()}");
             Console.WriteLine("Current criteria:");
             for (int i = 0; i < output.Count; i++)
             {
@@ -200,7 +198,7 @@ public class QueryController
         Operation CreateCriterion(FieldSet fs)
         {
             Field? field;
-            SqlDbType dbType;
+            SqlDbType dbType;  
             field = SelectField(fs);
             dbType = field.DbType;
             Operator? op = SelectOperator(dbType);

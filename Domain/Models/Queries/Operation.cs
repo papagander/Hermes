@@ -16,6 +16,10 @@ public class Operation
 {
     // e.g. Serial number equals, DateReceived greater than, Model Number contains.
     // Operations are pointed to by CriterionParameter to support n values per criterion.
+    public Statement ToStatement()
+    {
+        return new Statement() { Operation = this };
+    }
     public override string ToString()
     {
         string output = "";
@@ -37,12 +41,12 @@ public class Operation
             // Get operator's default string
             string output = Operator.ExecutionString;
             // Add the field name
-            output.Replace("{ASDF}", Field.Name);
+            output.Replace("/*FIELD_NAME*/", Field.Name);
             // Replace each parameter placeholder w its value
             for (int i = 0; i < OperationParameters.Count; i++)
             {
                 OperationParameter? param = OperationParameters[i];
-                output.Replace("{" + i + "}", param.Value);
+                output.Replace("/*p" + i + "*/", param.Value);
             }
             return output;
         }

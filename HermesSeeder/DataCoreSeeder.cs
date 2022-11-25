@@ -149,7 +149,7 @@ public class DataCoreSeeder
 
 
             name = "equals";
-            executionString = "{ASDF} = {0}";
+            executionString = "/*FIELD_NAME*/ = /*p0*/";
             paramName = "value";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -160,7 +160,7 @@ public class DataCoreSeeder
 
 
             name = "is";
-            executionString = "{ASDF} = '{0}'";
+            executionString = "/*FIELD_NAME*/ = '/*p0*/'";
             paramName = "value";
             paramType = SqlDbType.VarChar;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -171,7 +171,7 @@ public class DataCoreSeeder
 
 
             name = "not equals";
-            executionString = "{ASDF} <> {0}";
+            executionString = "/*FIELD_NAME*/ <> /*p0*/";
             paramName = "value";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -182,7 +182,7 @@ public class DataCoreSeeder
 
 
             name = "is not";
-            executionString = "{ASDF} <> '{0}'";
+            executionString = "/*FIELD_NAME*/ <> '/*p0*/'";
             paramName = "value";
             paramType = SqlDbType.VarChar;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -193,7 +193,7 @@ public class DataCoreSeeder
 
 
             name = "less than";
-            executionString = "{ASDF} < {0}";
+            executionString = "/*FIELD_NAME*/ < /*p0*/";
             paramName = "value";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -204,7 +204,7 @@ public class DataCoreSeeder
 
 
             name = "less than";
-            executionString = "{ASDF} < '{0}'";
+            executionString = "/*FIELD_NAME*/ < '/*p0*/'";
             paramName = "value";
             paramType = SqlDbType.VarChar;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -214,7 +214,7 @@ public class DataCoreSeeder
             output.Add(op);
 
             name = "greater than";
-            executionString = "{ASDF} > {0}";
+            executionString = "/*FIELD_NAME*/ > /*p0*/";
             paramName = "0";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -225,7 +225,7 @@ public class DataCoreSeeder
 
 
             name = "greater than";
-            executionString = "{ASDF} > '{0}'";
+            executionString = "/*FIELD_NAME*/ > '/*p0*/'";
             paramName = "0";
             paramType = SqlDbType.VarChar;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -237,7 +237,7 @@ public class DataCoreSeeder
 
 
             name = "less than or equal";
-            executionString = "{ASDF} <= {0}";
+            executionString = "/*FIELD_NAME*/ <= /*p0*/";
             paramName = "value";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -247,7 +247,7 @@ public class DataCoreSeeder
             output.Add(op);
 
             name = "less than or equal";
-            executionString = "{ASDF} <= '{0}'";
+            executionString = "/*FIELD_NAME*/ <= '/*p0*/'";
             paramName = "value";
             paramType = SqlDbType.VarChar;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -259,7 +259,7 @@ public class DataCoreSeeder
 
 
             name = "greater than or equal";
-            executionString = "{ASDF} >= {0}";
+            executionString = "/*FIELD_NAME*/ >= /*p0*/";
             paramName = "value";
             paramType = null;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -269,7 +269,7 @@ public class DataCoreSeeder
             output.Add(op);
 
             name = "greater than or equal";
-            executionString = "{ASDF} >= '{0}'";
+            executionString = "/*FIELD_NAME*/ >= '/*p0*/'";
             paramName = "value";
             paramType = SqlDbType.VarChar;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
@@ -346,7 +346,7 @@ public class DataCoreSeeder
         {
             if (disposing)
             {
-                Context.Dispose();
+                //Context.Dispose();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer
