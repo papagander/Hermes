@@ -30,11 +30,24 @@ public class QuerySeeder
     public void Seed()
     {
         Context.Database.ExecuteSqlRaw("DELETE FROM QUERY");
-        throw new NotImplementedException();
+        QueryService S = new(Context);
+        S.AddQuery(QueryZero(S));
     }
-    public Query QueryZero()
+    public Query QueryZero(QueryService S)
     {
-        throw new NotImplementedException();
+        // Query Name
+        string name;
+        // Query FieldSet
+        FieldSet fs;
+        // Query Fields
+        List<Field> fds = new();
+        // Query Statement
+        Statement stat = QueryZeroFilter(S);
+        
+        name = "Test Query 0";
+        fs = S.GetFieldSet(FieldSetSeeder.ReceivingSet.Name);
+        fds = fs.Fields;
+        return new Query() { Name = name, FieldSet = fs, Fields = fds, Statement = stat};
     }
 
     public Statement QueryZeroFilter(QueryService S)
@@ -52,16 +65,16 @@ public class QuerySeeder
         orStats.Add(GalanzMicrowaves(S));
         var prodStat = new Conjunction() { Statements = orStats}.ToStatement();
 
-        // Add date condition
+        // Get date condition
         Statement dateStatement = OneWeeksAgo(S);
+
+        // Create List of statements for top conj - {PRODUCT_INFO} AND {DATE_CONDITION}
         var _ = new List<Statement>();
-        _.Add(dateStatement);
         _.Add(prodStat);
+        _.Add(OneWeeksAgo(S));
 
-        // Combine Product condition w date condition
-        var parentStat = new Conjunction() { Statements = _}.ToStatement();
-
-
+        // Instantiate top level statement + return
+        return new Conjunction() { Statements = _}.ToStatement();
     }
 
     public static Statement CapitalBrandsVaccuums(QueryService S)
@@ -84,7 +97,7 @@ public class QuerySeeder
         Field customerField;
         Field categoryField;
 
-        // Fieldset the fields are in
+        // Fieldset the fds are in
         FieldSet fs;
 
         // "Is" operator
@@ -156,7 +169,7 @@ public class QuerySeeder
         Field customerField;
         Field categoryField;
 
-        // Fieldset the fields are in
+        // Fieldset the fds are in
         FieldSet fs;
 
         // "Is" operator
@@ -226,10 +239,10 @@ public class QuerySeeder
         // "Is" operator
         Operator opr;
 
-        // Parameter lists for operations
+        // Parameter list for operation
         List<OperationParameter> weeksAgoParams = new();
 
-        // Operation Parameters
+        // Operation Parameter
         OperationParameter weeksAgoParameter;
 
         // Statements to contain operations
@@ -248,14 +261,10 @@ public class QuerySeeder
 
         // Add parameters to parameter lists (1 each)
         weeksAgoParams.Add(weeksAgoParameter);
-        // Instantiate operations
-        weeksAgoOpn = new Operation() { Field = dateReceivedField, Operator = opr, OperationParameters = weeksAgoParams };
-        weeksAgoSt = new Statement() { Operation = weeksAgoOpn };
-        output = new Statement()
-        {
-            Operation = weeksAgoOpn
-        };
-        return output;
+
+        // Instantiate + return
+        return new Operation() { Field = dateReceivedField, Operator = opr, OperationParameters = weeksAgoParams }.ToStatement();
+        
 
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning restore CS8601 // Possible null reference assignment.
@@ -271,7 +280,7 @@ public class QuerySeeder
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-            // TODO: set large fields to null
+            // TODO: set large fds to null
             disposedValue = true;
         }
     }

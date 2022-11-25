@@ -62,11 +62,11 @@ public class QueryService
     public List<Conjoiner> GetConjoiners() => U.Conjoiners.GetAll().ToList();
     
 
-    public IEnumerable<FieldSet> GetFieldSets()
-    {
-        return U.FieldSets.GetAll();
-    }
-
+    public IEnumerable<FieldSet> GetFieldSets() => U.FieldSets.GetAll();
+    public FieldSet GetFieldSet(string name) => GetFieldSets().Where(fs => fs.Name == name).First();
+    public FieldSet GetFieldSet(int id) => GetFieldSets().First(fs => fs.Id == id);
+    public Field GetField(int fieldSetId, string name) => GetField(GetFieldSet(fieldSetId), name);
+    public Field GetField(FieldSet fs, string name) => fs.Fields.First(fd => fd.Name == name);
     public List<Operator> GetOperators(SqlDbType dbType)
     {
         List<Operator> allOps = U.Operators.GetAll().ToList();
@@ -77,15 +77,9 @@ public class QueryService
         return output;
     }
 
-    public Query? GetQuery(string name)
-    {
-        return U.Queries.Get(name);
-    }
+    public Query? GetQuery(string name) => U.Queries.Get(name);
 
-    public Query? GetQuery(int id)
-    {
-        return U.Queries.Get(id);
-    }
+    public Query? GetQuery(int id) => U.Queries.Get(id);
 
     public int RemoveQuery(int id)
     {
