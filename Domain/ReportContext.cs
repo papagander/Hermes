@@ -13,7 +13,8 @@ using Domain.Models.Queries;
 
 namespace Domain;
 
-public class ReportContext : DbContext
+public class ReportContext 
+    : DbContext
 {
     const string SQLITEDBNAME = "ReportDb.db";
     public static string SqliteDbPath { get => Path.Combine(DirPath, SQLITEDBNAME); }
@@ -38,7 +39,7 @@ public class ReportContext : DbContext
     // Query
     public DbSet<Query> Query { get; set; }
     public DbSet<Conjunction> Conjunction { get; set; }
-    public DbSet<Operation> Criterion { get; set; }
+    public DbSet<Operation> Operation { get; set; }
     public DbSet<OperationParameter> CriterionValue { get; set; }
     public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder m)

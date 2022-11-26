@@ -16,6 +16,9 @@ public class DataCoreSeeder
 {
     private bool disposedValue;
     ReportContext Context;
+    public const int AND = 1;
+    public const int OR = 2;
+    public const int NOR = 3;
     DataCoreService S { get; set; }
     public DataCoreSeeder(ReportContext context)
     {

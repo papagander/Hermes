@@ -2,7 +2,7 @@
 using Domain.Interfaces.Models;
 using Domain.Models.DataCore;
 using Domain.Models.FieldSets;
-
+using Domain.Models.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Queries;
@@ -22,6 +22,7 @@ public class Operation
     }
     public override string ToString()
     {
+        return ExecutionString;
         string output = "";
         output += $"{Field.Name} {Operator.Name} ";
         for (int i = 0; i < OperationParameters.Count; i++)
@@ -41,12 +42,12 @@ public class Operation
             // Get operator's default string
             string output = Operator.ExecutionString;
             // Add the field name
-            output.Replace("/*FIELD_NAME*/", Field.Name);
+            output = output.Replace("/*FIELD_NAME*/", $"[{Field.Name}]");
             // Replace each parameter placeholder w its value
             for (int i = 0; i < OperationParameters.Count; i++)
             {
                 OperationParameter? param = OperationParameters[i];
-                output.Replace("/*p" + i + "*/", param.Value);
+                output = output.Replace("/*p" + i + "*/", param.Value);
             }
             return output;
         }

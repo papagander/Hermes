@@ -1,6 +1,7 @@
 ﻿
 using Domain.Interfaces.Models;
 using Domain.Models.DataCore;
+using Domain.Models.Generic;
 
 namespace Domain.Models.Queries;
 

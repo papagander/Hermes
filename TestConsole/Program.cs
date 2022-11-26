@@ -25,10 +25,12 @@ class Program
         {
             seed.Seed();
         }
+        /**/
         using (var seed = new QuerySeeder(context))
         {
             seed.Seed();
         }
+        /**/
         using (MainMenu mm = new(context))
         {
             mm.Run();

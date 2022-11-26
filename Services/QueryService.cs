@@ -65,7 +65,7 @@ public class QueryService
         return Complete;
     }
     public List<Conjoiner> GetConjoiners() => U.Conjoiners.GetAll().ToList();
-    
+    public Conjoiner GetConjoiner(int id) => GetConjoiners().First(e => e.Id == id);
 
     public IEnumerable<FieldSet> GetFieldSets() => U.FieldSets.GetAll();
     public FieldSet GetFieldSet(string name) => GetFieldSets().Where(fs => fs.Name == name).First();
@@ -81,7 +81,7 @@ public class QueryService
                 output.Add(op);
         return output;
     }
-
+    public IEnumerable<Query> GetQueries() => U.Queries.GetAll();
     public Query? GetQuery(string name) => U.Queries.Get(name);
 
     public Query? GetQuery(int id) => U.Queries.Get(id);

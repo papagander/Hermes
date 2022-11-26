@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces.Models;
 using Domain.Models.DataCore;
+using Domain.Models.Generic;
 using Domain.Models.Queries;
 
 using System.Data;

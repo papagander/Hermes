@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.Models;
-
+using Domain.Models.Generic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

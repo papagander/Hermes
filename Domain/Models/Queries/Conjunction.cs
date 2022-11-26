@@ -1,7 +1,7 @@
 ﻿
 using Domain.Interfaces.Models;
 using Domain.Models.DataCore;
-
+using Domain.Models.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Queries;
@@ -14,7 +14,9 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
     // statement Id.
     public Statement ToStatement()
     {
-        return new Statement() { Conjunction = this };
+        Statement stat = new();
+        stat.Conjunction = this;
+        return stat;
     }
     public override string ToString()
     {
@@ -24,7 +26,7 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
         for (int i = 0; i < Statements.Count; i++)
         {
             Statement conjugant = Statements[i];
-            output += $" {conjugant.ToString()}";
+            output += $" {conjugant}";
             if (i < Statements.Count - 1) output += $" {conjoinerString}";
         }
         output += ")";

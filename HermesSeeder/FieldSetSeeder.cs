@@ -23,6 +23,8 @@ namespace HermesSeeder;
 public class FieldSetSeeder
     : ISeeder
 {
+    public const string RECEIVING = "Receiving";
+    public const string MOCKSET = "Mock Set";
     private bool disposedValue;
     ReportContext Context;
     FieldSetService S { get; set; }
@@ -38,13 +40,13 @@ public class FieldSetSeeder
         Context.Database.ExecuteSqlRaw("DELETE FROM FieldSet");
         Context.Database.ExecuteSqlRaw("DELETE FROM Field");
         S.CreateFieldSet(ReceivingSet.Name, ReceivingFields);
-        S.CreateFieldSet("MockSet", MockSetFields);
+        S.CreateFieldSet(MOCKSET, MockSetFields);
 
     }
     public static FieldSet ReceivingSet { 
         get
         {
-            return new FieldSet() { Id = 1, Name = "Receiving" };
+            return new FieldSet() { Id = 1, Name = RECEIVING };
 
         }
     }

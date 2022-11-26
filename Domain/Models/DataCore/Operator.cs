@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.Models;
-
+using Domain.Models.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;

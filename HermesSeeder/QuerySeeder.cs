@@ -63,18 +63,18 @@ public class QuerySeeder
         List<Statement> orStats = new();
         orStats.Add(CapitalBrandsVaccuums(S));
         orStats.Add(GalanzMicrowaves(S));
-        var prodStat = new Conjunction() { Statements = orStats}.ToStatement();
+        var prodStat = new Conjunction() { Conjoiner = S.GetConjoiner(DataCoreSeeder.OR), Statements = orStats}.ToStatement();
 
         // Get date condition
         Statement dateStatement = OneWeeksAgo(S);
 
         // Create List of statements for top conj - {PRODUCT_INFO} AND {DATE_CONDITION}
-        var _ = new List<Statement>();
-        _.Add(prodStat);
-        _.Add(OneWeeksAgo(S));
+        var stats = new List<Statement>();
+        stats.Add(prodStat);
+        stats.Add(OneWeeksAgo(S));
 
         // Instantiate top level statement + return
-        return new Conjunction() { Statements = _}.ToStatement();
+        return new Conjunction() {Conjoiner = S.GetConjoiner(DataCoreSeeder.AND), Statements = stats}.ToStatement();
     }
 
     public static Statement CapitalBrandsVaccuums(QueryService S)
@@ -120,10 +120,10 @@ public class QuerySeeder
         // Get Is Operator
         opr = S.GetOperators(SqlDbType.VarChar).FirstOrDefault(opr => opr.Name.ToLower().Contains("is"));
         // Get Receiving Table
-        fs = S.GetFieldSets().FirstOrDefault(fs => fs.Name.ToLower().Contains("receiving"));
+        fs = S.GetFieldSet(FieldSetSeeder.RECEIVING);
         // Get Customer and Category columns
-        customerField = fs.Fields.FirstOrDefault(f => f.Name.ToLower().Contains("customer"));
-        categoryField = fs.Fields.FirstOrDefault(f => f.Name.ToLower().Contains("category"));
+        customerField = fs.Fields.FirstOrDefault(f => f.Name.Contains("Customer"));
+        categoryField = fs.Fields.FirstOrDefault(f => f.Name.Contains("Category"));
 
 
         customerParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "Capital Brands" };
@@ -136,12 +136,7 @@ public class QuerySeeder
         categoryStatement = new Statement() { Operation = categoryOpn };
         andStatements.Add(customerStatement);
         andStatements.Add(categoryStatement);
-        and = new Conjunction() {Statements = andStatements };
-        output = new Statement()
-        {
-            Conjunction = and
-        };
-        return output;
+        return new Conjunction() {Conjoiner = S.GetConjoiner(DataCoreSeeder.AND), Statements = andStatements }.ToStatement();
 
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning restore CS8601 // Possible null reference assignment.
@@ -192,7 +187,7 @@ public class QuerySeeder
         // Get Is Operator
         opr = S.GetOperators(SqlDbType.VarChar).FirstOrDefault(opr => opr.Name.ToLower().Contains("is"));
         // Get Receiving Table
-        fs = S.GetFieldSets().FirstOrDefault(fs => fs.Name.ToLower().Contains("receiving"));
+        fs = S.GetFieldSet(FieldSetSeeder.RECEIVING);
         // Get Customer and Category columns
         customerField = fs.Fields.FirstOrDefault(f => f.Name.ToLower().Contains("customer"));
         categoryField = fs.Fields.FirstOrDefault(f => f.Name.ToLower().Contains("category"));
@@ -208,12 +203,7 @@ public class QuerySeeder
         categoryStatement = new Statement() { Operation = categoryOpn };
         andStatements.Add(customerStatement);
         andStatements.Add(categoryStatement);
-        and = new Conjunction() { Statements = andStatements };
-        output = new Statement()
-        {
-            Conjunction = and
-        };
-        return output;
+        return new Conjunction() { Conjoiner = S.GetConjoiner(DataCoreSeeder.AND), Statements = andStatements }.ToStatement();
 
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning restore CS8601 // Possible null reference assignment.
@@ -225,12 +215,7 @@ public class QuerySeeder
 #pragma warning disable CS8601 // Possible null reference assignment.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
         
-        Statement output;
-
-        // Operations 
-        Operation weeksAgoOpn;
-        
-        // Fields to perform operation on
+        // Field to perform operation on
         Field dateReceivedField;
 
         // Fieldset the field is in
@@ -245,16 +230,12 @@ public class QuerySeeder
         // Operation Parameter
         OperationParameter weeksAgoParameter;
 
-        // Statements to contain operations
-        Statement weeksAgoSt;
-
-
         // Get Is Operator
         opr = S.GetOperators(SqlDbType.VarChar).FirstOrDefault(opr => opr.Name.ToLower().Contains("is"));
         // Get Receiving Table
-        fs = S.GetFieldSets().FirstOrDefault(fs => fs.Name.ToLower().Contains("receiving"));
+        fs = S.GetFieldSet(FieldSetSeeder.RECEIVING);
         // Get date received field
-        dateReceivedField = fs.Fields.FirstOrDefault(f => f.Name.ToLower().Contains("Date Received"));
+        dateReceivedField = S.GetField(fs, "Date Received");
 
         // Create operation parameter entities
         weeksAgoParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "1" };

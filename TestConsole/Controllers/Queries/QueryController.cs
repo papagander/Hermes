@@ -271,6 +271,16 @@ public class QueryController
     }
     public override void ShowAll()
     {
-        throw new NotImplementedException();
+        var qs = S.GetQueries();
+        foreach (var query in qs)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(query.Name);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(query.FieldSet);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(query.ExecutionString);
+
+        }
     }
 }

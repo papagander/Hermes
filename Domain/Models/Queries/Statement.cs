@@ -1,7 +1,8 @@
 ﻿
 using Domain.Interfaces.Models;
-
+using Domain.Models.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Domain.Models.Queries;
 
@@ -17,7 +18,7 @@ public class Statement
     public override string ToString()
     {
         if (Conjunction is not null) return Conjunction.ToString();
-        else if (Operation is not null) return Operation.ToString();
+        else if (Operation is not null) return Operation.ExecutionString;
         else return $"Unreferenced statement {Id}";
     }
     [NotMapped]
@@ -58,6 +59,7 @@ public class Statement
             else throw new Exception("Statement cannot reference both an operation and a conjunction.");
         }
     }
+    
     public int? ParentConjunctionId { get; set; }
     public Conjunction? ParentConjunction { get; set; }
     internal List<Operation> operations;

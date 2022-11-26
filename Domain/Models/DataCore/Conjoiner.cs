@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.Models;
-
+using Domain.Models.Generic;
 using System;
 using System.ComponentModel.DataAnnotations;
 
