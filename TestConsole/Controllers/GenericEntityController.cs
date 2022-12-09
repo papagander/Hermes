@@ -36,6 +36,7 @@ namespace TestConsole.Controllers
         protected string NamePrompt(string entityType)
         {
             Console.WriteLine($"Please provide {entityType} name");
+            Console.ForegroundColor = ConsoleColor.White;
             string? name = Console.ReadLine().Trim();
             if (name is null | name == "")
             {

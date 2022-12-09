@@ -110,30 +110,29 @@ public abstract class GenericController
     }
     internal static T? SelectFromList<T>(IEnumerable<T> items) where T : class
     {
+        string symbols = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var _ = items.ToList();
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine("Enter a number to select an item. Press enter to terminate selection.");
         for (int i = 0; i < _.Count; i++)
         {
+            char symbol = symbols[i];
             T item = _[i];
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"{i}. {item.ToString()}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"{symbol}.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($" {item.ToString()}");
         }
-        string? input = Console.ReadLine();
-        if (input == "") return null;
-        int intput;
-        if (!int.TryParse(input, out intput))
-        {
-            Console.WriteLine("Could not parse input.");
-            return SelectFromList(_);
-        }
-        if (intput >= _.Count)
-        {
-            Console.WriteLine("Input out of range");
-            return SelectFromList(_);
-        }
-        return _[intput];
-
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("Press a key to select an item. Press escape to terminate selection.");
+        Console.ForegroundColor = ConsoleColor.White;
+        var input = Console.ReadKey().KeyChar.ToString().ToUpper();
+        Console.WriteLine();
+        for (int i = 0; i < items.Count(); i++)
+            if (input == symbols[i].ToString()) return items.ToList()[i];
+        symbols = symbols.ToLower();
+        for (int i = 0; i < items.Count(); i++)
+            if (input == symbols[i].ToString()) return items.ToList()[i];
+        return null;
     }
     protected IEnumerable<T>? CreateList<T>(Func<T?> Create)
         where T : class, IIndexed
@@ -166,9 +165,27 @@ public abstract class GenericController
         {
             sourceTs.Remove(t);
             output.Add(t);
+            Console.Clear();
+            ShowSelection(output);
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Remaining:");
             t = SelectFromList(sourceTs);
         }
         return output;
+        void ShowSelection(IEnumerable<T> selection)
+        {
+            if (selection.Any())
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Current Selection:");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                foreach (var item in selection)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+        }
     }
     /// <summary>
     /// Spacing: 10, 12

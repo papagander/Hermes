@@ -231,7 +231,7 @@ public class QuerySeeder
         OperationParameter weeksAgoParameter;
 
         // Get Is Operator
-        opr = S.GetOperators(SqlDbType.VarChar).FirstOrDefault(opr => opr.Name.ToLower().Contains("is"));
+        opr = S.GetOperators(SqlDbType.Date).FirstOrDefault(opr => opr.Name == "isWeeksAgo");
         // Get Receiving Table
         fs = S.GetFieldSet(FieldSetSeeder.RECEIVING);
         // Get date received field

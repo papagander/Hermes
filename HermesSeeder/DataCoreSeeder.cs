@@ -124,12 +124,20 @@ public class DataCoreSeeder
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
         i++;
 
-        // Greater Than Or Equal - Textual
+        // Greater Than Or Equal - time
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
         i++;
+
+        // Contains
+        op = BaseOperators[i];
+        dbTypes = new List<SqlDbType>();
+        dbTypes.AddRange(Textual);
+        S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
+        i++;
+
 
         // Weeks Ago
         op = BaseOperators[i];
@@ -281,10 +289,22 @@ public class DataCoreSeeder
             op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
             output.Add(op);
 
+            name = "contains";
+            executionString = "/*FIELD_NAME*/ LIKE '%/*p0*/%'";
+            paramName = "substring";
+            paramType = SqlDbType.Int;
+            _1 = new Parameter() { Name = paramName, DbType = paramType };
+            parameters = new List<Parameter>();
+            parameters.Add(_1);
+            op = new Operator { Name = name, ExecutionString = executionString, Parameters = parameters };
+            output.Add(op);
 
-            name = "weeks ago";
-            executionString = "SELECT DATEPART(WEEKDAY, GETDATE())";
-            paramName = "weeksBack";
+
+            name = "isWeeksAgo";
+            executionString = "(firstDate <= /*FIELD_NAME*/ AND lastDate >= /*FIELD_NAME*/)";
+            executionString = executionString.Replace("firstDate", "DATEADD(week, -/*p0*/, DATEADD(day, 1 - DATEPART(dw, DATEFROMPARTS(DATEPART(year, GETDATE()), DATEPART(month, GETDATE()), DATEPART(day, GETDATE()))), DATEFROMPARTS(DATEPART(year, GETDATE()), DATEPART(month, GETDATE()), DATEPART(day, GETDATE()))))");
+            executionString = executionString.Replace("lastDate", "DATEADD(day, 6, DATEADD(week, -/*p0*/, DATEADD(day, 1 - DATEPART(dw, DATEFROMPARTS(DATEPART(year, GETDATE()), DATEPART(month, GETDATE()), DATEPART(day, GETDATE()))), DATEFROMPARTS(DATEPART(year, GETDATE()), DATEPART(month, GETDATE()), DATEPART(day, GETDATE())))))");
+            paramName = "weeks-back";
             paramType = SqlDbType.Int;
             _1 = new Parameter() { Name = paramName, DbType = paramType };
             parameters = new List<Parameter>();

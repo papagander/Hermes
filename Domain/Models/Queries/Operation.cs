@@ -52,6 +52,27 @@ public class Operation
             return output;
         }
     }
+    public string FriendlyString
+    {
+        get
+        {
+            string output = Field.Name + " : " + Operator.Name;
+            output += "(";
+            var first = OperationParameters[0];
+            output += first.Parameter.Name + " : ";
+            output += first.Value;
+            for (int i = 1; i < OperationParameters.Count; i++)
+            {
+                OperationParameter? param = OperationParameters[i];
+                output += ", ";
+                output += param.Parameter.Name + " : ";
+                output += param.Value;
+            }
+            output += ")";
+
+            return output;
+        }
+    }
     public Field Field { get; set; }
     public Operator Operator { get; set; }
     public Statement Statement { get; set; }

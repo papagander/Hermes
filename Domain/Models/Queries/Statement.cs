@@ -69,4 +69,12 @@ public class Statement
     Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunction; }
     int IReferences<Conjunction>.MyTRefId { get { if (ParentConjunctionId is null) return -1; else return (int)ParentConjunctionId; } }
     Conjunction IReferences<Conjunction>.MyTRef { get => (Conjunction)ParentConjunction; }
+    public string FriendlyString { 
+        get
+        {
+            if (Conjunction is not null) return Conjunction.FriendlyString;
+            else if (Operation is not null) return Operation.FriendlyString;
+            else return $"Unreferenced statement {Id}";
+        }
+    }
 }

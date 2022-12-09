@@ -41,23 +41,34 @@ public class QueryController
     }
     public override void Add()
     {
-        Query q;
         string name;
         FieldSet fs;
         List<Field>? fields;
         int output;
 
+
+        Console.Clear();
+        AddQueryPrompt();
         // Name query
+        Console.ForegroundColor = ConsoleColor.Yellow;
         name = NamePrompt(EntityType);
+        Console.WriteLine();
+        // Select source table
         fs = SelectFieldSet();
+        // Select columns to show on report
         fields = SelectFields(fs);
         if (fields is null) return;
-        var query = new Query { Name = name, FieldSet = fs, Fields = fields };
         bool isValid;
         ConsoleKey input;
         do
         {
+            Console.Clear();
+            Console.WriteLine();
+            DisplayQuery(name ,fs, fields);
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Would you like to add a filter to this query? (y / n)");
+            Console.ForegroundColor = ConsoleColor.White;
             input = Console.ReadKey().Key;
             isValid = input == ConsoleKey.Y || input == ConsoleKey.N;
         } while (!isValid);
@@ -83,6 +94,27 @@ public class QueryController
         Console.WriteLine($"Changed {output} rows");
     }
 
+    private void AddQueryPrompt()
+    {
+        Console.Clear();
+    }
+    private void DisplayQuery(string name, FieldSet fs, IEnumerable<Field> fields)
+    {
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write("Query name: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine(name);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write("Source Table: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine(fs);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("Columns: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        foreach (Field field in fields) Console.Write($"{field.Name}, ");
+        Console.WriteLine("\n");
+    }
     private Statement CreateTopLevelStatement(List<Statement> statements)
     {
         Statement output;
@@ -174,8 +206,12 @@ public class QueryController
     private List<Operation> CreateOperations(FieldSet fs)
     {
         List<Operation> output = new List<Operation>();
-        Console.WriteLine("First, you will create the base operations for the filter by choosing fields ands operations to perform. Next,");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Clear();
+        Console.WriteLine("Create the base operations for the filter by choosing fields ands operations to perform. Next,");
         Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
+        Console.WriteLine("\n");
+        Console.ForegroundColor = ConsoleColor.White;
         do
         {
             output.Add(CreateCriterion(fs));
@@ -216,7 +252,7 @@ public class QueryController
             Field? field;
             do
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("Choose a field to filter on.");
                 field = SelectFromList(fs.Fields);
             } while (field is null);
@@ -243,31 +279,18 @@ public class QueryController
                 Console.WriteLine($"Input value for {op.Name} {param.Name}");
                 string val = Console.ReadLine();
                 cParams.Add(new OperationParameter() { Parameter = param, Value = val });
-            }
 
+            }
             return cParams;
         }
     }
 
-    FieldSet SelectFieldSet()
+    FieldSet? SelectFieldSet()
     {
-
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("Select a source table for this query.");
         var _fsz = S.GetFieldSets().ToList();
-        int selectionId;
-        bool selectionIsValid;
-        do
-        {
-            Console.WriteLine("Select a source table for this field.");
-            for (int i = 0; i < _fsz.Count; i++)
-            {
-                FieldSet _fs = _fsz[i];
-                Console.WriteLine(String.Format("{0,2}. {1,0}", i, _fs.Name));
-            }
-            selectionIsValid = int.TryParse(Console.ReadLine(), out selectionId);
-            selectionIsValid = selectionIsValid && selectionId < _fsz.Count;
-
-        } while (!selectionIsValid);
-        return _fsz[selectionId];
+        return SelectFromList(_fsz);
     }
     public override void ShowAll()
     {

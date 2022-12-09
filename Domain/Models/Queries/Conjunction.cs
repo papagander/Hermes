@@ -3,6 +3,7 @@ using Domain.Interfaces.Models;
 using Domain.Models.DataCore;
 using Domain.Models.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Domain.Models.Queries;
 
@@ -17,6 +18,20 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
         Statement stat = new();
         stat.Conjunction = this;
         return stat;
+    }
+    public string FriendlyString
+    {
+        get
+        {
+            if (Statements is null || Statements.Any() is false) return "(conjunction with no statements)";
+            if (Conjoiner is null) return "(conjunction with no conjoiner)";
+            string output = "(";
+            var first = Statements[0];
+            output += first.FriendlyString;
+
+            output += ")";
+            return output;
+        }
     }
     public override string ToString()
     {
