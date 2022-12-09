@@ -1,6 +1,7 @@
 ﻿
 using Domain.Interfaces.Models;
 using Domain.Models.Generic;
+
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
@@ -15,39 +16,43 @@ public class Statement
     // A statement represents either a single criterion or a conjunction.
     // Each report points to a statement. Records for which the statement is true
     // are included in the report.
-    public override string ToString()
+    [NotMapped]
+    public string ExecutionString
     {
-        if (Conjunction is not null) return Conjunction.ToString();
-        else if (Operation is not null) return Operation.ExecutionString;
-        else return $"Unreferenced statement {Id}";
+        get
+        {
+            if (Conjunction is not null) return Conjunction.ToString();
+            else if (Operation is not null) return Operation.ExecutionString;
+            else return $"Unreferenced statement {Id}";
+        }
     }
     [NotMapped]
-    public Operation? Operation 
-    { 
-        get 
-        { 
+    public Operation? Operation
+    {
+        get
+        {
             if (operations is null)
-                return null; 
-            return operations[0]; 
+                return null;
+            return operations[0];
         }
-        set 
+        set
         {
             if (Conjunction is null)
             {
-                operations= new();
+                operations = new();
                 operations.Add(value);
             }
             else throw new Exception("Statement cannot reference both an operation and a conjunction.");
-        } 
+        }
     }
     [NotMapped]
     public Conjunction? Conjunction
     {
-        get 
+        get
         {
-            if (conjunctions is null) 
-                return null; 
-            return conjunctions[0]; 
+            if (conjunctions is null)
+                return null;
+            return conjunctions[0];
         }
         set
         {
@@ -59,7 +64,7 @@ public class Statement
             else throw new Exception("Statement cannot reference both an operation and a conjunction.");
         }
     }
-    
+
     public int? ParentConjunctionId { get; set; }
     public Conjunction? ParentConjunction { get; set; }
     internal List<Operation> operations;
@@ -69,7 +74,9 @@ public class Statement
     Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunction; }
     int IReferences<Conjunction>.MyTRefId { get { if (ParentConjunctionId is null) return -1; else return (int)ParentConjunctionId; } }
     Conjunction IReferences<Conjunction>.MyTRef { get => (Conjunction)ParentConjunction; }
-    public string FriendlyString { 
+    [NotMapped]
+    public string FriendlyString
+    {
         get
         {
             if (Conjunction is not null) return Conjunction.FriendlyString;
@@ -77,4 +84,5 @@ public class Statement
             else return $"Unreferenced statement {Id}";
         }
     }
+    public override string ToString() => FriendlyString;
 }

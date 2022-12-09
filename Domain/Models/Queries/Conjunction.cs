@@ -19,33 +19,44 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
         stat.Conjunction = this;
         return stat;
     }
+    public override string ToString() => FriendlyString;
+    [NotMapped]
     public string FriendlyString
     {
         get
         {
             if (Statements is null || Statements.Any() is false) return "(conjunction with no statements)";
             if (Conjoiner is null) return "(conjunction with no conjoiner)";
-            string output = "(";
+            string output = "[ ";
             var first = Statements[0];
             output += first.FriendlyString;
+            for (int i = 1; i < Statements.Count; i++)
+            {
+                Statement? stat = Statements[i];
 
-            output += ")";
+                output += $" {Conjoiner.Name} {stat.FriendlyString}";
+            }
+            output += " ]";
             return output;
         }
     }
-    public override string ToString()
+    [NotMapped]
+    public string ExecutionString
     {
-        string output = "";
-        string conjoinerString = Conjoiner.Name;
-        output += "(";
-        for (int i = 0; i < Statements.Count; i++)
+        get
         {
-            Statement conjugant = Statements[i];
-            output += $" {conjugant}";
-            if (i < Statements.Count - 1) output += $" {conjoinerString}";
+            string output = "";
+            string conjoinerString = Conjoiner.Name;
+            output += "(";
+            for (int i = 0; i < Statements.Count; i++)
+            {
+                Statement conjugant = Statements[i];
+                output += $" {conjugant}";
+                if (i < Statements.Count - 1) output += $" {conjoinerString}";
+            }
+            output += ")";
+            return output;
         }
-        output += ")";
-        return output;
     }
     public int ConjoinerId { get; set; }
     public int StatementId { get; set; }

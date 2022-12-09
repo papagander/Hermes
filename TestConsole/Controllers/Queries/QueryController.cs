@@ -29,6 +29,7 @@ public class QueryController
     {
         var fields = new List<Field>();
         var allFields = fs.Fields;
+        Console.Clear();
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("Select fields to be included on this query.");
         fields = SelectListFromList(allFields);
@@ -52,7 +53,6 @@ public class QueryController
         // Name query
         Console.ForegroundColor = ConsoleColor.Yellow;
         name = NamePrompt(EntityType);
-        Console.WriteLine();
         // Select source table
         fs = SelectFieldSet();
         // Select columns to show on report
@@ -64,7 +64,7 @@ public class QueryController
         {
             Console.Clear();
             Console.WriteLine();
-            DisplayQuery(name ,fs, fields);
+            ShowQuery(name, fs, fields);
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Would you like to add a filter to this query? (y / n)");
@@ -98,29 +98,14 @@ public class QueryController
     {
         Console.Clear();
     }
-    private void DisplayQuery(string name, FieldSet fs, IEnumerable<Field> fields)
-    {
-
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("Query name: ");
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine(name);
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("Source Table: ");
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine(fs);
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("Columns: ");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        foreach (Field field in fields) Console.Write($"{field.Name}, ");
-        Console.WriteLine("\n");
-    }
     private Statement CreateTopLevelStatement(List<Statement> statements)
     {
         Statement output;
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("Now, combine those criteria into a single statement using conjunctions. ");
+        Console.Clear();
+        Console.WriteLine("Combine those criteria into a single statement using conjunctions. ");
         Console.WriteLine("Start with the inner-most conjunctions and then create the higher level ones.");
+        Console.WriteLine();
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Ex. ((Customer = Hurom AND Model = 1234) OR (Customer = Galanz AND Model = 5678)) AND [Date Received] WEEKSAGO(1)");
         Console.ForegroundColor = ConsoleColor.White;
@@ -140,7 +125,7 @@ public class QueryController
         Statement output;
         Conjunction conj;
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("First, select a conjoiner.");
+        Console.WriteLine("Select a conjunction.");
         List<Conjoiner> conjoiners = S.GetConjoiners();
         Conjoiner cjr = SelectConjoiner();
 
@@ -208,19 +193,23 @@ public class QueryController
         List<Operation> output = new List<Operation>();
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Clear();
-        Console.WriteLine("Create the base operations for the filter by choosing fields ands operations to perform. Next,");
-        Console.WriteLine("you will combine the criteria into one statement using conjunctions.");
+        Console.WriteLine("Create the base operations for the filter by choosing fields ands operations to perform.");
         Console.WriteLine("\n");
         Console.ForegroundColor = ConsoleColor.White;
         do
         {
-            output.Add(CreateCriterion(fs));
-            Console.WriteLine($"Created operation: {output.Last().ToString()}");
-            Console.WriteLine("Current criteria:");
+            output.Add(CreateOperation(fs));
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"Created operation: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"{output.Last().FriendlyString}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Current operations:");
+            Console.ForegroundColor = ConsoleColor.Gray;
             for (int i = 0; i < output.Count; i++)
             {
-                Operation? crit = output[i];
-                Console.WriteLine($"{i}.{crit.ToString()}");
+                Operation? opn = output[i];
+                Console.WriteLine($"{opn.FriendlyString}");
             }
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -231,15 +220,19 @@ public class QueryController
         } while (true);
 
 
-        Operation CreateCriterion(FieldSet fs)
+        Operation CreateOperation(FieldSet fs)
         {
-            Field? field;
-            SqlDbType dbType;  
-            field = SelectField(fs);
-            dbType = field.DbType;
+            Console.Clear();
+            Field field = SelectField(fs);
+            SqlDbType dbType = field.DbType;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Field: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(field.Name + "\n");
             Operator? op = SelectOperator(dbType);
             List<Parameter> parameters = op.Parameters;
-            List<OperationParameter> cParams = CreateCritParameters(op, parameters);
+            List<OperationParameter> cParams = CreateOpnParameters(op, parameters);
             return new Operation()
             {
                 Field = field,
@@ -270,7 +263,7 @@ public class QueryController
             } while (op is null);
             return op;
         }
-        static List<OperationParameter> CreateCritParameters(Operator op, List<Parameter> parameters)
+        static List<OperationParameter> CreateOpnParameters(Operator op, List<Parameter> parameters)
         {
             List<OperationParameter> cParams = new List<OperationParameter>();
             foreach (Parameter param in parameters)
@@ -287,6 +280,7 @@ public class QueryController
 
     FieldSet? SelectFieldSet()
     {
+        Console.Clear();
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("Select a source table for this query.");
         var _fsz = S.GetFieldSets().ToList();
@@ -294,16 +288,44 @@ public class QueryController
     }
     public override void ShowAll()
     {
+        Console.Clear();
         var qs = S.GetQueries();
         foreach (var query in qs)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(query.Name);
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(query.FieldSet);
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine(query.ExecutionString);
-
+            ShowQuery(query);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------------------------");
+            Console.WriteLine();
         }
     }
+    private void ShowQuery(string name, FieldSet fs, IEnumerable<Field> fields)
+    {
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write("Query name: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine(name);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write("Source Table: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine(fs);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("Columns: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        foreach (Field field in fields) Console.Write($"{field.Name}, ");
+        Console.WriteLine("\n");
+    }
+    private void ShowQuery(string name, FieldSet fs, IEnumerable<Field> fields, Statement? stat)
+    {
+        ShowQuery(name, fs, fields);
+        if (stat is not null)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Filter:");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(stat.FriendlyString);
+        }
+    }
+    private void ShowQuery(Query query) => ShowQuery(query.Name, query.FieldSet, query.Fields, query.Statement);
 }

@@ -22,7 +22,7 @@ public class Operation
     }
     public override string ToString()
     {
-        return ExecutionString;
+        return FriendlyString;
         string output = "";
         output += $"{Field.Name} {Operator.Name} ";
         for (int i = 0; i < OperationParameters.Count; i++)
@@ -52,20 +52,19 @@ public class Operation
             return output;
         }
     }
+    [NotMapped]
     public string FriendlyString
     {
         get
         {
-            string output = Field.Name + " : " + Operator.Name;
+            string output = Field.Name + " " + Operator.Name;
             output += "(";
             var first = OperationParameters[0];
-            output += first.Parameter.Name + " : ";
             output += first.Value;
             for (int i = 1; i < OperationParameters.Count; i++)
             {
                 OperationParameter? param = OperationParameters[i];
                 output += ", ";
-                output += param.Parameter.Name + " : ";
                 output += param.Value;
             }
             output += ")";
