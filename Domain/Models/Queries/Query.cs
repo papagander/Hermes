@@ -26,7 +26,8 @@ public class Query : Named, IReferences<FieldSets.FieldSet>, IReferencedBy<Field
             output += $" FROM [{FieldSet.Name}]";
             // Add top statement:
             // WHERE ( ( Customer = 'Galanz' AND Category = 'Microwaves' ) OR ( Customer = 'Capital Brands' AND Category = 'Vaccuums') ) AND WeeksAgo(1)
-            output += $" WHERE {Statement}";
+            if (Statement is not null) output += $" WHERE {Statement.ExecutionString}";
+            output += ";";
             return output;
         }
     }
@@ -34,11 +35,9 @@ public class Query : Named, IReferences<FieldSets.FieldSet>, IReferencedBy<Field
 
     public int FieldSetId { get; set; }
     public int? StatementId { get; set; }
-    int IReferences<FieldSet>.MyTRefId { get => FieldSetId; /*set => Id = value;*/ }
-    FieldSet IReferences<FieldSet>.MyTRef { get => FieldSet; /*set => FieldSet = value;*/ }
+    int IReferences<FieldSet>.MyTRefId { get => FieldSetId; }
+    FieldSet IReferences<FieldSet>.MyTRef { get => FieldSet; }
     List<Field> IReferencedBy<Field>.MyTs { get => Fields; set => Fields = value; }
-    //int IReferences<Statement>.MyTRefId { get => Id; /*set => Id = value;*/ }
-    //Statement IReferences<Statement>.MyTRef { get => Statement; /*set => Statement = value;*/ }
 }
 
 

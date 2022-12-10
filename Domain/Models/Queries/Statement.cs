@@ -21,7 +21,7 @@ public class Statement
     {
         get
         {
-            if (Conjunction is not null) return Conjunction.ToString();
+            if (Conjunction is not null) return Conjunction.ExecutionString;
             else if (Operation is not null) return Operation.ExecutionString;
             else return $"Unreferenced statement {Id}";
         }

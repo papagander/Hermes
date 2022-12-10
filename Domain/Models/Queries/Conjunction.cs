@@ -51,7 +51,7 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
             for (int i = 0; i < Statements.Count; i++)
             {
                 Statement conjugant = Statements[i];
-                output += $" {conjugant}";
+                output += $" {conjugant.ExecutionString}";
                 if (i < Statements.Count - 1) output += $" {conjoinerString}";
             }
             output += ")";
