@@ -67,17 +67,11 @@ public class FieldSetSeeder
             name = "Category";
             dbType = SqlDbType.VarChar;
             output.Add(new Field() {  Name = name, DbType = dbType }) ;
-            name = "Sub Category";
-            dbType = SqlDbType.VarChar;
-            output.Add(new Field() {  Name = name, DbType = dbType }) ;
-            name = "Customer";
+            name = "Customer Name";
             dbType = SqlDbType.VarChar;
             output.Add(new Field() {  Name = name, DbType = dbType });
-            name = "Price";
-            dbType = SqlDbType.Money;
-            output.Add(new Field() { Name = name, DbType = dbType });
             name = "Date Received";
-            dbType = SqlDbType.Date;
+            dbType = SqlDbType.DateTime;
             output.Add(new Field() { Name = name, DbType = dbType });
 
             return output;

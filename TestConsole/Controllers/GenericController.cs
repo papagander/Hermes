@@ -28,36 +28,29 @@ public abstract class GenericController
     public GenericController(ReportContext context)
     {
         this.context = context;
-
-        // Add an empty option to offset the others
-        Actions.Add(new Function("", Run));
     }
     public void Run()
     {
-        Console.Clear();
+        var quit = new Function("Quit", Quit);
+        var actions = Actions;
+        actions.Add(quit);
+        string symbols = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         while (true)
         {
+            Console.Clear();
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{MenuName} Interface:");
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.White;
-            int FinalActionDex = Actions.Count - 1;
-            string numFormat;
-            if (FinalActionDex > 9) numFormat = "00";
-            else numFormat = "0";
-            // Start w one bcuz 0 is an empty and reserved for quit
-            for (int i = 1; i < Actions.Count; i++)
-            {
-                Function? action = Actions[i];
-                Console.WriteLine(String.Format("{0,2}. {1,0}", i.ToString(numFormat), action.Name));
-            }
-            Console.WriteLine(String.Format("{0,2}. {1,0}", numFormat, "Quit"));
-            int selection = GetSelection(FinalActionDex);
-            Console.WriteLine("\n");
-            if (selection == -1) continue;
-            if (selection == 0) break;
-            Actions[selection].Action();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Select a function.");
+            PromptList(actions, symbols);
+            Console.WriteLine();
+            Function? action = ParsePrompt(actions, symbols);
+            if (action is null) continue;
+            if (action == quit) break;
+            action.Action();
+
         }
     }
     protected void About()
@@ -69,27 +62,6 @@ public abstract class GenericController
         Console.WriteLine(AboutBody);
         Console.WriteLine("______________________________________________________________________________________________________________________");
 
-    }
-    public int GetSelection(int max)
-    {
-        int secondDigitOfLast = Actions.Count / 10;
-
-        while (true)
-        {
-            ConsoleKey input = Console.ReadKey().Key;
-            int intput0;
-            do intput0 = ParseIntegerInput(input);
-            while (intput0 == -1);
-            if (secondDigitOfLast == 0 || intput0 > secondDigitOfLast) return intput0;
-            input = Console.ReadKey().Key;
-            int intput1;
-            do intput1 = ParseIntegerInput(input);
-            while (intput1 == -1);
-            int intput = intput0 * 10 + intput1;
-            if (intput > max) return -1;
-            Actions[intput].Action();
-
-        }
     }
     protected int ParseIntegerInput(ConsoleKey input)
     {
@@ -108,9 +80,25 @@ public abstract class GenericController
         return output;
 
     }
+
     internal static T? SelectFromList<T>(IEnumerable<T> items) where T : class
     {
-        string symbols = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        string symbols = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        PromptList(items, symbols);
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("Press a key to select an item. Press escape to terminate selection.");
+        return ParsePrompt(items, symbols);
+
+    }
+    /// <summary>
+    /// Present list to user using sumbols provided. Use ParsePrompt method to parse the user's input.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="items"></param>
+    /// <param name="symbols"></param>
+    protected static void PromptList<T>(IEnumerable<T> items, string symbols) where T : class
+    {
         var _ = items.ToList();
         for (int i = 0; i < _.Count; i++)
         {
@@ -121,19 +109,24 @@ public abstract class GenericController
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($" {item.ToString()}");
         }
-        Console.WriteLine();
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine("Press a key to select an item. Press escape to terminate selection.");
+    }
+    /// <summary>
+    /// Used to parse user's input after PromptList.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="items"></param>
+    /// <param name="symbols"></param>
+    /// <returns></returns>
+    protected static T? ParsePrompt<T>(IEnumerable<T> items, string symbols) where T : class
+    {
         Console.ForegroundColor = ConsoleColor.White;
         var input = Console.ReadKey().KeyChar.ToString().ToUpper();
         Console.WriteLine();
         for (int i = 0; i < items.Count(); i++)
             if (input == symbols[i].ToString()) return items.ToList()[i];
-        symbols = symbols.ToLower();
-        for (int i = 0; i < items.Count(); i++)
-            if (input == symbols[i].ToString()) return items.ToList()[i];
         return null;
     }
+
     protected IEnumerable<T>? CreateList<T>(Func<T?> Create)
         where T : class, IIndexed
     {
@@ -210,7 +203,7 @@ public abstract class GenericController
         Console.WriteLine(".  ");
         Thread.Sleep(334 * seconds);
     }
-
+    protected void Quit() { }
 
     protected virtual void Dispose(bool disposing)
     {

@@ -10,5 +10,9 @@
             Name = name;
             Action = action;
         }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
