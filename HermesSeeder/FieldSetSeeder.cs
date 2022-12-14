@@ -58,10 +58,10 @@ public class FieldSetSeeder
             var output = new List<Field>();
             string name;
             SqlDbType dbType;
-            name = "Serial Number";
+            name = "Serial";
             dbType = SqlDbType.VarChar;
             output.Add(new Field() {  Name = name, DbType = dbType }) ;
-            name = "Model Number";
+            name = "Model";
             dbType= SqlDbType.VarChar;
             output.Add(new Field() { Name = name, DbType = dbType }) ;
             name = "Category";

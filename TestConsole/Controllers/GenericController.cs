@@ -50,6 +50,10 @@ public abstract class GenericController
             if (action is null) continue;
             if (action == quit) break;
             action.Action();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Press any key to return to menu.");
+            Console.ReadKey();
 
         }
     }

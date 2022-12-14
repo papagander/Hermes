@@ -13,8 +13,8 @@ namespace Domain
     {
         public ReportContext CreateDbContext(string[] args)
         {
-            SetupSqlite();
-            var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
+            //SetupSqlite();
+            var optionsBuilder = ReportContext.SqlServerOptionsBuilder();
 
             return new ReportContext(optionsBuilder.Options);
         }

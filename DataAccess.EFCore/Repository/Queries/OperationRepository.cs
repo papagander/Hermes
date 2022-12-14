@@ -13,8 +13,8 @@ public class OperationRepository
     ReferencesRepository<Operation, Field> RefF;
     public OperationRepository(ReportContext reportContext) : base(reportContext)
     {
-        RefOp = new ReferencesRepository<Operation, Operator>(hContext);
-        RefF = new ReferencesRepository<Operation, Field>(hContext);
+        RefOp = new ReferencesRepository<Operation, Operator>(context);
+        RefF = new ReferencesRepository<Operation, Field>(context);
     }
     public IEnumerable<Operation> GetRange(Field MyTRef) => RefF.GetRange(MyTRef);
     public IEnumerable<Operation> GetRange(Operator MyTRef) => RefOp.GetRange(MyTRef);

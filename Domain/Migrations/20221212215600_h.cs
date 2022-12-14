@@ -4,7 +4,7 @@
 
 namespace Domain.Migrations
 {
-    public partial class asdf : Migration
+    public partial class h : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,9 +12,9 @@ namespace Domain.Migrations
                 name: "Conjoiner",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,9 +25,9 @@ namespace Domain.Migrations
                 name: "FieldSet",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,10 +38,10 @@ namespace Domain.Migrations
                 name: "Operator",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ExecutionString = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExecutionString = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,11 +52,11 @@ namespace Domain.Migrations
                 name: "Field",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    FieldSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DbType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FieldSetId = table.Column<int>(type: "int", nullable: false),
+                    DbType = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,10 +73,10 @@ namespace Domain.Migrations
                 name: "OperatorFieldTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    OperatorId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DbType = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OperatorId = table.Column<int>(type: "int", nullable: false),
+                    DbType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,11 +93,11 @@ namespace Domain.Migrations
                 name: "Parameters",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    OperatorId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DbType = table.Column<int>(type: "INTEGER", nullable: true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OperatorId = table.Column<int>(type: "int", nullable: false),
+                    DbType = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,10 +114,10 @@ namespace Domain.Migrations
                 name: "Conjunction",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ConjoinerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    StatementId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConjoinerId = table.Column<int>(type: "int", nullable: false),
+                    StatementId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,9 +134,9 @@ namespace Domain.Migrations
                 name: "Statement",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ParentConjunctionId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParentConjunctionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -152,11 +152,11 @@ namespace Domain.Migrations
                 name: "Operation",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    FieldId = table.Column<int>(type: "INTEGER", nullable: false),
-                    OperatorId = table.Column<int>(type: "INTEGER", nullable: false),
-                    StatementId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FieldId = table.Column<int>(type: "int", nullable: false),
+                    OperatorId = table.Column<int>(type: "int", nullable: false),
+                    StatementId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -185,11 +185,11 @@ namespace Domain.Migrations
                 name: "Query",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    FieldSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    StatementId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FieldSetId = table.Column<int>(type: "int", nullable: false),
+                    StatementId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -208,26 +208,25 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CriterionValue",
+                name: "OperationParameter",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    OperationId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ParameterId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Value = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OperationId = table.Column<int>(type: "int", nullable: false),
+                    ParameterId = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CriterionValue", x => x.Id);
+                    table.PrimaryKey("PK_OperationParameter", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CriterionValue_Operation_OperationId",
+                        name: "FK_OperationParameter_Operation_OperationId",
                         column: x => x.OperationId,
                         principalTable: "Operation",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CriterionValue_Parameters_ParameterId",
+                        name: "FK_OperationParameter_Parameters_ParameterId",
                         column: x => x.ParameterId,
                         principalTable: "Parameters",
                         principalColumn: "Id",
@@ -238,8 +237,8 @@ namespace Domain.Migrations
                 name: "FieldQuery",
                 columns: table => new
                 {
-                    FieldsId = table.Column<int>(type: "INTEGER", nullable: false),
-                    QueriesId = table.Column<int>(type: "INTEGER", nullable: false)
+                    FieldsId = table.Column<int>(type: "int", nullable: false),
+                    QueriesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -249,13 +248,13 @@ namespace Domain.Migrations
                         column: x => x.FieldsId,
                         principalTable: "Field",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FieldQuery_Query_QueriesId",
                         column: x => x.QueriesId,
                         principalTable: "Query",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -267,16 +266,6 @@ namespace Domain.Migrations
                 name: "IX_Conjunction_StatementId",
                 table: "Conjunction",
                 column: "StatementId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CriterionValue_OperationId",
-                table: "CriterionValue",
-                column: "OperationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CriterionValue_ParameterId",
-                table: "CriterionValue",
-                column: "ParameterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Field_FieldSetId",
@@ -302,6 +291,16 @@ namespace Domain.Migrations
                 name: "IX_Operation_StatementId",
                 table: "Operation",
                 column: "StatementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OperationParameter_OperationId",
+                table: "OperationParameter",
+                column: "OperationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OperationParameter_ParameterId",
+                table: "OperationParameter",
+                column: "ParameterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OperatorFieldTypes_OperatorId",
@@ -348,22 +347,22 @@ namespace Domain.Migrations
                 table: "Conjunction");
 
             migrationBuilder.DropTable(
-                name: "CriterionValue");
-
-            migrationBuilder.DropTable(
                 name: "FieldQuery");
 
             migrationBuilder.DropTable(
+                name: "OperationParameter");
+
+            migrationBuilder.DropTable(
                 name: "OperatorFieldTypes");
+
+            migrationBuilder.DropTable(
+                name: "Query");
 
             migrationBuilder.DropTable(
                 name: "Operation");
 
             migrationBuilder.DropTable(
                 name: "Parameters");
-
-            migrationBuilder.DropTable(
-                name: "Query");
 
             migrationBuilder.DropTable(
                 name: "Field");

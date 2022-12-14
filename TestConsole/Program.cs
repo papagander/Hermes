@@ -14,9 +14,10 @@ class Program
 {
     public static void Main(string[] args)
     {
-        var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
+        var optionsBuilder = ReportContext.SqlServerOptionsBuilder();
 
         ReportContext context = new ReportContext(optionsBuilder.Options);
+        /*
         using (var seed = new DataCoreSeeder(context))
         {
             seed.Seed();
@@ -25,12 +26,11 @@ class Program
         {
             seed.Seed();
         }
-        /**/
         using (var seed = new QuerySeeder(context))
         {
             seed.Seed();
         }
-        /**/
+        */
         using (MainMenu mm = new(context))
         {
             mm.Run();

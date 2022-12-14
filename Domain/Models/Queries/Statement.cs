@@ -31,8 +31,8 @@ public class Statement
     {
         get
         {
-            if (operations is null)
-                return null;
+            if (operations is null) return null;
+            if (!operations.Any()) return null;
             return operations[0];
         }
         set
@@ -50,8 +50,8 @@ public class Statement
     {
         get
         {
-            if (conjunctions is null)
-                return null;
+            if (conjunctions is null)                return null;
+            if (!conjunctions.Any()) return null;
             return conjunctions[0];
         }
         set
@@ -68,7 +68,7 @@ public class Statement
     public int? ParentConjunctionId { get; set; }
     public Conjunction? ParentConjunction { get; set; }
     internal List<Operation> operations;
-    internal List<Conjunction> conjunctions;
+    public List<Conjunction> conjunctions;
 
     Operation? ISuperTypeOf<Operation>.MySub { get => Operation; }
     Conjunction? ISuperTypeOf<Conjunction>.MySub { get => Conjunction; }

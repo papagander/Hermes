@@ -7,7 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Domain.Models.Queries;
 
-public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner>, IReferencedBy<Statement>
+public class Conjunction 
+    : Indexed
+    , ISubTypeOf<Statement>
+    , IReferences<Conjoiner>
+    , IReferencedBy<Statement>
 {
     // A ParentConjunction is pointed to by n statements (conjugants).
     // These statements are joined by the conjoiner
@@ -62,6 +66,7 @@ public class Conjunction : Indexed, ISubTypeOf<Statement>, IReferences<Conjoiner
     public int StatementId { get; set; }
 
     public Conjoiner Conjoiner { get; set; }
+    [NotMapped]
     public Statement Statement { get; set; }
     public List<Statement> Statements { get; set; }
     int ISubTypeOf<Statement>.MySuperId { get => StatementId; set => StatementId = value; }

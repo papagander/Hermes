@@ -40,7 +40,7 @@ public class ReportContext
     public DbSet<Query> Query { get; set; }
     public DbSet<Conjunction> Conjunction { get; set; }
     public DbSet<Operation> Operation { get; set; }
-    public DbSet<OperationParameter> CriterionValue { get; set; }
+    public DbSet<OperationParameter> OperationParameter { get; set; }
     public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder m)
     {
@@ -57,7 +57,12 @@ public class ReportContext
         //  Field Sets
         m.Entity<FieldSet>()
             .HasMany(e => e.Fields)
-            .WithOne(e => e.FieldSet);
+            .WithOne(e => e.FieldSet)
+            .OnDelete(DeleteBehavior.Cascade);
+        m.Entity<Query>()
+            .HasOne(e => e.FieldSet)
+            .WithMany(e => e.Queries)
+            .OnDelete(DeleteBehavior.Cascade);
 
 
         //  Queries
@@ -66,6 +71,17 @@ public class ReportContext
             .WithMany(e => e.Queries);
         m.Entity<Query>()
             .HasOne(e => e.FieldSet);
+
+        m.Entity<Field>()
+            .HasMany(e => e.Queries)
+            .WithMany(e => e.Fields);
+
+
+        m.Entity<OperationParameter>()
+            .HasOne(e => e.Operation)
+            .WithMany(e => e.OperationParameters)
+            .HasForeignKey(e => e.OperationId)
+            .OnDelete(DeleteBehavior.NoAction);
 
     //  Conjunctions
         m.Entity<Statement>()
@@ -88,10 +104,35 @@ public class ReportContext
         //  Field Sets
         m.Entity<FieldSet>()
             .Navigation(e => e.Fields).AutoInclude();
+
+        // Queries
+        m.Entity<Query>()
+            .Navigation(e => e.FieldSet).AutoInclude();
+        m.Entity<Query>()
+            .Navigation(e => e.Fields).AutoInclude();
+
+        m.Entity<Statement>()
+            .Navigation(e => e.operations).AutoInclude();
+
+        m.Entity<Conjunction>()
+            .Navigation(e => e.Conjoiner).AutoInclude();
+        m.Entity<Conjunction>()
+            .Navigation(e => e.Statements).AutoInclude();
+
+        m.Entity<Operation>()
+            .Navigation(e => e.Operator).AutoInclude();
+        m.Entity<Operation>()
+            .Navigation(e => e.Field).AutoInclude();
+        m.Entity<Operation>()
+            .Navigation(e => e.OperationParameters).AutoInclude();
     }
 
     public static DbContextOptionsBuilder<ReportContext> SqlLiteOptionsBuilder()
     {
         return new DbContextOptionsBuilder<ReportContext>().UseSqlite($"Data Source = {ReportContext.SqliteDbPath}");
+    }
+    public static DbContextOptionsBuilder<ReportContext> SqlServerOptionsBuilder()
+    {
+        return new DbContextOptionsBuilder<ReportContext>().UseSqlServer("Server=localhost;Database=HermesMessengerDb;Trusted_Connection=true;Encrypt=false;");
     }
 }

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace DataAccess.EFCore.Repository;
 public class GenericRepository<T> 
 {
-    protected readonly ReportContext hContext;
+    protected readonly ReportContext context;
     public GenericRepository(ReportContext context)
     {
-        this.hContext = context;
+        this.context = context;
     }
 }

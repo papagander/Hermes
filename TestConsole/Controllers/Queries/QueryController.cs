@@ -319,7 +319,6 @@ public class QueryController
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine();
             Console.WriteLine("---------------------------------------------------------------");
-            Console.WriteLine();
         }
     }
     private void ShowQuery(Query query)

@@ -16,6 +16,6 @@ namespace DataAccess.EFCore.Repository
         {
         }
 
-        public IEnumerable<T> GetAll() => hContext.Set<T>();
+        public IEnumerable<T> GetAll() => context.Set<T>();
     }
 }

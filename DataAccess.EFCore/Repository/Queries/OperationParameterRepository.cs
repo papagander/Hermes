@@ -18,8 +18,8 @@ namespace DataAccess.EFCore.Repository.Queries
         ReferencesRepository<OperationParameter, Parameter> P;
         public OperationParameterRepository(ReportContext reportContext) : base(reportContext)
         {
-            Opn = new ReferencesRepository<OperationParameter, Operation>(hContext);
-            P = new ReferencesRepository<OperationParameter, Parameter>(hContext);
+            Opn = new ReferencesRepository<OperationParameter, Operation>(context);
+            P = new ReferencesRepository<OperationParameter, Parameter>(context);
         }
 
         public IEnumerable<OperationParameter> GetRange(Operation MyTRef) => Opn.GetRange(MyTRef);
