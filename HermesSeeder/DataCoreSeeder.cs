@@ -30,17 +30,35 @@ public class DataCoreSeeder
         SeedOperators();
         SeedConjoiners();
     }
+    public void DeleteQueries()
+    {
+        Context.Database.ExecuteSqlRaw("DELETE FROM Query");
+        Context.Database.ExecuteSqlRaw("DELETE FROM OperationParameter");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Operation");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Conjunction");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Statement");
+        Context.Database.ExecuteSqlRaw("DELETE FROM FieldQuery");
+
+
+    }
+    public void DeletFieldSets()
+    {
+        Context.Database.ExecuteSqlRaw("DELETE FROM FieldSet");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Field");
+
+    }
     void SeedConjoiners()
     {
         Context.Database.ExecuteSqlRaw("DELETE FROM Conjoiner");
-        S.AddConjoiner("and");
-        S.AddConjoiner("or");
-        S.AddConjoiner("nor");
+        S.AddConjoiner("AND");
+        S.AddConjoiner("OR");
     }
     void SeedOperators()
     {
 
         Context.Database.ExecuteSqlRaw("DELETE FROM Operator");
+        Context.Database.ExecuteSqlRaw("DELETE FROM OperatorFieldType");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Parameter");
         int i = 0;
         Operator op;
         List<SqlDbType> dbTypes;

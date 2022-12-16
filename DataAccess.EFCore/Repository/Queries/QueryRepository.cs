@@ -28,8 +28,9 @@ namespace DataAccess.EFCore.Repository.Queries
             return LoadQueryWithStatement(output);
         }
 
-        private Query LoadQueryWithStatement(Query query)
+        private Query? LoadQueryWithStatement(Query query)
         {
+            if (query is null) return null;
             context.Entry(query)
                             .Reference(x => x.Statement)
                             .Load();

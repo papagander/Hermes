@@ -29,8 +29,8 @@ public class ReportContext
     // Core
     public DbSet<Conjoiner> Conjoiner { get; set; }
     public DbSet<Operator> Operator { get; set; }
-    public DbSet<OperatorFieldType> OperatorFieldTypes{ get; set; }
-    public DbSet<Parameter> Parameters{ get; set; }
+    public DbSet<OperatorFieldType> OperatorFieldType{ get; set; }
+    public DbSet<Parameter> Parameter { get; set; }
 
     // FieldSet
     public DbSet<Models.FieldSets.FieldSet> FieldSet { get; set; }

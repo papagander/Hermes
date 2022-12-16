@@ -89,8 +89,10 @@ public class QueryController
         Statement statement = CreateTopLevelStatement(statements);
 
         output = S.AddQuery(name, fs, fields, statement);
-
+        Console.Clear();
+        ShowQuery(new Query() { Name = name, FieldSet = fs, Fields = fields, Statement = statement });
         Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine();
         Console.WriteLine($"Changed {output} rows");
     }
 
@@ -100,6 +102,7 @@ public class QueryController
     }
     private Statement CreateTopLevelStatement(List<Statement> statements)
     {
+        if (statements.Count == 1) return statements[0];    
         Statement output;
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Clear();

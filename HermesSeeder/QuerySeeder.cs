@@ -29,7 +29,12 @@ public class QuerySeeder
 
     public void Seed()
     {
-        Context.Database.ExecuteSqlRaw("DELETE FROM QUERY");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Query");
+        Context.Database.ExecuteSqlRaw("DELETE FROM OperationParameter");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Operation");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Conjunction");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Statement");
+        Context.Database.ExecuteSqlRaw("DELETE FROM FieldQuery");
         QueryService S = new(Context);
         S.AddQuery(QueryZero(S));
     }
