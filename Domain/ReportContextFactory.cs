@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class ReportContextFactory : IDesignTimeDbContextFactory<ReportContext>
+    public class ReportContextFactory 
+        : IDesignTimeDbContextFactory<ReportContext>
     {
         public ReportContext CreateDbContext(string[] args)
         {
             //SetupSqlite();
-            var optionsBuilder = ReportContext.SqlServerOptionsBuilder();
+            var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
 
             return new ReportContext(optionsBuilder.Options);
         }

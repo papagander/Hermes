@@ -14,7 +14,7 @@ class Program
 {
     public static void Main(string[] args)
     {
-        var optionsBuilder = ReportContext.SqlServerOptionsBuilder();
+        var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
 
         ReportContext context = new ReportContext(optionsBuilder.Options);
         
@@ -30,7 +30,6 @@ class Program
         {
             seed.Seed();
         }
-        
         using (MainMenu mm = new(context))
         {
             mm.Run();

@@ -57,7 +57,6 @@ public class DataCoreSeeder
     {
 
         Context.Database.ExecuteSqlRaw("DELETE FROM Operator");
-        Context.Database.ExecuteSqlRaw("DELETE FROM OperatorFieldType");
         Context.Database.ExecuteSqlRaw("DELETE FROM Parameter");
         int i = 0;
         Operator op;
