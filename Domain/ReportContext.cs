@@ -10,10 +10,11 @@ using Domain.Models;
 using Domain.Models.DataCore;
 using Domain.Models.FieldSets;
 using Domain.Models.Queries;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Domain;
 
-public class ReportContext 
+public class ReportContext
     : DbContext
 {
     const string SQLITEDBNAME = "ReportDb.db";
@@ -29,7 +30,7 @@ public class ReportContext
     // Core
     public DbSet<Conjoiner> Conjoiner { get; set; }
     public DbSet<Operator> Operator { get; set; }
-    public DbSet<OperatorFieldType> OperatorFieldType{ get; set; }
+    public DbSet<OperatorFieldType> OperatorFieldType { get; set; }
     public DbSet<Parameter> Parameter { get; set; }
 
     // FieldSet
@@ -83,7 +84,7 @@ public class ReportContext
             .HasForeignKey(e => e.OperationId)
             .OnDelete(DeleteBehavior.NoAction);
 
-    //  Conjunctions
+        //  Conjunctions
         m.Entity<Statement>()
             .HasOne(st => st.ParentConjunction)
             .WithMany(s => s.Statements);
@@ -94,8 +95,8 @@ public class ReportContext
             .HasOne(crt => crt.Statement)
             .WithMany(s => s.operations);
 
-// Navigations
-    //  Data Core
+        // Navigations
+        //  Data Core
         m.Entity<Operator>()
             .Navigation(e => e.Parameters).AutoInclude();
         m.Entity<Operator>()
@@ -127,12 +128,13 @@ public class ReportContext
             .Navigation(e => e.OperationParameters).AutoInclude();
     }
 
-    public static DbContextOptionsBuilder<ReportContext> SqlLiteOptionsBuilder()
+    public static DbContextOptionsBuilder<ReportContext> SqlLiteOptionsBuilder() => new DbContextOptionsBuilder<ReportContext>().UseSqlite($"Data Source = {ReportContext.SqliteDbPath}");
+    public static DbContextOptionsBuilder<ReportContext> LocalSqlServerOptionsBuilder() => new DbContextOptionsBuilder<ReportContext>().UseSqlServer("Server=localhost;Database=HermesMessengerDb;Trusted_Connection=true;Encrypt=false;");
+
+    public static DbContextOptionsBuilder<ReportContext> SqlServerAzOptionsBuilder()
     {
-        return new DbContextOptionsBuilder<ReportContext>().UseSqlite($"Data Source = {ReportContext.SqliteDbPath}");
+        string password = File.ReadAllText("password.txt");
+        return new DbContextOptionsBuilder<ReportContext>().UseSqlServer($"Server = tcp:hermes - messenger.database.windows.net, 1433; Initial Catalog = HermesQueryDb; Persist Security Info = False; User ID = hermes; Password ={password}; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;");
     }
-    public static DbContextOptionsBuilder<ReportContext> SqlServerOptionsBuilder()
-    {
-        return new DbContextOptionsBuilder<ReportContext>().UseSqlServer("Server=localhost;Database=HermesMessengerDb;Trusted_Connection=true;Encrypt=false;");
-    }
+
 }
