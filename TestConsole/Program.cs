@@ -16,8 +16,8 @@ class Program
     {
         var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
 
-        ReportContext context = new ReportContext(optionsBuilder.Options);
-        
+        ReportContext context = new ReportContextFactory().CreateDbContext(new string[0]);
+        /*
         using (var seed = new DataCoreSeeder(context))
         {
             seed.Seed();
@@ -30,6 +30,7 @@ class Program
         {
             seed.Seed();
         }
+        */
         using (MainMenu mm = new(context))
         {
             mm.Run();

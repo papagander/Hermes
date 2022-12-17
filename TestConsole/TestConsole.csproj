@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="password.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="ReportDb.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

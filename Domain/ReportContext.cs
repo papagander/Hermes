@@ -11,6 +11,10 @@ using Domain.Models.DataCore;
 using Domain.Models.FieldSets;
 using Domain.Models.Queries;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Models.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Domain.Interfaces.Models;
 
 namespace Domain;
 
@@ -45,6 +49,68 @@ public class ReportContext
     public DbSet<Statement> Statement { get; set; }
     protected override void OnModelCreating(ModelBuilder m)
     {
+        m.Entity<Query>()
+            .Property(x => x.Name)
+            .HasColumnType("varchar(50)");
+        m.Entity<FieldSet>()
+            .Property(x => x.Name)
+            .HasColumnType("varchar(50)");
+        m.Entity<Field>()
+            .Property(x => x.Name)
+            .HasColumnType("varchar(50)");
+        m.Entity<Conjoiner>()
+            .Property(x => x.Name)
+            .HasColumnType("varchar(50)");
+        m.Entity<Query>()
+            .Property(x => x.Name)
+            .HasColumnType("varchar(50)");
+
+        m.Entity<Operator>().HasIndex(e => e.Id);
+        m.Entity<OperatorFieldType>().HasIndex(e => e.Id);
+        m.Entity<Parameter>().HasIndex(e => e.Id);
+        m.Entity<Conjoiner>().HasIndex(e => e.Id);
+
+        m.Entity<FieldSet>().HasIndex(e => e.Id);
+        m.Entity<Field>().HasIndex(e => e.Id);
+
+        m.Entity<Query>().HasIndex(e => e.Id);
+        m.Entity<Operation>().HasIndex(e => e.Id);
+        m.Entity<OperationParameter>().HasIndex(e => e.Id);
+        m.Entity<Conjunction>().HasIndex(e => e.Id);
+
+        m.Entity<Operator>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+        m.Entity<OperatorFieldType>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+        m.Entity<Parameter>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+        m.Entity<Conjoiner>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+
+        m.Entity<FieldSet>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+        m.Entity<Field>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+
+        m.Entity<Query>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+        m.Entity<Operation>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+        m.Entity<OperationParameter>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+        m.Entity<Conjunction>()
+            .Property(x => x.Id)
+            .UseIdentityColumn(1, 1);
+
 
         // Relationships
         //  Data Core
@@ -134,7 +200,7 @@ public class ReportContext
     public static DbContextOptionsBuilder<ReportContext> SqlServerAzOptionsBuilder()
     {
         string password = File.ReadAllText("password.txt");
-        return new DbContextOptionsBuilder<ReportContext>().UseSqlServer($"Server = tcp:hermes - messenger.database.windows.net, 1433; Initial Catalog = HermesQueryDb; Persist Security Info = False; User ID = hermes; Password ={password}; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;");
+        return new DbContextOptionsBuilder<ReportContext>().UseSqlServer($"Server = tcp:hermes-messenger.database.windows.net, 1433; Initial Catalog = HermesMessengerDb; Persist Security Info = False; User ID = hermes; Password ={password}; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;");
     }
 
 }

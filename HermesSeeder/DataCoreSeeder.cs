@@ -57,6 +57,7 @@ public class DataCoreSeeder
     {
 
         Context.Database.ExecuteSqlRaw("DELETE FROM Operator");
+        Context.Database.ExecuteSqlRaw("DELETE FROM OperatorFieldType");
         Context.Database.ExecuteSqlRaw("DELETE FROM Parameter");
         int i = 0;
         Operator op;
@@ -69,7 +70,7 @@ public class DataCoreSeeder
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
         i++;
 
-        // Equals - Textual
+        // Is - Textual
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);
@@ -84,7 +85,7 @@ public class DataCoreSeeder
         S.AddOperator(op.Name, op.ExecutionString, dbTypes, op.Parameters);
         i++;
 
-        // Not Equals - Textual
+        // Is not - Textual
         op = BaseOperators[i];
         dbTypes = new List<SqlDbType>();
         dbTypes.AddRange(Temporal);

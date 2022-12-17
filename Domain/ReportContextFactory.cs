@@ -15,7 +15,7 @@ namespace Domain
         public ReportContext CreateDbContext(string[] args)
         {
             //SetupSqlite();
-            var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
+            var optionsBuilder = ReportContext.SqlServerAzOptionsBuilder();
 
             return new ReportContext(optionsBuilder.Options);
         }
