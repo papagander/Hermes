@@ -14,7 +14,6 @@ class Program
 {
     public static void Main(string[] args)
     {
-        var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
 
         ReportContext context = new ReportContextFactory().CreateDbContext(new string[0]);
         /*
