@@ -16,8 +16,8 @@ class Program
     {
 
         ReportContext context = new ReportContextFactory().CreateDbContext(new string[0]);
-        /*
-        using (var seed = new DataCoreSeeder(context))
+        
+        /*using (var seed = new DataCoreSeeder(context))
         {
             seed.Seed();
         }
@@ -25,11 +25,11 @@ class Program
         {
             seed.Seed();
         }
-        using (var seed = new QuerySeeder(context))
-        {
+        using (var seed = new QuerySeeder(context)) {
+        
             seed.Seed();
-        }
-        */
+        }*/
+        
         using (MainMenu mm = new(context))
         {
             mm.Run();
