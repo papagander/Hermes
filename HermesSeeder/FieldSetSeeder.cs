@@ -23,8 +23,8 @@ namespace HermesSeeder;
 public class FieldSetSeeder
     : ISeeder
 {
-    public const string RECEIVING = "Receiving";
-    public const string MOCKSET = "Mock Set";
+    public const string DEVICES = "Devices";
+    public const string STUDENTS = "Students";
     private bool disposedValue;
     ReportContext Context;
     FieldSetService S { get; set; }
@@ -39,61 +39,64 @@ public class FieldSetSeeder
 
         Context.Database.ExecuteSqlRaw("DELETE FROM FieldSet");
         Context.Database.ExecuteSqlRaw("DELETE FROM Field");
-        S.CreateFieldSet(ReceivingSet.Name, ReceivingFields);
-        S.CreateFieldSet(MOCKSET, MockSetFields);
+        S.CreateFieldSet(DevicesSet.Name, DeviceFields);
+        S.CreateFieldSet(STUDENTS, StudentFields);
 
     }
-    public static FieldSet ReceivingSet { 
+    public static FieldSet DevicesSet { 
         get
         {
-            return new FieldSet() { Id = 1, Name = RECEIVING };
+            return new FieldSet() { Id = 1, Name = DEVICES };
 
         }
     }
 
-    public static List<Field> ReceivingFields
+    public static List<Field> DeviceFields
     {
         get
         {
             var output = new List<Field>();
             string name;
             SqlDbType dbType;
-            name = "Serial";
+            name = "Asset Tag";
             dbType = SqlDbType.VarChar;
             output.Add(new Field() {  Name = name, DbType = dbType }) ;
-            name = "Model";
+            name = "Device Model";
             dbType= SqlDbType.VarChar;
             output.Add(new Field() { Name = name, DbType = dbType }) ;
-            name = "Category";
+            name = "Device Category";
             dbType = SqlDbType.VarChar;
             output.Add(new Field() {  Name = name, DbType = dbType }) ;
-            name = "Customer Name";
+            name = "Department";
             dbType = SqlDbType.VarChar;
             output.Add(new Field() {  Name = name, DbType = dbType });
-            name = "Date Received";
+            name = "Deployment Date";
             dbType = SqlDbType.DateTime;
             output.Add(new Field() { Name = name, DbType = dbType });
 
             return output;
         }
     }
-    public static List<Field> MockSetFields
+    public static List<Field> StudentFields
     {
         get
         {
             var output = new List<Field>();
             string name;
             SqlDbType dbType;
-            name = "Name";
+            name = "First Name";
             dbType = SqlDbType.VarChar;
             output.Add(new Field() { Name = name, DbType = dbType });
-            name = "Price";
-            dbType = SqlDbType.Money;
+            name = "Last Name";
+            dbType = SqlDbType.VarChar;
             output.Add(new Field() { Name = name, DbType = dbType });
-            name = "My int";
+            name = "Credits Earned";
             dbType = SqlDbType.Int;
             output.Add(new Field() { Name = name, DbType = dbType });
-            name = "Date Received";
+            name = "Financial Aid Reward";
+            dbType = SqlDbType.Money;
+            output.Add(new Field() { Name = name, DbType = dbType });
+            name = "Date Enrolled";
             dbType = SqlDbType.Date;
             output.Add(new Field() { Name = name, DbType = dbType });
 

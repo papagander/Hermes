@@ -14,10 +14,12 @@ namespace Services
     {
         protected  IUnitOfWork  UnitOfWork { get; set; }
         protected ReportContext context {  get; private set; }
+        // dep inject context
         public GenericService(ReportContext _)
         {
             context = _;
         }
+        // used by children to finalize changes
         protected int Complete => UnitOfWork.Complete();
     }
 }

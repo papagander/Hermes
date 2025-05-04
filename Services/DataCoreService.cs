@@ -16,34 +16,34 @@ namespace Services
         GenericService
         , IDataCoreService
     {
-        DataCoreUnitOfWork U { get; set; }
+        DataCoreUnitOfWork uow { get; set; }
         public DataCoreService(ReportContext _context) : base(_context)
         {
-            U = new(context);
-            UnitOfWork = U;
+            uow = new(context);
+            UnitOfWork = uow;
         }
 
         public int AddOperator(string name, string executionString, IEnumerable<SqlDbType> dbTypes, IEnumerable<Parameter> parameters)
         {
-            U.Operators.Add(name, executionString, dbTypes, parameters);
+            uow.Operators.Add(name, executionString, dbTypes, parameters);
             return Complete;
         }
 
-        public Operator? GetOperator(int id) => U.Operators.Get(id);
+        public Operator? GetOperator(int id) => uow.Operators.Get(id);
 
-        public IEnumerable<Operator> GetAllOperators() => U.Operators.GetAll();
+        public IEnumerable<Operator> GetAllOperators() => uow.Operators.GetAll();
 
         public int RemoveOperator(int id)
         {
-            var op = U.Operators.Get(id);
-            if (op is not null) U.Operators.Remove(op);
+            var op = uow.Operators.Get(id);
+            if (op is not null) uow.Operators.Remove(op);
             return Complete;
         }
 
         public IEnumerable<Operator> GetOperators(SqlDbType dbType)
         {
             var output = new List<Operator>();
-            foreach (var op in U.Operators.GetAll())
+            foreach (var op in uow.Operators.GetAll())
                 foreach (var fto in op.OperatorFieldTypes)
                     if (fto.DbType.Equals(dbType))
                     {
@@ -55,25 +55,25 @@ namespace Services
 
         public int AddFieldTypes(int operatorId, IEnumerable<SqlDbType> dbTypes)
         {
-            var op = U.Operators.Get(operatorId);
+            var op = uow.Operators.Get(operatorId);
             if (op is null) return -1;
             throw new NotImplementedException();
         }
 
         public int AddConjoiner(string name)
         {
-            U.Conjoiners.Add(name);
+            uow.Conjoiners.Add(name);
             return Complete;
         }
 
-        public Conjoiner? GetConjoiner(int id) => U.Conjoiners.Get(id);
-        public Conjoiner? GetConjoiner(string name) => U.Conjoiners.Get(name);
+        public Conjoiner? GetConjoiner(int id) => uow.Conjoiners.Get(id);
+        public Conjoiner? GetConjoiner(string name) => uow.Conjoiners.Get(name);
 
-        public IEnumerable<Conjoiner> GetAllConjoiners() => U.Conjoiners.GetAll();
+        public IEnumerable<Conjoiner> GetAllConjoiners() => uow.Conjoiners.GetAll();
 
         public int RemoveConjoiner(Conjoiner cjr)
         {
-            U.Conjoiners.Remove(cjr);
+            uow.Conjoiners.Remove(cjr);
             return Complete;    
         }
     }

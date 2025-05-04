@@ -32,8 +32,8 @@ public class QuerySeeder
         Context.Database.ExecuteSqlRaw("DELETE FROM Query");
         Context.Database.ExecuteSqlRaw("DELETE FROM OperationParameter");
         Context.Database.ExecuteSqlRaw("DELETE FROM Operation");
-        Context.Database.ExecuteSqlRaw("DELETE FROM Conjunction");
         Context.Database.ExecuteSqlRaw("DELETE FROM Statement");
+        Context.Database.ExecuteSqlRaw("DELETE FROM Conjunction");
         Context.Database.ExecuteSqlRaw("DELETE FROM FieldQuery");
         QueryService S = new(Context);
         S.AddQuery(QueryZero(S));
@@ -50,7 +50,7 @@ public class QuerySeeder
         Statement stat = QueryZeroFilter(S);
         
         name = "Test Query 0";
-        fs = S.GetFieldSet(FieldSetSeeder.ReceivingSet.Name);
+        fs = S.GetFieldSet(FieldSetSeeder.DevicesSet.Name);
         fds = fs.Fields;
         return new Query() { Name = name, FieldSet = fs, Fields = fds, Statement = stat};
     }
@@ -59,15 +59,15 @@ public class QuerySeeder
     {
         // Returns a statement which is interpreted as
         // "(
-        // ( Customer is 'Capital Brands' AND Category is 'Vaccuum Cleaner')
-        // OR (Customer is 'Galanz' AND Category is 'Microwave')
+        // ( department is 'Chemistry' AND Category is 'Laptop')
+        // OR (department is 'SCCS' AND Category is 'Monitor')
         // ) AND WeeksAgo(1)"
         Statement output;
 
         // Combine our two product info conditions
         List<Statement> orStats = new();
-        orStats.Add(CapitalBrandsVaccuums(S));
-        orStats.Add(GalanzMicrowaves(S));
+        orStats.Add(ChemistryLaptops(S));
+        orStats.Add(CompSciMonitors(S));
         var prodStat = new Conjunction() { Conjoiner = S.GetConjoiner(DataCoreSeeder.OR), Statements = orStats}.ToStatement();
 
         // Get date condition
@@ -82,7 +82,7 @@ public class QuerySeeder
         return new Conjunction() {Conjoiner = S.GetConjoiner(DataCoreSeeder.AND), Statements = stats}.ToStatement();
     }
 
-    public static Statement CapitalBrandsVaccuums(QueryService S)
+    public static Statement ChemistryLaptops(QueryService S)
     {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning disable CS8601 // Possible null reference assignment.
@@ -95,11 +95,11 @@ public class QuerySeeder
         Conjunction and;
 
         // Operations joined under the and
-        Operation customerOpn;
+        Operation departmentOpn;
         Operation categoryOpn;
 
         // Fields to perform operation on
-        Field customerField;
+        Field departmentField;
         Field categoryField;
 
         // Fieldset the fds are in
@@ -109,37 +109,37 @@ public class QuerySeeder
         Operator opr;
 
         // Parameter lists for operations
-        List<OperationParameter> customerParameters = new();
+        List<OperationParameter> departmentParameters = new();
         List<OperationParameter> categoryParameters = new();
 
         // Operation Parameters
-        OperationParameter customerParameter;
+        OperationParameter departmentParameter;
         OperationParameter categoryParameter;
 
         // Statements to contain operations
         Statement categoryStatement;
-        Statement customerStatement;
+        Statement departmentStatement;
 
 
 
         // Get Is Operator
         opr = S.GetOperators(SqlDbType.VarChar).FirstOrDefault(opr => opr.Name.ToLower().Contains("is"));
-        // Get Receiving Table
-        fs = S.GetFieldSet(FieldSetSeeder.RECEIVING);
-        // Get Customer and Category columns
-        customerField = fs.Fields.FirstOrDefault(f => f.Name.Contains("Customer"));
+        // Get Device Table
+        fs = S.GetFieldSet(FieldSetSeeder.DEVICES);
+        // Get department and Category columns
+        departmentField = fs.Fields.FirstOrDefault(f => f.Name.Contains("Department"));
         categoryField = fs.Fields.FirstOrDefault(f => f.Name.Contains("Category"));
 
 
-        customerParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "Capital Brands" };
-        categoryParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "Vaccuums" };
-        customerParameters.Add(customerParameter);
+        departmentParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "Chemistry" };
+        categoryParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "Laptop" };
+        departmentParameters.Add(departmentParameter);
         categoryParameters.Add(categoryParameter);
-        customerOpn = new Operation() { Field = customerField, Operator = opr, OperationParameters = customerParameters};
+        departmentOpn = new Operation() { Field = departmentField, Operator = opr, OperationParameters = departmentParameters};
         categoryOpn = new Operation() { Field = categoryField, Operator = opr, OperationParameters = categoryParameters};
-        customerStatement = new Statement() { Operation = customerOpn };
+        departmentStatement = new Statement() { Operation = departmentOpn };
         categoryStatement = new Statement() { Operation = categoryOpn };
-        andStatements.Add(customerStatement);
+        andStatements.Add(departmentStatement);
         andStatements.Add(categoryStatement);
         return new Conjunction() {Conjoiner = S.GetConjoiner(DataCoreSeeder.AND), Statements = andStatements }.ToStatement();
 
@@ -148,7 +148,7 @@ public class QuerySeeder
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
-    public static Statement GalanzMicrowaves(QueryService S)
+    public static Statement CompSciMonitors(QueryService S)
     {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning disable CS8601 // Possible null reference assignment.
@@ -162,11 +162,11 @@ public class QuerySeeder
         Conjunction and;
 
         // Operations joined under the and
-        Operation customerOpn;
+        Operation departmentOpn;
         Operation categoryOpn;
 
         // Fields to perform operation on
-        Field customerField;
+        Field departmentField;
         Field categoryField;
 
         // Fieldset the fds are in
@@ -176,37 +176,37 @@ public class QuerySeeder
         Operator opr;
 
         // Parameter lists for operations
-        List<OperationParameter> customerParameters = new();
+        List<OperationParameter> departmentParameters = new();
         List<OperationParameter> categoryParameters = new();
 
         // Operation Parameters
-        OperationParameter customerParameter;
+        OperationParameter departmentParameter;
         OperationParameter categoryParameter;
 
         // Statements to contain operations
         Statement categoryStatement;
-        Statement customerStatement;
+        Statement departmentStatement;
 
 
 
         // Get Is Operator
         opr = S.GetOperators(SqlDbType.VarChar).FirstOrDefault(opr => opr.Name.ToLower().Contains("is"));
         // Get Receiving Table
-        fs = S.GetFieldSet(FieldSetSeeder.RECEIVING);
-        // Get Customer and Category columns
-        customerField = fs.Fields.FirstOrDefault(f => f.Name.ToLower().Contains("customer"));
+        fs = S.GetFieldSet(FieldSetSeeder.DEVICES);
+        // Get department and Category columns
+        departmentField = fs.Fields.FirstOrDefault(f => f.Name.ToLower().Contains("department"));
         categoryField = fs.Fields.FirstOrDefault(f => f.Name.ToLower().Contains("category"));
 
 
-        customerParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "Galanz" };
-        categoryParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "Microwaves" };
-        customerParameters.Add(customerParameter);
+        departmentParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "SCCS" };
+        categoryParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "Monitor" };
+        departmentParameters.Add(departmentParameter);
         categoryParameters.Add(categoryParameter);
-        customerOpn = new Operation() { Field = customerField, Operator = opr, OperationParameters = customerParameters };
+        departmentOpn = new Operation() { Field = departmentField, Operator = opr, OperationParameters = departmentParameters };
         categoryOpn = new Operation() { Field = categoryField, Operator = opr, OperationParameters = categoryParameters };
-        customerStatement = new Statement() { Operation = customerOpn };
+        departmentStatement = new Statement() { Operation = departmentOpn };
         categoryStatement = new Statement() { Operation = categoryOpn };
-        andStatements.Add(customerStatement);
+        andStatements.Add(departmentStatement);
         andStatements.Add(categoryStatement);
         return new Conjunction() { Conjoiner = S.GetConjoiner(DataCoreSeeder.AND), Statements = andStatements }.ToStatement();
 
@@ -238,9 +238,9 @@ public class QuerySeeder
         // Get Is Operator
         opr = S.GetOperators(SqlDbType.Date).FirstOrDefault(opr => opr.Name == "isWeeksAgo");
         // Get Receiving Table
-        fs = S.GetFieldSet(FieldSetSeeder.RECEIVING);
+        fs = S.GetFieldSet(FieldSetSeeder.DEVICES);
         // Get date received field
-        dateReceivedField = S.GetField(fs, "Date Received");
+        dateReceivedField = S.GetField(fs, "Deployment Date");
 
         // Create operation parameter entities
         weeksAgoParameter = new OperationParameter() { Parameter = opr.Parameters[0], Value = "1" };

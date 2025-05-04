@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Reflection.PortableExecutable;
 using DataAccess.EFCore;
 
 using HermesSeeder;
@@ -16,23 +17,25 @@ class Program
     {
 
         ReportContext context = new ReportContextFactory().CreateDbContext(new string[0]);
-        
-        /*using (var seed = new DataCoreSeeder(context))
-        {
-            seed.Seed();
-        }
-        using (var seed = new FieldSetSeeder(context))
-        {
-            seed.Seed();
-        }
-        using (var seed = new QuerySeeder(context)) {
-        
-            seed.Seed();
-        }*/
-        
+        //Seed(context);
         using (MainMenu mm = new(context))
         {
             mm.Run();
+        }
+    }
+    static void Seed(ReportContext context) 
+    {        
+        using (var seed = new DataCoreSeeder(context))
+        {
+            //seed.Seed();
+        }
+        using (var seed = new FieldSetSeeder(context))
+        {
+            //seed.Seed();
+        }
+        using (var seed = new QuerySeeder(context)) {
+        
+            //seed.Seed();
         }
     }
 }
