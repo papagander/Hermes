@@ -34,14 +34,3 @@ It bridges the gap between human-readable configuration and fully dynamic, type-
 
 - 🪄 **EF Core Integration**  
   Outputs LINQ expressions for direct translation to SQL via Entity Framework.
-
-## 🧠 Design Principles
-
-- 📋 **Domain-Driven Design**  
-  If it's not in the data model, it doesn't exist.
-
-- 🛑 **Don't Repeat Yourself**  
-  Hermes is constructed with a *disgusting* level of inheritance and polymorphism—because reuse is holy.
-
-- ✅ **Safety First**  
-  Because it's better to use your bare hands than unreliable tools.
