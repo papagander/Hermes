@@ -44,7 +44,7 @@ Upon returning to the query menu, you can create a new query. The wizard does a 
 
 Quitting the Query menu will take you back to the top menu. The datacore menu 
 
-Tip: If you ever want to uninstall:  
+## Tip: If you ever want to uninstall:  
 ```bash
 dotnet tool uninstall --global Hermes_Console
 ```
