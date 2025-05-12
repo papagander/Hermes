@@ -23,10 +23,8 @@ public class ReportContext
 {
     const string SQLITEDBNAME = "ReportDb.db";
     public static string SqliteDbPath { get => Path.Combine(DirPath, SQLITEDBNAME); }
-    public static string DirPath
-    {
-        get => Directory.GetCurrentDirectory();
-    }
+    public static string DirPath =>
+    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Hermes");
     public ReportContext(DbContextOptions<ReportContext> options) : base(options)
     {
 

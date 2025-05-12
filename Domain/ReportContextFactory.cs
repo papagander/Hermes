@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Domain
 {
     public class ReportContextFactory 
@@ -14,15 +15,8 @@ namespace Domain
     {
         public ReportContext CreateDbContext(string[] args)
         {
-            //SetupSqlite();
             var optionsBuilder = ReportContext.SqlLiteOptionsBuilder();
-
             return new ReportContext(optionsBuilder.Options);
-        }
-        void SetupSqlite()
-        {
-            if (!Directory.Exists(ReportContext.DirPath)) Directory.CreateDirectory(ReportContext.DirPath);
-            if (!File.Exists(ReportContext.SqliteDbPath)) File.Create(ReportContext.SqliteDbPath);
         }
     }
 }

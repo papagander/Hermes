@@ -23,21 +23,20 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\HermesSeeder\HermesSeeder.csproj" />
+    <ProjectReference Include="..\DbSeeder\DbSeeder.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <None Update="ReportDb.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="password.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-  <None Include="ReportDb.db" Pack="true" PackagePath="tools/net8.0/any/" CopyToOutputDirectory="PreserveNewest" />
+<ItemGroup>
+  <None Include="ReportDb.db" Pack="true" PackagePath="tools/net8.0/any/">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
 </ItemGroup>
 
 </Project>

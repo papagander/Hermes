@@ -3,7 +3,7 @@
 using System.Reflection.PortableExecutable;
 using DataAccess.EFCore;
 
-using HermesSeeder;
+using DbSeeder;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +17,8 @@ class Program
     {
 
         ReportContext context = new ReportContextFactory().CreateDbContext(new string[0]);
-        Seed(context);
+        DbBuilder.SetupSqlite();
+        //Seed(context);
         using (MainMenu mm = new(context))
         {
             mm.Run();
@@ -27,15 +28,15 @@ class Program
     {        
         using (var seed = new DataCoreSeeder(context))
         {
-            //seed.Seed();
+            seed.Seed();
         }
         using (var seed = new FieldSetSeeder(context))
         {
-            //seed.Seed();
+            seed.Seed();
         }
         using (var seed = new QuerySeeder(context)) {
         
-            //seed.Seed();
+            seed.Seed();
         }
     }
 }

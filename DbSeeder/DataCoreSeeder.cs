@@ -10,7 +10,7 @@ using Services;
 using System.Data;
 using System.Net;
 
-namespace HermesSeeder;
+namespace DbSeeder;
 public class DataCoreSeeder
     : ISeeder
 {

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 using static System.Net.Mime.MediaTypeNames;
 
-namespace HermesSeeder;
+namespace DbSeeder;
 public class FieldSetSeeder
     : ISeeder
 {

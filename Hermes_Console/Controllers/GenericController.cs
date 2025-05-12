@@ -124,8 +124,17 @@ public abstract class GenericController
     protected static T? ParsePrompt<T>(IEnumerable<T> items, string symbols) where T : class
     {
         Console.ForegroundColor = ConsoleColor.White;
-        var input = Console.ReadKey().KeyChar.ToString().ToUpper();
-        Console.WriteLine();
+        string input;
+        if (Console.IsInputRedirected)
+        {
+            Console.WriteLine("Console input is redirected; falling back to ReadLine.");
+            input = Console.ReadLine()?.Trim().ToUpper() ?? string.Empty;
+        }
+        else
+        {
+            input = Console.ReadKey().KeyChar.ToString().ToUpper();
+            Console.WriteLine();
+        }
         for (int i = 0; i < items.Count(); i++)
             if (input == symbols[i].ToString()) return items.ToList()[i];
         return null;

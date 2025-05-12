@@ -16,7 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HermesSeeder;
+namespace DbSeeder;
 public class QuerySeeder
     : ISeeder
 {
