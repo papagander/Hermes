@@ -17,7 +17,7 @@ class Program
     {
 
         ReportContext context = new ReportContextFactory().CreateDbContext(new string[0]);
-        //Seed(context);
+        Seed(context);
         using (MainMenu mm = new(context))
         {
             mm.Run();

@@ -110,7 +110,7 @@ public class QueryController
         Console.WriteLine("Start with the inner-most conjunctions and then create the higher level ones.");
         Console.WriteLine();
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("Ex. ((Customer = Hurom AND Model = 1234) OR (Customer = Galanz AND Model = 5678)) AND [Date Received] WEEKSAGO(1)");
+        Console.WriteLine("Ex. ((Department is(Chemistry) AND Category is Laptop) OR (Department = Math AND Category is Monitor)) AND [Deployment Date] isWeeksAgo(1)");
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("\n***\n");
 
