@@ -35,6 +35,11 @@ dotnet pack -c Release
 dotnet tool install --global --add-source ./bin/Release Hermes_Console
 ```
 
+### ♦️ If you ever want to uninstall:  
+```bash
+dotnet tool uninstall --global Hermes_Console
+```
+
 ### 🔹 Step 4: Run Hermes   
 
 Just go literally anywhere and type:  
@@ -46,12 +51,9 @@ which will bring you into Hermes's top level menu. I recommend entering the Quer
 
 Upon returning to the query menu, you can create a new query. The wizard does a reasonably good job of guiding the user through constructing the query. 
 
-Quitting the Query menu will take you back to the top menu. The datacore menu 
+Quitting the Query menu will take you back to the top menu. The datacore -> operators menu -> show function will expose the details for the filter functions Hermes uses to build query filters.
 
-## Tip: If you ever want to uninstall:  
-```bash
-dotnet tool uninstall --global Hermes_Console
-```
+
 
 
 ## ✨ Why Hermes?
