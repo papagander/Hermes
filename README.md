@@ -10,9 +10,9 @@ Hermes is a console-driven domain-specific language (DSL) wizard designed to hel
 
 ## Installation Guide
 
-### 🔹 Step 0: Install Linux  
+### 🔹 Step 0: Install Linux / MacOS  
 
-MacOS works too. If you're on Windows, you'll need to use WSL to pretend to be Linux.
+If you're on Windows, you'll need to use WSL to pretend to be Linux.
 
 ### 🔹 Step 1: Install .NET 8 from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)  
 
