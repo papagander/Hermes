@@ -1,10 +1,58 @@
+Created by [Tim Dolin](https://github.com/papagander) • Contributions welcome
+
 # 🪽 Hermes: Query Engine
 
-Hermes is a console-driven domain-specific language (DSL) engine designed to help nontechnical users define and execute complex, nested SQL queries using intuitive filter logic. Built with C# and Entity Framework Core, Hermes offers a clean, recursive architecture that balances extensibility, clarity, and raw expressive power.
+Hermes is a console-driven domain-specific language (DSL) engine designed to help nontechnical users create and execute complex, nested SQL queries using intuitive filter logic. Built with C# and Entity Framework Core, Hermes offers a clean, recursive architecture that balances extensibility, clarity, and raw expressive power.
+
+## Installation Guide
+
+### 🔹 Step 0: Install Linux  
+
+MacOS works too. If you're on Windows, you'll need to use WSL to pretend to be Linux.
+
+### 🔹 Step 1: Install .NET 8 from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)  
+
+### 🔹 Step 2: Download Hermes Source Code  
+  
+Run the following wherever you want to install the source code (it'll all be contained in one folder):  
+
+```bash
+git clone https://github.com/papagander/Hermes.git
+cd Hermes/Hermes_Console
+echo yeeee haw
+```  
+
+### 🔹 Step 3: Build and install Hermes  
+
+Run the following from somewhere/Hermes/Hermes_Console:
+
+```bash
+dotnet pack -c Release
+dotnet tool install --global --add-source ./bin/Release Hermes_Console
+```
+
+### 🔹 Step 4: Run Hermes   
+
+Just go literally anywhere and type:  
+```bash
+Hermes_Console
+```
+
+which will bring you into Hermes's top level menu. I recommend entering the Query menu and clicking 'show' to start. This will show the sample query loaded into the seeded database.  
+
+Upon returning to the query menu, you can create a new query. The wizard does a reasonably good job of guiding the user through constructing the query. 
+
+Quitting the Query menu will take you back to the top menu. The datacore menu 
+
+Tip: If you ever want to uninstall:  
+```bash
+dotnet tool uninstall --global Hermes_Console
+```
+
 
 ## ✨ Why Hermes?
 
-Creating database reports a la carte is conceivably possible for nontechnical actors—**if** they’re given the right tools. Hermes provides a foundation for building those tools.
+SQL is not pretty. SQL is not always very helpful. SQL does not care how soon you need your inventory reports. But Hermes cares. Hermes offers a framework to abstract and store commonly applied filters as parameterized functions, and combine those functions as the user wishes in order to create complex queries.
 
 It offers:
 - A **modular, composable system** where new interfaces or tools can interoperate with the core
