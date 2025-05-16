@@ -85,6 +85,3 @@ It bridges the gap between human-readable configuration and fully dynamic, type-
 
 - 🧩 **Modular + Extensible**  
   Clean separation of concerns makes it easy to add new operators, data sources, and output targets.
-
-- 🪄 **EF Core Integration**  
-  Outputs LINQ expressions for direct translation to SQL via Entity Framework.
