@@ -1,5 +1,3 @@
-Created by [Tim Dolin](https://github.com/papagander) • Contributions welcome
-
 # 🪽 Hermes: Query Engine
 
 Hermes is a console-driven domain-specific language (DSL) wizard designed to help users create and execute complex SQL queries using intuitive and readable filter logic. Built with C# and Entity Framework Core, Hermes offers a clean, recursive architecture that balances extensibility, clarity, and raw expressive power.
@@ -29,6 +27,7 @@ echo yeeee haw
 Run the following from somewhere/Hermes/Hermes_Console:
 
 ```bash
+dotnet build
 dotnet pack -c Release
 dotnet tool install --global --add-source ./bin/Release Hermes_Console
 ```
