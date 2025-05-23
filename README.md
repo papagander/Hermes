@@ -10,23 +10,21 @@ Hermes is a console-driven domain-specific language (DSL) wizard designed to hel
 
 ## Installation Guide
 
-### 🔹 Step 0: Install Linux / MacOS  
+### 🔹 Step 1: Install [Git](https://git-scm.com/downloads)
 
-If you're on Windows, you'll need to use WSL to pretend to be Linux.
+### 🔹 Step 2: Install .NET 8 SDK from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)  
 
-### 🔹 Step 1: Install .NET 8 from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)  
-
-### 🔹 Step 2: Download Hermes Source Code  
+### 🔹 Step 3: Download Hermes Source Code  
   
 Run the following wherever you want to install the source code (it'll all be contained in one folder):  
 
-```bash
+```bash / git bash
 git clone https://github.com/papagander/Hermes.git
 cd Hermes/Hermes_Console
 echo yeeee haw
 ```  
 
-### 🔹 Step 3: Build and install Hermes  
+### 🔹 Step 4: Build and install Hermes  
 
 Run the following from somewhere/Hermes/Hermes_Console:
 
@@ -40,7 +38,7 @@ dotnet tool install --global --add-source ./bin/Release Hermes_Console
 dotnet tool uninstall --global Hermes_Console
 ```
 
-### 🔹 Step 4: Run Hermes   
+### 🔹 Step 5: Run Hermes   
 
 Just go literally anywhere and type:  
 ```bash
