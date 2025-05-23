@@ -19,7 +19,6 @@ Run the following wherever you want to install the source code (it'll all be con
 ```bash / git bash
 git clone https://github.com/papagander/Hermes.git
 cd Hermes/Hermes_Console
-echo yeeee haw
 ```  
 
 ### 🔹 Step 4: Build and install Hermes  
