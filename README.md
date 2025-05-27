@@ -38,12 +38,12 @@ dotnet tool uninstall --global Hermes_Console
 
 ### 🔹 Step 5: Run Hermes   
 
-Just go literally anywhere and type:  
+Typing the following into your terminal will now bring you into Hermes's top level menu:
 ```bash
 Hermes_Console
 ```
 
-which will bring you into Hermes's top level menu. I recommend entering the Query menu and clicking 'show' to start. This will show the sample query loaded into the seeded database.  
+I recommend entering the Query menu and clicking 'show' to start. This will show the sample query loaded into the seeded database.  
 
 Upon returning to the query menu, you can create a new query. The wizard does a reasonably good job of guiding the user through constructing the query. 
 
